@@ -53,8 +53,7 @@ export default function Header() {
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a
                   className="dropdown-item"
-                  target="_blank"
-                  href="/CadDoadores"
+                  href="/cadastro"
                 >
                   Quero ser doador!
                 </a>

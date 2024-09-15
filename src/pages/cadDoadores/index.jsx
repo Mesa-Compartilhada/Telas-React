@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { addEndereco } from "../../lib/api/endereco";
 import { addEmpresa } from "../../lib/api/empresa";
+import { useNavigate } from "react-router-dom";
 const bcrypt = require('bcryptjs')
 
 export default function CadDoadores() {
+
+  const navigate = useNavigate();
 
   // Categorias de empresa para preencher os dropdown
   const categoriaDoadora = {
@@ -58,10 +61,8 @@ export default function CadDoadores() {
         enderecoId: enderecoAdicionado.id
       }
 
-      console.log(novaEmpresa)
-      let empresaAdicionada = await addEmpresa(novaEmpresa)
-      console.log(enderecoAdicionado)
-      console.log(empresaAdicionada)
+      await addEmpresa(novaEmpresa)
+      navigate("/login")
     }
     else {
       console.log("Dados inválidos")
@@ -137,7 +138,7 @@ export default function CadDoadores() {
             <select className="form-control" id="categoria" disabled={ !empresa.tipo || empresa.tipo.length <= 0 } onChange={(e) => setEmpresa({ ...empresa, categoria: e.target.value })}>
               <option value="">Selecione uma categoria</option>
               {
-                empresa.tipo == 1 
+                empresa.tipo === 1 
                 ? Object.keys(categoriaDoadora).map(key => <option key={key} value={key}>{categoriaDoadora[key]}</option>)
                 : Object.keys(categoriaRecebedora).map(key => <option key={key} value={key}>{categoriaRecebedora[key]}</option>)
               }

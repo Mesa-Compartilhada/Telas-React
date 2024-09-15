@@ -9,7 +9,7 @@ export default function AppRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<PagInicial />} />
-                <Route path="/CadDoadores" element={<CadDoadores />} />
+                <Route path="/cadastro" element={<CadDoadores />} />
                 <Route path="/CadRecebedores" element={<CadRecebedores />} />
                 <Route path="/Login" element={<Login />} />
             </Routes>
