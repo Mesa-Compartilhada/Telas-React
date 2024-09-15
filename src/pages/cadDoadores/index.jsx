@@ -1,241 +1,277 @@
+import { useState } from "react";
+import { addEndereco } from "../../lib/api/endereco";
+import { addEmpresa } from "../../lib/api/empresa";
+const bcrypt = require('bcryptjs')
+
 export default function CadDoadores() {
-//   function primeiroAcesso() {
-//     // Se não tiver "Banco" no localStorage insere
-//     if (!localStorage.getItem("Banco")) {
-//       let dados = [
-//         {
-//           id: Date.now(),
-//           dadosBasicos: {
-//             nome: "Fatec",
-//             cnpj: "00.000.000/0000-00",
-//             tipo: "Outro",
-//           },
-//           endereco: {
-//             logradouro: "Avenida Luiz Merenda",
-//             numero: "433",
-//             CEP: "09931-390",
-//             complemento: "Não tem",
-//             bairro: "Canhema",
-//             cidade: "Diadema",
-//           },
-//           dadosLogin: {
-//             email: "Fatec@217.com",
-//             senha: "Fatec217",
-//           },
-//         },
-//       ];
-//       banco = JSON.stringify(dados);
-//       localStorage.setItem("Banco", banco);
-//     }
-//   }
-//   function pegaValores() {
-//     let nomeE = document.getElementById("nome").value;
-//     let cnpj = document.getElementById("cnpj").value;
-//     let testabelecimento = document.getElementById("tipo").value;
-//     let endereco = document.getElementById("endereco").value;
-//     let numero = document.getElementById("numero").value;
-//     let CEP = document.getElementById("Cep").value;
-//     let complemento = document.getElementById("Complemento").value;
-//     let bairro = document.getElementById("Bairro").value;
-//     let email = document.getElementById("email").value;
-//     let senha = document.getElementById("senha").value;
 
-//     let novoDado = {
-//       id: Date.now(),
-//       dadosBasicos: {
-//         nome: nomeE,
-//         cnpj: cnpj,
-//         tipo: testabelecimento,
-//       },
-//       endereco: {
-//         logradouro: endereco,
-//         numero: numero,
-//         CEP: CEP,
-//         complemento: complemento,
-//         bairro: bairro,
-//         cidade: "Diadema",
-//       },
-//       dadosLogin: {
-//         email: email,
-//         senha: senha,
-//       },
-//     };
+  // Categorias de empresa para preencher os dropdown
+  const categoriaDoadora = {
+    1: "Restaurante", 
+    2: "Hortifrutti", 
+    3: "Mercado", 
+    4: "Padaria", 
+    5: "Fast Food",
+    6: "Outro"
+  }
+  const categoriaRecebedora = {
+    1: "Organização não governamental", 
+    2: "Organização Religiosa", 
+    3: "Unidade básica de saúde",
+    4: "Outro"
+  }
 
-//     return novoDado;
-//   }
-//   function limpaCampos() {
-//     document.getElementById("nome").value = "";
-//     document.getElementById("cnpj").value = "";
-//     document.getElementById("tipo").value = "";
-//     document.getElementById("endereco").value = "";
-//     document.getElementById("numero").value = "";
-//     document.getElementById("Cep").value = "";
-//     document.getElementById("Complemento").value = "";
-//     document.getElementById("Bairro").value = "";
-//     document.getElementById("email").value = "";
-//     document.getElementById("senha").value = "";
-//   }
-//   // função que pega o cadastro dos Doadores 'D'
-//   function cadastroD() {
-//     let novoCadastro = pegaValores();
-//     let banco = localStorage.getItem("Banco");
-//     banco = JSON.parse(banco);
+  // JSON que armazena as informações da empresa
+  const [empresa, setEmpresa] = useState({})
+  // JSON que armazena as informações do endereço (é armazenado separadamente no banco de dados)
+  const [endereco, setEndereco] = useState({})
 
-//     // se email já estiver cadastrado exibe alert e não insere os dados
-//     for (let i = 0; i < banco.length; i++) {
-//       if (banco[i].dadosLogin.email == novoCadastro.dadosLogin.email) {
-//         return alert("Email já cadastrado");
-//       }
-//     }
-//     if (novoCadastro.dadosLogin.email == "") {
-//       return alert("Preencha os dados corretamente");
-//     }
-//     banco.push(novoCadastro);
-//     banco = JSON.stringify(banco);
-//     localStorage.setItem("Banco", banco);
+  async function cadastrarEmpresa() {
+    // Validação dos dados
+    if(
+      endereco.cep
+      && endereco.numero
+      && empresa.nome && empresa.nome.length > 1
+      && empresa.cnpj
+      && empresa.tipo
+      && empresa.senha && empresa.senha.length >= 8
+      && empresa.confirmacaoDeSenha && empresa.confirmacaoDeSenha.length >= 8
+      && empresa.senha === empresa.confirmacaoDeSenha
+    ) {
+      // Enviando dados para a função que chama a rota POST da API
+      let enderecoAdicionado = await addEndereco(endereco)
 
-//     alert(
-//       "Obrigada por fazer o seu cadastro " +
-//         novoCadastro.dadosBasicos.nome +
-//         "\n Você tem um(a) " +
-//         novoCadastro.dadosBasicos.tipo +
-//         " certo?" +
-//         "\n Seu email é " +
-//         novoCadastro.dadosLogin.email
-//     );
-//     limpaCampos();
-//     window.location.href = "/Login";
-//   }
-//   primeiroAcesso();
+      let senha = await bcrypt.hash(empresa.senha, 10)
+      // Adicionar enderecoId no JSON da empresa
+      setEmpresa({
+        ...empresa,
+        enderecoId: enderecoAdicionado.id,
+      })
+
+      const novaEmpresa = {
+        ...empresa,
+        tipo: parseInt(empresa.tipo),
+        categoria: parseInt(empresa.categoria),
+        status: "1",
+        senha: senha,
+        confirmacaoDeSenha: senha,
+        enderecoId: enderecoAdicionado.id
+      }
+
+      console.log(novaEmpresa)
+      let empresaAdicionada = await addEmpresa(novaEmpresa)
+      console.log(enderecoAdicionado)
+      console.log(empresaAdicionada)
+    }
+    else {
+      console.log("Dados inválidos")
+    }
+  }
+
+  // Função para preencher campos do endereço automaticamente
+  async function preencherEndereco(cep) {
+    // API (também retorna latitude e longitude para usar em mapas depois): https://github.com/raniellyferreira/awesomeapi-cep
+    let result = await fetch(`https://cep.awesomeapi.com.br/json/${cep.target.value}`, {
+        method: "GET"
+      }
+    )
+    let endereco = await result.json()
+    // O número e o complemento são adicionados pelos próprios inputs
+    setEndereco({
+      cep: cep.target.value,
+      logradouro: endereco.address,
+      bairro: endereco.district,
+      cidade: endereco.city,
+      estado: endereco.state,
+      pais: "Brasil",
+    })
+  }
 
   return (
     <>
-      <div class="container">
+      <div className="container p-5">
         <h1>Cadastro doador</h1>
         <h4>Dados básicos:</h4>
         <form>
-          <div class="form-group">
-            <label for="nome">Nome fantasia de sua empresa:</label>
+          <div className="form-group">
+            <label htmlFor="nome">Nome fantasia de sua empresa:</label>
             <input
               type="text"
               id="nome"
-              class="form-control"
+              className="form-control"
               placeholder="Nome fantasia"
+              onChange={(e) => setEmpresa({...empresa, nome: e.target.value})}
             />
           </div>
 
-          <div class="form-group">
-            <label for="cnpj"> CNPJ: </label>
+          <div className="form-group">
+            <label htmlFor="cnpj"> CNPJ: </label>
             <input
               type="text"
               id="cnpj"
-              class="form-control"
+              className="form-control"
               placeholder="00.000.000/0000-00"
+              onChange={(e) => setEmpresa({...empresa, cnpj: e.target.value})}
             />
-            <small class="form-text text-muted">
+            <small className="form-text text-muted">
               Nunca vamos compartilhar seu CNPJ com ninguém.
             </small>
           </div>
-
-          <div class="form-group">
-            <label for="tipo">Tipo de estabelecimento:</label>
-            <select class="form-control" id="tipo">
-              <option></option>
-              <option>Restaurante</option>
-              <option>Hortifrutti</option>
-              <option>Mercado</option>
-              <option>Padaria</option>
-              <option>Fast Food</option>
-              <option>Outro</option>
+          
+          <div className="form-group">
+            <label htmlFor="tipo">Tipo da empresa</label>
+            <select name="tipo" id="tipo" className="form-control" onChange={(e) => setEmpresa({...empresa, tipo: e.target.value})}>
+              <option value="">Selecione um tipo</option>
+              <option value={1}>Doadora</option>
+              <option value={2}>Recebedora</option>
             </select>
           </div>
+
+          <div className="form-group">
+            <label htmlFor="categoria">
+              { empresa.categoria === 1 
+                ? "Categoria de estabelecimento:" 
+                : "Categoria de instituição:"
+              }
+            </label>
+            <select className="form-control" id="categoria" disabled={ !empresa.tipo || empresa.tipo.length <= 0 } onChange={(e) => setEmpresa({ ...empresa, categoria: e.target.value })}>
+              <option value="">Selecione uma categoria</option>
+              {
+                empresa.tipo == 1 
+                ? Object.keys(categoriaDoadora).map(key => <option key={key} value={key}>{categoriaDoadora[key]}</option>)
+                : Object.keys(categoriaRecebedora).map(key => <option key={key} value={key}>{categoriaRecebedora[key]}</option>)
+              }
+            </select>
+          </div>
+
+          <hr className="mt-4 mb-4" />
+
           <h4>Endereço do estabelecimento:</h4>
-          <div class="form-row">
-            <div class="col-10 form-group">
-              <label for="endereco">Endereço:</label>
+          <div className="form-row">
+            <div className="col form-group">
+              <label htmlFor="cep">CEP:</label>
               <input
                 type="text"
-                class="form-control"
-                placeholder="Ex: Avenida Brasil"
-                id="endereco"
+                id="cep"
+                className="form-control"
+                placeholder="00000-000"
+                onChange={(e) => preencherEndereco(e)
+                }
               />
             </div>
-            <div class="col-2">
-              <label for="numero">Número:</label>
+          </div>
+          <div className="form-row">
+            <div className="col form-group">
+              <label htmlFor="logradouro">Logradouro:</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Ex: Avenida Brasil"
+                id="logradouro"
+                defaultValue={endereco.logradouro}
+                disabled
+              />
+            </div>
+            <div className="col form-group">
+              <label htmlFor="bairro">Bairro:</label>
+              <input
+                type="text"
+                id="bairro"
+                className="form-control"
+                placeholder="Ex: Centro"
+                defaultValue={endereco.bairro}
+                disabled
+              />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="col form-group">
+              <label htmlFor="cidade">Cidade:</label>
+              <input
+                type="text"
+                id="cidade"
+                className="form-control"
+                placeholder="Ex: SP"
+                defaultValue={endereco.cidade}
+                disabled
+              />
+            </div>
+            <div className="col form-group">
+              <label htmlFor="estado">Estado:</label>
+              <input
+                type="text"
+                id="estado"
+                className="form-control"
+                placeholder="Ex: SP"
+                defaultValue={endereco.estado}
+                disabled
+              />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="col-2">
+              <label htmlFor="numero">Número:</label>
               <input
                 type="text"
                 id="numero"
-                class="form-control"
+                className="form-control"
                 placeholder="Ex: 123"
+                onChange={(e) => setEndereco({ ...endereco, numero: e.target.value })}
               />
             </div>
-          </div>
-          <div class="form-row">
-            <div class="col form-group">
-              <label for="Cep">CEP:</label>
+            <div className="col form-group">
+              <label htmlFor="complemento">Complemento:</label>
               <input
                 type="text"
-                id="Cep"
-                class="form-control"
-                placeholder="00000-000"
-              />
-            </div>
-            <div class="col form-group">
-              <label for="Complemento">Complemento:</label>
-              <input
-                type="text"
-                id="Complemento"
-                class="form-control"
+                id="complemento"
+                className="form-control"
                 placeholder="Ex: Apto 1"
+                onChange={(e) => setEndereco({ ...endereco, complemento: e.target.value })}
               />
             </div>
-            <div class="col form-group">
-              <label for="Bairro">Bairro:</label>
-              <input
-                type="text"
-                id="Bairro"
-                class="form-control"
-                placeholder="Ex: Centro"
-              />
-            </div>
-            <div class="col form-group">
-              <label for="Cidade">Cidade:</label>
-              <select id="Cidade" class="form-control">
-                <option>Diadema</option>
-              </select>
-            </div>
           </div>
-          <div class="form-row">
-            <div class="col"></div>
-          </div>
+          
+          <hr className="mt-4 mb-4" />
+
           <h4>Dados de login:</h4>
-          <div class="form-group">
-            <label for="email">Digite seu email:</label>
+          <div className="form-group">
+            <label htmlFor="email">Digite seu email:</label>
             <input
               type="email"
-              class="form-control"
+              className="form-control"
               id="email"
               aria-describedby="emailHelp"
               placeholder="contato@empresa.com.br"
               required="required"
+              onChange={(e) => setEmpresa({...empresa, email: e.target.value})}
             />
           </div>
 
-          <div class="form-group">
-            <label for="senha">Senha:</label>
+          <div className="form-group">
+            <label htmlFor="senha">Senha:</label>
             <input
               type="password"
-              class="form-control"
+              className="form-control"
               id="senha"
               placeholder="Senha"
+              onChange={(e) => setEmpresa({...empresa, senha: e.target.value})}
             />
           </div>
 
-          <button class="pushable" type="button" 
-        //   onClick={cadastroD()}
-          >
-            <span class="edge"></span>
-            <span class="front">Enviar</span>
+          <div className="form-group">
+            <label htmlFor="confirmacaoDeSenha">Senha:</label>
+            <input
+              type="password"
+              className="form-control"
+              id="confirmacaoDeSenha"
+              placeholder="Confirmação de Senha"
+              onChange={(e) => setEmpresa({...empresa, confirmacaoDeSenha: e.target.value})}
+            />
+          </div>
+
+          <button className="btn-primary pushable rounded p-1" type="button" onClick={() => cadastrarEmpresa()}>
+            <span className="edge"></span>
+            <span className="front">Enviar</span>
           </button>
         </form>
       </div>
