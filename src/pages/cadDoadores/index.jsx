@@ -2,55 +2,80 @@ import { useState } from "react";
 import { addEndereco } from "../../lib/api/endereco";
 import { addEmpresa } from "../../lib/api/empresa";
 import { useNavigate } from "react-router-dom";
+import { DadosBasicos } from "./components/DadosBasicos";
+import { Endereco } from "./components/Endereco";
+import { DadosLogin } from "./components/DadosLogin";
 const bcrypt = require('bcryptjs')
 
 export default function CadDoadores() {
 
   const navigate = useNavigate();
 
-  // Categorias de empresa para preencher os dropdown
-  const categoriaDoadora = {
-    1: "Restaurante", 
-    2: "Hortifrutti", 
-    3: "Mercado", 
-    4: "Padaria", 
-    5: "Fast Food",
-    6: "Outro"
-  }
-  const categoriaRecebedora = {
-    1: "Organização não governamental", 
-    2: "Organização Religiosa", 
-    3: "Unidade básica de saúde",
-    4: "Outro"
-  }
-
   // JSON que armazena as informações da empresa
   const [empresa, setEmpresa] = useState({})
   // JSON que armazena as informações do endereço (é armazenado separadamente no banco de dados)
   const [endereco, setEndereco] = useState({})
+  // State para mensagens de erro nos inputs
+  const [mensagens, setMensagens] = useState({})
+
+  function validarDados(dados) {
+    let nome, cnpj, tipo, categoria, cep, numero, email, senha, confirmacaoDeSenha
+    let r = true
+    if(pagina === 1) {
+      if(!dados.nome || dados.nome.length <= 0) {
+        nome = "Insira o nome da empresa"
+        r = false
+      }
+      if(!dados.cnpj || dados.cnpj.length <= 0) {
+        cnpj = "Insira o CNPJ da empresa"
+        r = false
+      }
+      if(!dados.tipo || dados.tipo === "0") {
+        tipo = "Selecione o tipo da empresa"
+        r = false
+      }
+      if(!dados.categoria || dados.categoria === "0") {
+        categoria = "Selecione a categoria da empresa"
+        r = false
+      }
+    }
+    else if(pagina === 2) {
+      if(!dados.cep || dados.cep.length <= 0) {
+        cep = "Insira um CEP válido"
+        r = false
+      }
+      if(!dados.numero || dados.numero.length <= 0) {
+        numero = "Insira um número válido"
+        r = false
+      }
+    }
+    else if(pagina === 3) {
+      if(!dados.email || dados.email.length <= 0) {
+        email = "Insira um email válido"
+        r = false
+      }
+      if(!dados.senha || dados.senha.length <= 0) {
+        senha = "Insira uma senha válida"
+        r = false
+      }
+      if(!dados.confirmacaoDeSenha || dados.confirmacaoDeSenha.length <= 0 || dados.senha != dados.confirmacaoDeSenha) {
+        confirmacaoDeSenha = "Confirme sua senha corretamente"
+        r = false
+      }
+    }
+    setMensagens({ ...mensagens, nome, cnpj, tipo, categoria, cep, numero, email, senha, confirmacaoDeSenha })
+    console.log(mensagens)
+    return r
+  }
 
   async function cadastrarEmpresa() {
     // Validação dos dados
-    if(
-      endereco.cep
-      && endereco.numero
-      && empresa.nome && empresa.nome.length > 1
-      && empresa.cnpj
-      && empresa.tipo
-      && empresa.senha && empresa.senha.length >= 8
-      && empresa.confirmacaoDeSenha && empresa.confirmacaoDeSenha.length >= 8
-      && empresa.senha === empresa.confirmacaoDeSenha
-    ) {
+    if(validarDados({...empresa, ...endereco})) {
       // Enviando dados para a função que chama a rota POST da API
       let enderecoAdicionado = await addEndereco(endereco)
 
       let senha = await bcrypt.hash(empresa.senha, 10)
-      // Adicionar enderecoId no JSON da empresa
-      setEmpresa({
-        ...empresa,
-        enderecoId: enderecoAdicionado.id,
-      })
-
+      
       const novaEmpresa = {
         ...empresa,
         tipo: parseInt(empresa.tipo),
@@ -63,9 +88,6 @@ export default function CadDoadores() {
 
       await addEmpresa(novaEmpresa)
       navigate("/login")
-    }
-    else {
-      console.log("Dados inválidos")
     }
   }
 
@@ -88,192 +110,37 @@ export default function CadDoadores() {
     })
   }
 
+  const [pagina, setPagina] = useState(1)
+
+  function avançarPagina(dados) {
+    console.log(dados)
+    if(validarDados(dados)) {
+      setPagina(pagina + 1)
+    }
+  }
+
   return (
     <>
       <div className="container p-5">
-        <h1>Cadastro doador</h1>
-        <h4>Dados básicos:</h4>
+        <h1>Cadastre sua empresa</h1>
+
+        <div className="mt-5 mb-5 text-center">
+          <div className="mb-2">
+            <img className={pagina !== 1 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/490660/company.svg" alt="Ícone de empresa" width={pagina !== 1 ? 35 : 60} />
+            <img className={pagina !== 2 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/383565/location-pin.svg" alt="Ícone de ponto no mapa" width={pagina !== 2 ? 35 : 60} />
+            <img className={pagina !== 3 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/416019/account-user-avatar.svg" alt="Ícone de acesso de usuário" width={pagina !== 3 ? 35 : 60} />
+          </div>
+
+          <button className="btn btn-info text-white mt-2 mr-2" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}>{"Voltar"}</button>
+          <button className="btn btn-info text-white mt-2" onClick={() => avançarPagina({...empresa, ...endereco})} disabled={pagina >= 3}>{"Avançar"}</button>
+        </div>
+
         <form>
-          <div className="form-group">
-            <label htmlFor="nome">Nome fantasia de sua empresa:</label>
-            <input
-              type="text"
-              id="nome"
-              className="form-control"
-              placeholder="Nome fantasia"
-              onChange={(e) => setEmpresa({...empresa, nome: e.target.value})}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="cnpj"> CNPJ: </label>
-            <input
-              type="text"
-              id="cnpj"
-              className="form-control"
-              placeholder="00.000.000/0000-00"
-              onChange={(e) => setEmpresa({...empresa, cnpj: e.target.value})}
-            />
-            <small className="form-text text-muted">
-              Nunca vamos compartilhar seu CNPJ com ninguém.
-            </small>
-          </div>
-          
-          <div className="form-group">
-            <label htmlFor="tipo">Tipo da empresa</label>
-            <select name="tipo" id="tipo" className="form-control" onChange={(e) => setEmpresa({...empresa, tipo: e.target.value})}>
-              <option value="">Selecione um tipo</option>
-              <option value={1}>Doadora</option>
-              <option value={2}>Recebedora</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="categoria">
-              { empresa.categoria === 1 
-                ? "Categoria de estabelecimento:" 
-                : "Categoria de instituição:"
-              }
-            </label>
-            <select className="form-control" id="categoria" disabled={ !empresa.tipo || empresa.tipo.length <= 0 } onChange={(e) => setEmpresa({ ...empresa, categoria: e.target.value })}>
-              <option value="">Selecione uma categoria</option>
-              {
-                empresa.tipo === 1 
-                ? Object.keys(categoriaDoadora).map(key => <option key={key} value={key}>{categoriaDoadora[key]}</option>)
-                : Object.keys(categoriaRecebedora).map(key => <option key={key} value={key}>{categoriaRecebedora[key]}</option>)
-              }
-            </select>
-          </div>
-
-          <hr className="mt-4 mb-4" />
-
-          <h4>Endereço do estabelecimento:</h4>
-          <div className="form-row">
-            <div className="col form-group">
-              <label htmlFor="cep">CEP:</label>
-              <input
-                type="text"
-                id="cep"
-                className="form-control"
-                placeholder="00000-000"
-                onChange={(e) => preencherEndereco(e)
-                }
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="col form-group">
-              <label htmlFor="logradouro">Logradouro:</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Ex: Avenida Brasil"
-                id="logradouro"
-                defaultValue={endereco.logradouro}
-                disabled
-              />
-            </div>
-            <div className="col form-group">
-              <label htmlFor="bairro">Bairro:</label>
-              <input
-                type="text"
-                id="bairro"
-                className="form-control"
-                placeholder="Ex: Centro"
-                defaultValue={endereco.bairro}
-                disabled
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="col form-group">
-              <label htmlFor="cidade">Cidade:</label>
-              <input
-                type="text"
-                id="cidade"
-                className="form-control"
-                placeholder="Ex: SP"
-                defaultValue={endereco.cidade}
-                disabled
-              />
-            </div>
-            <div className="col form-group">
-              <label htmlFor="estado">Estado:</label>
-              <input
-                type="text"
-                id="estado"
-                className="form-control"
-                placeholder="Ex: SP"
-                defaultValue={endereco.estado}
-                disabled
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="col-2">
-              <label htmlFor="numero">Número:</label>
-              <input
-                type="text"
-                id="numero"
-                className="form-control"
-                placeholder="Ex: 123"
-                onChange={(e) => setEndereco({ ...endereco, numero: e.target.value })}
-              />
-            </div>
-            <div className="col form-group">
-              <label htmlFor="complemento">Complemento:</label>
-              <input
-                type="text"
-                id="complemento"
-                className="form-control"
-                placeholder="Ex: Apto 1"
-                onChange={(e) => setEndereco({ ...endereco, complemento: e.target.value })}
-              />
-            </div>
-          </div>
-          
-          <hr className="mt-4 mb-4" />
-
-          <h4>Dados de login:</h4>
-          <div className="form-group">
-            <label htmlFor="email">Digite seu email:</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              aria-describedby="emailHelp"
-              placeholder="contato@empresa.com.br"
-              required="required"
-              onChange={(e) => setEmpresa({...empresa, email: e.target.value})}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="senha">Senha:</label>
-            <input
-              type="password"
-              className="form-control"
-              id="senha"
-              placeholder="Senha"
-              onChange={(e) => setEmpresa({...empresa, senha: e.target.value})}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="confirmacaoDeSenha">Senha:</label>
-            <input
-              type="password"
-              className="form-control"
-              id="confirmacaoDeSenha"
-              placeholder="Confirmação de Senha"
-              onChange={(e) => setEmpresa({...empresa, confirmacaoDeSenha: e.target.value})}
-            />
-          </div>
-
-          <button className="btn-primary pushable rounded p-1" type="button" onClick={() => cadastrarEmpresa()}>
-            <span className="edge"></span>
-            <span className="front">Enviar</span>
-          </button>
+          {
+            pagina === 1 ? <DadosBasicos mensagens={ mensagens } setMensagens={ setMensagens } setPagina={ setPagina } empresa={ empresa } setEmpresa={setEmpresa} />
+            : pagina === 2 ? <Endereco mensagens={ mensagens } setMensagens={ setMensagens } setPagina={ setPagina } endereco={ endereco } setEndereco={ setEndereco } preencherEndereco={preencherEndereco} />
+            : <DadosLogin mensagens={ mensagens } setMensagens={ setMensagens } setPagina={ setPagina } empresa={ empresa } setEmpresa={ setEmpresa } cadastrarEmpresa= { cadastrarEmpresa } />
+          }
         </form>
       </div>
     </>
