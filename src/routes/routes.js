@@ -4,6 +4,7 @@ import CadRecebedores from "../pages/cadRecebedores";
 import Home from "../pages/Home";
 import Login from "../pages/login";
 import PagInicial from "../pages/pagInicial";
+import Dashboard from "../pages/Dashboard";
 
 export default function AppRoutes() {
     return (
@@ -14,6 +15,7 @@ export default function AppRoutes() {
           <Route path="/CadRecebedores" element={<CadRecebedores />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Home" element={<Home />} />
+          <Route path="/Dashboard" element={<Dashboard />}/>
         </Routes>
       </BrowserRouter>
     );
