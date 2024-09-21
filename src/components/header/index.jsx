@@ -1,4 +1,3 @@
-import Styles from './header.modules.css';
 import logo from '../../assets/logo.svg'
 
 export default function Header() {
@@ -43,7 +42,7 @@ export default function Header() {
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle nav-item"
-                href="#"
+                href="/"
                 id="navbarDropdown"
                 role="button"
                 data-toggle="dropdown"
