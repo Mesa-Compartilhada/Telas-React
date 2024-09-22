@@ -1,22 +1,23 @@
 // Components:
-import Header from "../../components/Header_V1.jsx/index.jsx"
+import Header from "../../components/Header_V1.jsx/index.jsx";
+import FAQ from "./components/faq.jsx";
 
 // Assets:
+import logo from "../../assets/MC_Logo.svg";
 import alvo from "../../assets/alvo.svg";
 import check from "../../assets/check.svg";
+import entrega from "../../assets/entrega_mc.png";
 import mapa from "../../assets/Mapa.svg";
-import ODS2 from "../../assets/SDG-2.svg";
 import ODS10 from "../../assets/SDG-10.svg";
 import ODS12 from "../../assets/SDG-12.svg";
 import ODS17 from "../../assets/SDG-17.svg";
-
-
+import ODS2 from "../../assets/SDG-2.svg";
 
 export default function Home() {
   return (
     <>
-      <div className="bg-white h-full ">
-        <Header/>
+      <div className="bg-white h-full">
+        <Header />
         {/* Banner */}
         <div className=" pt-5 lg:p-0">
           <div className="container text-l-Abobora flex flex-col lg:flex-row justify-center lg:gap-10 pb-10">
@@ -60,7 +61,7 @@ export default function Home() {
           <h1 className="text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-center pt-6 text-l-Abobora">
             Quem somos
           </h1>
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 p-20">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 p-10 md:p-20">
             <div class="rounded-xl bg-white p-6 text-center shadow-xl">
               <div class="mx-auto flex h-16 w-16 -translate-y-12 transform items-center justify-center rounded-full bg-azul shadow-lg shadow-azul-escuro">
                 <img src={alvo} className="size-6" alt="" />
@@ -94,77 +95,135 @@ export default function Home() {
         </section>
         {/* Metas ODS */}
         <section>
-          <section>
-            {/* Container */}
-            <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-20">
-              {/* Title */}
-              <h2 className="text-center mb-8 text-3xl font-bold md:text-5xl">
-                Nossas metas dos Objetivos de Desenvolvimento Sustentável
-              </h2>
-              {/* Content */}
-              <div className="mx-auto grid max-w-xl gap-4">
-                <a
-                  href="/"
-                  className="flex flex-col items-center pb-8 text-center border-b border-gray-300 sm:flex-row sm:text-left"
-                >
-                  <img src={ODS2} alt="" className="h-40 w-40 max-w-32" />
-                  <div className="px-8">
-                    <p className="mb-6 text-sm font-bold sm:text-base lg:mb-6">
-                      Fome zero e agricultura sustentável
-                    </p>
-                    <p className="text-sm text-gray-500">
+          {/* Container */}
+          <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-20">
+            {/* Title */}
+            <h2 className="text-3xl font-bold md:text-5xl text-l-Abobora">
+              Nossas metas dos Objetivos de Desenvolvimento Sustentável
+            </h2>
+            {/* Content */}
+            <div className=" grid gap-0 sm:justify-items-stretch  md:grid-cols-2 md:gap-4 lg:gap-8 text-azul-escuro">
+              {/* Item */}
+              <a
+                href="/"
+                className="flex flex-col md:flex-row items-center gap-4 rounded-md p-4"
+              >
+                <img
+                  src={ODS2}
+                  alt=""
+                  className="inline-block h-36 w-36 max-w-none flex-none object-cover"
+                />
+                <div className="flex flex-col items-start py-4">
+                  <p className="mb-4 text-xl font-bold">
+                    Fome zero e agricultura sustentável
+                  </p>
+                  <div className="flex flex-col items-start text-sm text-gray-500 lg:flex-row lg:items-center">
+                    <p>
                       Erradicar a fome, alcançar a segurança alimentar, melhorar
                       a nutrição e promover a agricultura sustentável
                     </p>
                   </div>
-                </a>
-                <a
-                  href="/"
-                  className="flex flex-col items-center pb-8 text-center border-b border-gray-300 sm:flex-row sm:text-left"
-                >
-                  <img src={ODS10} alt="" className="h-40 w-40 max-w-32" />
-                  <div className="px-8">
-                    <p className="mb-6 text-sm font-bold sm:text-base lg:mb-6">
-                      Redução das desigualdades
-                    </p>
-                    <p className="text-sm text-gray-500">
+                </div>
+              </a>
+              {/* Item */}
+              <a
+                href="/"
+                className="flex flex-col md:flex-row items-center gap-4 rounded-md p-4"
+              >
+                <img
+                  src={ODS10}
+                  alt=""
+                  className="inline-block h-36 w-36 max-w-none flex-none object-cover"
+                />
+                <div className="flex flex-col items-start py-4">
+                  <p className="mb-4 text-xl font-bold">
+                    Redução das desigualdades
+                  </p>
+                  <div className="flex flex-col items-start text-sm text-gray-500 lg:flex-row lg:items-center">
+                    <p>
                       Reduzir as desigualdades no interior dos países e entre
                       países
                     </p>
                   </div>
-                </a>
-                <a
-                  href="/"
-                  className="flex flex-col items-center pb-8 text-center border-b border-gray-300 sm:flex-row sm:text-left "
-                >
-                  <img src={ODS12} alt="" className="h-40 w-40 max-w-32" />
-                  <div className="px-8">
-                    <p className="mb-6 text-sm font-bold sm:text-base lg:mb-6">
-                      Consumo e produção responsáveis
-                    </p>
-                    <p className="text-sm text-gray-500">
+                </div>
+              </a>
+              {/* Item */}
+              <a
+                href="/"
+                className="flex flex-col md:flex-row items-center gap-4 rounded-md p-4"
+              >
+                <img
+                  src={ODS12}
+                  alt=""
+                  className="inline-block h-36 w-36 max-w-none flex-none object-cover"
+                />
+                <div className="flex flex-col items-start py-4">
+                  <p className="mb-4 text-xl font-bold">
+                    Consumo e produção responsáveis
+                  </p>
+                  <div className="flex flex-col items-start text-sm text-gray-500 lg:flex-row lg:items-center">
+                    <p>
                       Garantir padrões de consumo e de produção sustentáveis
                     </p>
                   </div>
-                </a>
-                <a
-                  href="/"
-                  className="flex flex-col items-center pb-8 text-center border-b border-gray-300 sm:flex-row sm:text-left "
-                >
-                  <img src={ODS17} alt="" className="h-40 w-40 max-w-32" />
-                  <div className="px-8">
-                    <p className="mb-6 text-sm font-bold sm:text-base lg:mb-6">
-                      Parcerias e meios de implementação
-                    </p>
-                    <p className="text-sm text-gray-500">
+                </div>
+              </a>
+              {/* Item */}
+              <a
+                href="/"
+                className="flex flex-col md:flex-row items-center gap-4 rounded-md p-4"
+              >
+                <img
+                  src={ODS17}
+                  alt=""
+                  className="inline-block h-36 w-36 max-w-none flex-none object-cover"
+                />
+                <div className="flex flex-col items-start py-4">
+                  <p className="mb-4 text-xl font-bold">
+                    Parcerias e meios de implementação
+                  </p>
+                  <div className="flex flex-col items-start text-sm text-gray-500 lg:flex-row lg:items-center">
+                    <p>
                       Reforçar os meios de implementação e revitalizar a
                       parceria global para o desenvolvimento sustentável
                     </p>
                   </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+        <section className="flex flex-col items-center">
+          <div className="h-auto md:h-[32rem] max-w-screen-2xl md:bg-cover ">
+            <img src={entrega} alt="" />
+          </div>
+        </section>
+        <section>
+          <FAQ />
+        </section>
+        <section>
+          <footer className="block bg-l-pessego">
+            {/* Container */}
+            <div className="py-8  mx-auto w-full max-w-7xl px-5 md:px-10">
+              {/* Component */}
+              <div className="flex-col flex items-center">
+                <a href="/" className="inline-block max-w-full text-black">
+                  <img
+                    src={logo}
+                    alt=""
+                    className="inline-block md:w-64 w-40 pt-2 md:p-3"
+                  />
                 </a>
+
+                <div className="mb-3 border-b bg-l-Abobora w-48"></div>
+                <div className="mb-12 grid-cols-1  grid w-full max-w-52 gap-3">
+                  <p className="text-sm sm:text-base ">
+                    © Copyright 2024. Todos os direitos reservados.
+                  </p>
+                </div>
               </div>
             </div>
-          </section>
+          </footer>
         </section>
       </div>
     </>
