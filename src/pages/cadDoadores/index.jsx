@@ -21,44 +21,44 @@ export default function CadDoadores() {
   function validarDados(dados) {
     let nome, cnpj, tipo, categoria, cep, numero, email, senha, confirmacaoDeSenha
     let r = true
-    if(pagina === 1) {
-      if(!dados.nome || dados.nome.length <= 0) {
+    if (pagina === 1) {
+      if (!dados.nome || dados.nome.length <= 0) {
         nome = "Insira o nome da empresa"
         r = false
       }
-      if(!dados.cnpj || dados.cnpj.length <= 0) {
+      if (!dados.cnpj || dados.cnpj.length <= 0) {
         cnpj = "Insira o CNPJ da empresa"
         r = false
       }
-      if(!dados.tipo || dados.tipo === "0") {
+      if (!dados.tipo || dados.tipo === "0") {
         tipo = "Selecione o tipo da empresa"
         r = false
       }
-      if(!dados.categoria || dados.categoria === "0") {
+      if (!dados.categoria || dados.categoria === "0") {
         categoria = "Selecione a categoria da empresa"
         r = false
       }
     }
-    else if(pagina === 2) {
-      if(!dados.cep || dados.cep.length <= 0) {
+    else if (pagina === 2) {
+      if (!dados.cep || dados.cep.length <= 0) {
         cep = "Insira um CEP válido"
         r = false
       }
-      if(!dados.numero || dados.numero.length <= 0) {
+      if (!dados.numero || dados.numero.length <= 0) {
         numero = "Insira um número válido"
         r = false
       }
     }
-    else if(pagina === 3) {
-      if(!dados.email || dados.email.length <= 0) {
+    else if (pagina === 3) {
+      if (!dados.email || dados.email.length <= 0) {
         email = "Insira um email válido"
         r = false
       }
-      if(!dados.senha || dados.senha.length <= 0) {
+      if (!dados.senha || dados.senha.length <= 0) {
         senha = "Insira uma senha válida"
         r = false
       }
-      if(!dados.confirmacaoDeSenha || dados.confirmacaoDeSenha.length <= 0 || dados.senha != dados.confirmacaoDeSenha) {
+      if (!dados.confirmacaoDeSenha || dados.confirmacaoDeSenha.length <= 0 || dados.senha != dados.confirmacaoDeSenha) {
         confirmacaoDeSenha = "Confirme sua senha corretamente"
         r = false
       }
@@ -70,12 +70,12 @@ export default function CadDoadores() {
 
   async function cadastrarEmpresa() {
     // Validação dos dados
-    if(validarDados({...empresa, ...endereco})) {
+    if (validarDados({ ...empresa, ...endereco })) {
       // Enviando dados para a função que chama a rota POST da API
       let enderecoAdicionado = await addEndereco(endereco)
 
       let senha = await bcrypt.hash(empresa.senha, 10)
-      
+
       const novaEmpresa = {
         ...empresa,
         tipo: parseInt(empresa.tipo),
@@ -95,8 +95,8 @@ export default function CadDoadores() {
   async function preencherEndereco(cep) {
     // API (também retorna latitude e longitude para usar em mapas depois): https://github.com/raniellyferreira/awesomeapi-cep
     let result = await fetch(`https://cep.awesomeapi.com.br/json/${cep.target.value}`, {
-        method: "GET"
-      }
+      method: "GET"
+    }
     )
     let endereco = await result.json()
     // O número e o complemento são adicionados pelos próprios inputs
@@ -114,7 +114,7 @@ export default function CadDoadores() {
 
   function avançarPagina(dados) {
     console.log(dados)
-    if(validarDados(dados)) {
+    if (validarDados(dados)) {
       setPagina(pagina + 1)
     }
   }
@@ -132,14 +132,14 @@ export default function CadDoadores() {
           </div>
 
           <button className="btn btn-info text-white mt-2 mr-2" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}>{"Voltar"}</button>
-          <button className="btn btn-info text-white mt-2" onClick={() => avançarPagina({...empresa, ...endereco})} disabled={pagina >= 3}>{"Avançar"}</button>
+          <button className="btn btn-info text-white mt-2" onClick={() => avançarPagina({ ...empresa, ...endereco })} disabled={pagina >= 3}>{"Avançar"}</button>
         </div>
 
         <form>
           {
-            pagina === 1 ? <DadosBasicos mensagens={ mensagens } setMensagens={ setMensagens } setPagina={ setPagina } empresa={ empresa } setEmpresa={setEmpresa} />
-            : pagina === 2 ? <Endereco mensagens={ mensagens } setMensagens={ setMensagens } setPagina={ setPagina } endereco={ endereco } setEndereco={ setEndereco } preencherEndereco={preencherEndereco} />
-            : <DadosLogin mensagens={ mensagens } setMensagens={ setMensagens } setPagina={ setPagina } empresa={ empresa } setEmpresa={ setEmpresa } cadastrarEmpresa= { cadastrarEmpresa } />
+            pagina === 1 ? <DadosBasicos mensagens={mensagens} setMensagens={setMensagens} setPagina={setPagina} empresa={empresa} setEmpresa={setEmpresa} />
+              : pagina === 2 ? <Endereco mensagens={mensagens} setMensagens={setMensagens} setPagina={setPagina} endereco={endereco} setEndereco={setEndereco} preencherEndereco={preencherEndereco} />
+                : <DadosLogin mensagens={mensagens} setMensagens={setMensagens} setPagina={setPagina} empresa={empresa} setEmpresa={setEmpresa} cadastrarEmpresa={cadastrarEmpresa} />
           }
         </form>
       </div>
