@@ -1,5 +1,5 @@
 export function DadosLogin(props) {
-  const { mensagens, setMensagens, setPagina, empresa, setEmpresa, cadastrarEmpresa } = props
+  const { mensagens, empresa, setEmpresa, cadastrarEmpresa } = props
   return(
     <>
     <h4>Dados de login:</h4>

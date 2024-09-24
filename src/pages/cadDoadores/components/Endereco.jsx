@@ -1,5 +1,39 @@
 export function Endereco(props) {
-  const { mensagens, setMensagens, setPagina, endereco, setEndereco, preencherEndereco } = props
+  const { mensagens, endereco, setEndereco } = props
+
+  // Função para preencher campos do endereço automaticamente
+  async function preencherEndereco(cep) {
+    cep = cep.target.value
+    if(cep.length >= 8) { 
+      // API (também retorna latitude e longitude para usar em mapas depois): https://github.com/raniellyferreira/awesomeapi-cep
+      let result = await fetch(`https://cep.awesomeapi.com.br/json/${cep}`, {
+        method: "GET"
+      })
+      let dadosCep = await result.json()
+      // O número e o complemento são adicionados pelos próprios inputs
+      setEndereco({
+        ...endereco,
+        cep: cep,
+        logradouro: dadosCep.address,
+        bairro: dadosCep.district,
+        cidade: dadosCep.city,
+        estado: dadosCep.state,
+        pais: "Brasil",
+      })
+    }
+    else {
+      setEndereco({
+        ...endereco,
+        cep: "",
+        logradouro: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        pais: "Brasil",
+      })
+    }
+  }
+
   return(
     <>
       <h4>Endereço do estabelecimento:</h4>
@@ -12,7 +46,7 @@ export function Endereco(props) {
             className="form-control"
             placeholder="00000-000"
             defaultValue={endereco.cep}
-            onChange={(e) => preencherEndereco(e)
+            onChange={(e) => {(e.target.value.length === 0 || e.target.value.length >= 8) && preencherEndereco(e) }
             }
           />
           <small className="form-text text-muted">
@@ -28,7 +62,7 @@ export function Endereco(props) {
             className="form-control"
             placeholder="Ex: Avenida Brasil"
             id="logradouro"
-            defaultValue={endereco.logradouro}
+            value={endereco.logradouro || ""}
             disabled
           />
         </div>
@@ -39,7 +73,7 @@ export function Endereco(props) {
             id="bairro"
             className="form-control"
             placeholder="Ex: Centro"
-            defaultValue={endereco.bairro}
+            value={endereco.bairro || ""}
             disabled
           />
         </div>
@@ -52,7 +86,7 @@ export function Endereco(props) {
             id="cidade"
             className="form-control"
             placeholder="Ex: SP"
-            defaultValue={endereco.cidade}
+            value={endereco.cidade || ""}
             disabled
           />
         </div>
@@ -63,7 +97,7 @@ export function Endereco(props) {
             id="estado"
             className="form-control"
             placeholder="Ex: SP"
-            defaultValue={endereco.estado}
+            value={endereco.estado || ""}
             disabled
           />
         </div>
@@ -76,7 +110,7 @@ export function Endereco(props) {
             id="numero"
             className="form-control"
             placeholder="Ex: 123"
-            defaultValue={endereco.numero}
+            value={endereco.numero || ""}
             onChange={(e) => setEndereco({ ...endereco, numero: e.target.value })}
           />
           <small className="form-text text-muted">
@@ -90,7 +124,7 @@ export function Endereco(props) {
             id="complemento"
             className="form-control"
             placeholder="Ex: Apto 1"
-            defaultValue={endereco.complemento}
+            value={endereco.complemento || ""}
             onChange={(e) => setEndereco({ ...endereco, complemento: e.target.value })}
           />
         </div>

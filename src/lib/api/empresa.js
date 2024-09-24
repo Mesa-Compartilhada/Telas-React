@@ -45,9 +45,40 @@ export async function addEmpresa(empresa) {
         'Content-Type': 'application/json;charset=UTF-8'
       },
     });
+    if(result == 400) {
+      console.log(result)
+      return false
+    }
+    result = await result.json()
+    console.log(result)
+    return result
   } catch(error) {
     console.log(error)
     return false
   }
   
+}
+
+export async function login(email, senha) {
+  try {
+    let result = await fetch("http://localhost:8080/apimc/empresa/login", {
+      method: "POST", 
+      body: JSON.stringify({email, senha}),
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
+    })
+    if(result.status !== 200) {
+      return false
+    }
+    else {
+      result = await result.json()
+      console.log(result)
+      return result
+    }
+  } catch(error) {
+    console.log(error)
+    return false
+  }
 }

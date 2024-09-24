@@ -1,5 +1,5 @@
 export function DadosBasicos(props) {
-  const { mensagens, setMensagens, setPagina, empresa, setEmpresa } = props
+  const { mensagens, empresa, setEmpresa } = props
 
   // Categorias de empresa para preencher os dropdown
   const categoriaDoadora = {

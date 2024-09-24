@@ -1,42 +1,57 @@
 import { useState } from "react";
-import { getEmpresaByEmail } from "../../lib/api/empresa";
+import { login } from "../../lib/api/empresa";
 import { useNavigate } from "react-router-dom";
-const bcrypt = require("bcryptjs")
 
 export default function Login() {
 
   const navigate = useNavigate()
-  const [dadosLogin, setDadosLogin] = useState({});
+  const [dadosLogin, setDadosLogin] = useState({})
   const [mensagem, setMensagem] = useState()
+  const [mensagens, setMensagens] = useState({
+    email: "",
+    senha: ""
+  })
+
+  function validarDados() {
+    let r = true
+    let email, senha
+    if(!dadosLogin.email || dadosLogin.email.length < 1) {
+      email = "Insira o email"
+      r = false
+    }
+    if(!dadosLogin.senha || dadosLogin.senha.length <= 8) {
+      senha = "A senha deve ter no mínimo 8 caracteres"
+      r = false
+    }
+    console.log(mensagens)
+    setMensagens({email, senha})
+    return r
+  }
 
   async function fazerLogin() {
+    validarDados()
     if(dadosLogin.email && dadosLogin.senha) {
-      const result = await getEmpresaByEmail(dadosLogin.email);
+      const result = await login(dadosLogin.email, dadosLogin.senha);
       if(result) {
-        if(await bcrypt.compare(dadosLogin.senha, result.senha)) {
           const { id, cnpj, tipo, categoria, nome, email, status, endereco, doacoes } = result
           const usuario = { id, cnpj, tipo, categoria, nome, email, status, endereco, doacoes }
           localStorage.setItem("user", JSON.stringify(usuario))
-          setMensagem("")
+          setMensagens({})
           navigate("/")
-        } 
-        else {
-          setMensagem("Senha incorreta")
-        }
       }
       else {
-        setMensagem("Email inválido")
+        setMensagem("Dados incorretos")
       }
     }
   }
 
   return (
     <>
-      <div className="container-fluid centraliza">
-        <div className="card vidro" style={{ width: "44rem" }}>
+      <div className="centraliza">
+        <div className="" style={{ width: "44rem" }}>
           <div className="card-body">
-            <h5 className="card-title">Login</h5>
-            <p className="text-sm">{mensagem}</p>
+            <h5 className="text-2xl">Login</h5>
+            <small>{mensagem || <>&nbsp;</>}</small>
             <form className="mt-3">
               <div className="form-group">
                 <label htmlFor="email">Digite seu email:</label>
@@ -49,6 +64,7 @@ export default function Login() {
                   required="required"
                   onChange={(e) => setDadosLogin({ ...dadosLogin, email: e.target.value })}
                 />
+                <small>{mensagens.email || ""}</small>
               </div>
 
               <div className="form-group">
@@ -60,6 +76,7 @@ export default function Login() {
                   placeholder="Senha"
                   onChange={(e) => setDadosLogin({ ...dadosLogin, senha: e.target.value })}
                 />
+                <small>{mensagens.senha}</small>
               </div>
 
               <button

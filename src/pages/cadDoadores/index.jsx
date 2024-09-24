@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { DadosBasicos } from "./components/DadosBasicos";
 import { Endereco } from "./components/Endereco";
 import { DadosLogin } from "./components/DadosLogin";
-const bcrypt = require('bcryptjs')
 
 export default function CadDoadores() {
 
@@ -62,9 +61,16 @@ export default function CadDoadores() {
         confirmacaoDeSenha = "Confirme sua senha corretamente"
         r = false
       }
+      if(dados.senha.length < 8) {
+        senha = "A senha deve ter pelo menos 8 dígitos"
+        r = false
+      }
+      if(dados.confirmacaoDeSenha.length < 8) {
+        confirmacaoDeSenha = "A senha deve ter pelo menos 8 dígitos"
+        r = false
+      }
     }
     setMensagens({ ...mensagens, nome, cnpj, tipo, categoria, cep, numero, email, senha, confirmacaoDeSenha })
-    console.log(mensagens)
     return r
   }
 
@@ -73,76 +79,55 @@ export default function CadDoadores() {
     if (validarDados({ ...empresa, ...endereco })) {
       // Enviando dados para a função que chama a rota POST da API
       let enderecoAdicionado = await addEndereco(endereco)
-
-      let senha = await bcrypt.hash(empresa.senha, 10)
-
-      const novaEmpresa = {
-        ...empresa,
-        tipo: parseInt(empresa.tipo),
-        categoria: parseInt(empresa.categoria),
-        status: "1",
-        senha: senha,
-        confirmacaoDeSenha: senha,
-        enderecoId: enderecoAdicionado.id
+      if(enderecoAdicionado) {
+        const novaEmpresa = {
+          ...empresa,
+          tipo: parseInt(empresa.tipo),
+          categoria: parseInt(empresa.categoria),
+          status: 1,
+          enderecoId: enderecoAdicionado.id
+        }
+        
+        let empresaAdicionada = await addEmpresa(novaEmpresa)
+        if(empresaAdicionada) {
+          navigate("/login")
+        }
       }
-
-      await addEmpresa(novaEmpresa)
-      navigate("/login")
     }
-  }
-
-  // Função para preencher campos do endereço automaticamente
-  async function preencherEndereco(cep) {
-    // API (também retorna latitude e longitude para usar em mapas depois): https://github.com/raniellyferreira/awesomeapi-cep
-    let result = await fetch(`https://cep.awesomeapi.com.br/json/${cep.target.value}`, {
-      method: "GET"
-    }
-    )
-    let endereco = await result.json()
-    // O número e o complemento são adicionados pelos próprios inputs
-    setEndereco({
-      cep: cep.target.value,
-      logradouro: endereco.address,
-      bairro: endereco.district,
-      cidade: endereco.city,
-      estado: endereco.state,
-      pais: "Brasil",
-    })
   }
 
   const [pagina, setPagina] = useState(1)
 
   function avançarPagina(dados) {
-    console.log(dados)
+    console.log(endereco)
     if (validarDados(dados)) {
       setPagina(pagina + 1)
     }
   }
 
   return (
-    <>
-      <div className="container p-5">
-        <h1>Cadastre sua empresa</h1>
+    <div className="mx-64 my-4">
+      <h1 className="text-4xl m-4">Cadastre sua empresa</h1>
 
-        <div className="mt-5 mb-5 text-center">
-          <div className="mb-2">
-            <img className={pagina !== 1 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/490660/company.svg" alt="Ícone de empresa" width={pagina !== 1 ? 35 : 60} />
-            <img className={pagina !== 2 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/383565/location-pin.svg" alt="Ícone de ponto no mapa" width={pagina !== 2 ? 35 : 60} />
-            <img className={pagina !== 3 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/416019/account-user-avatar.svg" alt="Ícone de acesso de usuário" width={pagina !== 3 ? 35 : 60} />
-          </div>
-
+      <div className="flex flex-col items-center gap-4">
+        <div className="mb-2 flex flex-row">
+          <img className={pagina !== 1 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/490660/company.svg" alt="Ícone de empresa" width={pagina !== 1 ? 35 : 60} />
+          <img className={pagina !== 2 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/383565/location-pin.svg" alt="Ícone de ponto no mapa" width={pagina !== 2 ? 35 : 60} />
+          <img className={pagina !== 3 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/416019/account-user-avatar.svg" alt="Ícone de acesso de usuário" width={pagina !== 3 ? 35 : 60} />
+        </div>
+        <div className="flex flex-row">
           <button className="btn btn-info text-white mt-2 mr-2" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}>{"Voltar"}</button>
           <button className="btn btn-info text-white mt-2" onClick={() => avançarPagina({ ...empresa, ...endereco })} disabled={pagina >= 3}>{"Avançar"}</button>
         </div>
-
-        <form>
-          {
-            pagina === 1 ? <DadosBasicos mensagens={mensagens} setMensagens={setMensagens} setPagina={setPagina} empresa={empresa} setEmpresa={setEmpresa} />
-              : pagina === 2 ? <Endereco mensagens={mensagens} setMensagens={setMensagens} setPagina={setPagina} endereco={endereco} setEndereco={setEndereco} preencherEndereco={preencherEndereco} />
-                : <DadosLogin mensagens={mensagens} setMensagens={setMensagens} setPagina={setPagina} empresa={empresa} setEmpresa={setEmpresa} cadastrarEmpresa={cadastrarEmpresa} />
-          }
-        </form>
       </div>
-    </>
+
+      <form>
+        {
+          pagina === 1 ? <DadosBasicos mensagens={mensagens} empresa={empresa} setEmpresa={setEmpresa} />
+            : pagina === 2 ? <Endereco mensagens={mensagens} endereco={endereco} setEndereco={setEndereco} />
+              : <DadosLogin mensagens={mensagens} empresa={empresa} setEmpresa={setEmpresa} cadastrarEmpresa={cadastrarEmpresa} />
+        }
+      </form>
+    </div>
   );
 }
