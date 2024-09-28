@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { DadosBasicos } from "./components/DadosBasicos";
 import { Endereco } from "./components/Endereco";
 import { DadosLogin } from "./components/DadosLogin";
+import icone_empresa from "./../../assets/icone_empresa.svg"
+import icone_ponto_map from "./../../assets/icone_ponto_mapa.svg"
+import icone_usuario from "./../../assets/icone_usuario.svg"
+import { ListaDoacao } from "../../components/listaDoacoes/ListaDoacoes";
 
 export default function CadDoadores() {
 
@@ -61,11 +65,11 @@ export default function CadDoadores() {
         confirmacaoDeSenha = "Confirme sua senha corretamente"
         r = false
       }
-      if(dados.senha.length < 8) {
+      if(!dados.senha || dados.senha.length < 8) {
         senha = "A senha deve ter pelo menos 8 dígitos"
         r = false
       }
-      if(dados.confirmacaoDeSenha.length < 8) {
+      if(!dados.confirmacaoDeSenha || dados.confirmacaoDeSenha.length < 8) {
         confirmacaoDeSenha = "A senha deve ter pelo menos 8 dígitos"
         r = false
       }
@@ -106,28 +110,31 @@ export default function CadDoadores() {
   }
 
   return (
-    <div className="mx-64 my-4">
-      <h1 className="text-4xl m-4">Cadastre sua empresa</h1>
+    <div className="">
+      <ListaDoacao />
+      <div className="mx-16 lg:mx-80 my-4">
+        <h1 className="text-4xl m-4">Cadastre sua empresa</h1>
 
-      <div className="flex flex-col items-center gap-4">
-        <div className="mb-2 flex flex-row">
-          <img className={pagina !== 1 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/490660/company.svg" alt="Ícone de empresa" width={pagina !== 1 ? 35 : 60} />
-          <img className={pagina !== 2 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/383565/location-pin.svg" alt="Ícone de ponto no mapa" width={pagina !== 2 ? 35 : 60} />
-          <img className={pagina !== 3 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/416019/account-user-avatar.svg" alt="Ícone de acesso de usuário" width={pagina !== 3 ? 35 : 60} />
+        <div className="flex flex-col items-center gap-4 my-4">
+          <div className="mb-2 flex flex-row">
+            <img className={pagina !== 1 ? "opacity-25" : ""} src={icone_empresa} alt="Ícone de empresa" width={pagina !== 1 ? 35 : 60} />
+            <img className={pagina !== 2 ? "opacity-25" : ""} src={icone_ponto_map} alt="Ícone de ponto no mapa" width={pagina !== 2 ? 35 : 60} />
+            <img className={pagina !== 3 ? "opacity-25" : ""} src={icone_usuario} alt="Ícone de acesso de usuário" width={pagina !== 3 ? 35 : 60} />
+          </div>
+          <div className="flex flex-row">
+            <button className="text-white mt-2 mr-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}>{"Voltar"}</button>
+            <button className="text-white mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80" onClick={() => avançarPagina({ ...empresa, ...endereco })} disabled={pagina >= 3}>{"Avançar"}</button>
+          </div>
         </div>
-        <div className="flex flex-row">
-          <button className="btn btn-info text-white mt-2 mr-2" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}>{"Voltar"}</button>
-          <button className="btn btn-info text-white mt-2" onClick={() => avançarPagina({ ...empresa, ...endereco })} disabled={pagina >= 3}>{"Avançar"}</button>
-        </div>
+
+        <form>
+          {
+            pagina === 1 ? <DadosBasicos mensagens={mensagens} empresa={empresa} setEmpresa={setEmpresa} />
+              : pagina === 2 ? <Endereco mensagens={mensagens} endereco={endereco} setEndereco={setEndereco} />
+                : <DadosLogin mensagens={mensagens} empresa={empresa} setEmpresa={setEmpresa} cadastrarEmpresa={cadastrarEmpresa} />
+          }
+        </form>
       </div>
-
-      <form>
-        {
-          pagina === 1 ? <DadosBasicos mensagens={mensagens} empresa={empresa} setEmpresa={setEmpresa} />
-            : pagina === 2 ? <Endereco mensagens={mensagens} endereco={endereco} setEndereco={setEndereco} />
-              : <DadosLogin mensagens={mensagens} empresa={empresa} setEmpresa={setEmpresa} cadastrarEmpresa={cadastrarEmpresa} />
-        }
-      </form>
     </div>
   );
 }

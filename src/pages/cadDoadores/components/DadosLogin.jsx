@@ -50,7 +50,7 @@ export function DadosLogin(props) {
         </small>
       </div>
 
-      <button className="btn btn-info text-white pushable rounded mt-2" type="button" onClick={() => cadastrarEmpresa()}>
+      <button className="text-white pushable mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80" type="button" onClick={() => cadastrarEmpresa()}>
         <span className="edge"></span>
         <span className="front">Enviar</span>
       </button>
