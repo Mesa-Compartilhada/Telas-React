@@ -111,7 +111,6 @@ export default function CadDoadores() {
 
   return (
     <div className="">
-      <ListaDoacao />
       <div className="mx-16 lg:mx-80 my-4">
         <h1 className="text-4xl m-4">Cadastre sua empresa</h1>
 
