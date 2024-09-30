@@ -1,8 +1,12 @@
+import InputField from "../../../components/inputs/InputField"
+import SelectField from "../../../components/inputs/SelectField"
+
 export function DadosBasicos(props) {
   const { mensagens, empresa, setEmpresa } = props
 
   // Categorias de empresa para preencher os dropdown
   const categoriaDoadora = {
+    0: "Selecione uma categoria",
     1: "Restaurante", 
     2: "Hortifrutti", 
     3: "Mercado", 
@@ -11,6 +15,7 @@ export function DadosBasicos(props) {
     6: "Outro"
   }
   const categoriaRecebedora = {
+    0: "Selecione uma categoria",
     1: "Organização não governamental", 
     2: "Organização Religiosa", 
     3: "Unidade básica de saúde",
@@ -18,72 +23,20 @@ export function DadosBasicos(props) {
   }
 
   return(
-    <>
-      <h4>Dados básicos:</h4>
-      <div className="form-group">
-        <label htmlFor="nome">Nome fantasia de sua empresa:</label>
-        <input
-          type="text"
-          id="nome"
-          className="form-control"
-          placeholder="Nome fantasia"
-          defaultValue={empresa.nome}
-          onChange={(e) => setEmpresa({...empresa, nome: e.target.value})}
-        />
-        <small className="form-text text-muted">
-          {mensagens.nome ?? ""}
-        </small>
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="cnpj"> CNPJ: </label>
-        <input
-          type="text"
-          id="cnpj"
-          className="form-control"
-          placeholder="00.000.000/0000-00"
-          defaultValue={empresa.cnpj}
-          onChange={(e) => setEmpresa({...empresa, cnpj: e.target.value})}
-        />
-        <small className="form-text text-muted">
-          Nunca vamos compartilhar seu CNPJ com ninguém.
-        </small>
-        <small className="form-text text-muted">
-          {mensagens.cnpj ?? ""}
-        </small>
-      </div>
+    <div className="flex flex-col gap-5">
+      <h4 className="text-2xl mb-2">Dados básicos:</h4>
       
-      <div className="form-group">
-        <label htmlFor="tipo">Tipo da empresa:</label>
-        <select name="tipo" id="tipo" className="form-control" onChange={(e) => setEmpresa({...empresa, tipo: e.target.value})} defaultValue={empresa.tipo}>
-          <option value={0}>Selecione um tipo</option>
-          <option value={1}>Doadora</option>
-          <option value={2}>Recebedora</option>
-        </select>
-        <small className="form-text text-muted">
-          {mensagens.tipo ?? ""}
-        </small>
-      </div>
+      <InputField type={"text"} label={"Nome fantasia"} name={"nome"} id={"nome"} defaultValue={empresa.nome} msg={mensagens.nome} change={(e) => setEmpresa({...empresa, nome: e.target.value})}/>
+      
+      <InputField type={"text"} label={"CNPJ"} name={"cnpj"} id={"cnpj"} defaultValue={empresa.cnpj} msg={mensagens.cnpj} hint={"Nunca vamos compartilhar seu CNPJ com ninguém."} change={(e) => setEmpresa({...empresa, cnpj: e.target.value})} />
 
-      <div className="form-group">
-        <label htmlFor="categoria">
-          { empresa.categoria === "1" 
-            ? "Categoria de estabelecimento:" 
-            : "Categoria de instituição:"
-          }
-        </label>
-        <select className="form-control" id="categoria" disabled={ !empresa.tipo || empresa.tipo.length <= 0 } onChange={(e) => setEmpresa({ ...empresa, categoria: e.target.value })} defaultValue={empresa.categoria}>
-          <option value="">Selecione uma categoria</option>
-          {
-            empresa.tipo === "1" 
-            ? Object.keys(categoriaDoadora).map(key => <option key={key} value={key}>{categoriaDoadora[key]}</option>)
-            : Object.keys(categoriaRecebedora).map(key => <option key={key} value={key}>{categoriaRecebedora[key]}</option>)
-          }
-        </select>
-        <small className="form-text text-muted">
-          {mensagens.categoria ?? ""}
-        </small>
-      </div>
-    </>
+      <SelectField name={"tipo"} label={"Tipo empresa:"} id={"tipo"} options={{0: "Selecione um tipo", 1: "Doadora", 2: "Recebedora"}} msg={mensagens.tipo} defaultValue={empresa.tipo} change={(e) => setEmpresa({...empresa, tipo: e.target.value})} />
+      
+      {
+        empresa.tipo === "1"
+        ? <SelectField name={"categoria"} label={"Categoria de estabelecimento:"} id={"categoria"} options={categoriaDoadora} msg={mensagens.categoria} disabled={!empresa.tipo || empresa.tipo === "0"} change={(e) => setEmpresa({...empresa, categoria: e.target.value})} />
+        : <SelectField name={"categoria"} label={"Categoria de instituição:"} id={"categoria"} options={categoriaRecebedora} msg={mensagens.categoria} disabled={!empresa.tipo || empresa.tipo === "0"} change={(e) => setEmpresa({...empresa, categoria: e.target.value})} />
+      }
+    </div>
   )
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { login } from "../../lib/api/empresa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import InputField from "../../components/inputs/InputField";
 
 export default function Login() {
 
@@ -49,47 +50,23 @@ export default function Login() {
     <>
       <div className="centraliza">
         <div className="" style={{ width: "44rem" }}>
-          <div className="card-body">
+          <div className="flex flex-col">
             <h5 className="text-2xl">Login</h5>
-            <small>{mensagem || <>&nbsp;</>}</small>
-            <form className="mt-3">
-              <div className="form-group">
-                <label htmlFor="email">Digite seu email:</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  aria-describedby="emailHelp"
-                  placeholder="contato@empresa.com.br"
-                  required="required"
-                  onChange={(e) => setDadosLogin({ ...dadosLogin, email: e.target.value })}
-                />
-                <small>{mensagens.email || ""}</small>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="senha">Senha:</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="senha"
-                  placeholder="Senha"
-                  onChange={(e) => setDadosLogin({ ...dadosLogin, senha: e.target.value })}
-                />
-                <small>{mensagens.senha}</small>
-              </div>
+            <small className="text-xs ml-2 opacity-80 my-2">{mensagem || <>&nbsp;</>}</small>
+            <form className="mt-3 flex flex-col gap-2">
+              <InputField type={"email"} label={"Email"} name={"email"} id={"email"} msg={mensagens.email} change={(e) => setDadosLogin({...dadosLogin, email: e.target.value})} />
+              
+              <InputField type={"password"} label={"Senha"} name={"senha"} id={"senha"} msg={mensagens.senha} change={(e) => setDadosLogin({...dadosLogin, senha: e.target.value})} />
 
               <button
-                className="pushable btn btn-info"
+                className="btn-primary"
                 type="button"
                 onClick={() => fazerLogin()}
               >
                 <span className="edge"></span>
                 <span className="front">Enviar</span>
               </button>
-              <a className="btn btn-outline-link" href="/cadastro">
-                Não possui cadastro?
-              </a>
+              <Link className="text-xs" to={"/cadastro"}>Não possui cadastro?</Link>
             </form>
           </div>
         </div>

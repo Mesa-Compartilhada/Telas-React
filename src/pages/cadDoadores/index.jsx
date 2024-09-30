@@ -103,6 +103,7 @@ export default function CadDoadores() {
   const [pagina, setPagina] = useState(1)
 
   function avançarPagina(dados) {
+    console.log(empresa)
     console.log(endereco)
     if (validarDados(dados)) {
       setPagina(pagina + 1)
