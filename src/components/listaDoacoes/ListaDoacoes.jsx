@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { getDoacoes } from "../../lib/api/doacao"
 import { CardDoacao } from "./components/CardDoacao"
 
-export function ListaDoacao() {
+export function ListaDoacoes() {
   const [doacoes, setDoacoes] = useState([])
 
   useEffect(() => {

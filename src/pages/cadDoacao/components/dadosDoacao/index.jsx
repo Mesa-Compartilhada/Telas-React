@@ -3,19 +3,17 @@ export default function DadosDoacao(props) {
 
     // Categorias de doacao para preencher os dropdown
     const categoriaDoacao = {
-        1: "Doce",
-        2: "Salgado",
+        1:"Caseira",
+        2:"Industrializado",
         3: "Perecível",
         4: "Não Perecível",
         5: "In Natura",
-        6: "Outro"
     }
     const formaConservacao = {
-        1: "Armazenameno em local seco",
-        2: "Refrigeração",
-        3: "Congelamento",
-        4: "Pronto para consumo",
-        5: "Outro"
+        1: "Armazenamento em local seco",
+        2: "Pronto para consumo",
+        3: "Refrigeração",
+        4: "Congelamento",
     }
 
     return (
