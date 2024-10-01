@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
-import { getDoacoes } from "../../lib/api/doacao"
 import { CardDoacao } from "./components/CardDoacao"
 
-export function ListaDoacoes() {
+export function ListaDoacoes({ getDoacoes, params = null }) {
+
   const [doacoes, setDoacoes] = useState([])
 
   useEffect(() => {
     const getListaDeDoacoes = async () => {
-      let result = await getDoacoes()
+      let result = !params ? await getDoacoes() : await getDoacoes(params)
       setDoacoes(result)
     }
     getListaDeDoacoes()
