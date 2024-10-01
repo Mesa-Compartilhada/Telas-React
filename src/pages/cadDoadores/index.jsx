@@ -134,6 +134,16 @@ export default function CadDoadores() {
                 : <DadosLogin mensagens={mensagens} empresa={empresa} setEmpresa={setEmpresa} cadastrarEmpresa={cadastrarEmpresa} />
           }
         </form>
+
+        {
+          pagina === 3
+          &&
+          
+          <button className="text-white pushable mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80" type="button" onClick={() => cadastrarEmpresa()}>
+            <span className="edge"></span>
+            <span className="front">Enviar</span>
+          </button>
+        }
       </div>
     </div>
   );

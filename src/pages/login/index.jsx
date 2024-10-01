@@ -34,11 +34,11 @@ export default function Login() {
     if(dadosLogin.email && dadosLogin.senha) {
       const result = await login(dadosLogin.email, dadosLogin.senha);
       if(result) {
-          const { id, cnpj, tipo, categoria, nome, email, status, endereco, doacoes } = result
-          const usuario = { id, cnpj, tipo, categoria, nome, email, status, endereco, doacoes }
-          localStorage.setItem("user", JSON.stringify(usuario))
+          const { id, tipo } = result
+          const usuario = { id, tipo }
+          localStorage.setItem("user-mesa-compartilhada", JSON.stringify(usuario))
           setMensagens({})
-          navigate("/")
+          navigate("/dashboard")
       }
       else {
         setMensagem("Dados incorretos")

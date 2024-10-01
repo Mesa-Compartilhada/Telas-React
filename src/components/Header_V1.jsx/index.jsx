@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logo from "../../assets/MC_Logo.svg";
 import user from "../../assets/user.svg";
 
@@ -16,12 +17,12 @@ export default function Header() {
             </div>
 
             <div class="flex items-center gap-4">
+            <Link to={"/cadastro"}> 
               <button
                 class="inline-flex items-center justify-center gap-1.5 rounded border border-gray-200 bg-white px-5 py-3 text-gray-900 transition focus:outline-none focus:ring focus:ring-branco "
                 type="button"
               >
-                <span class="text-sm font-medium"> Cadastro </span>
-
+                <span class="text-sm font-medium">Cadastro</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="size-4"
@@ -37,15 +38,18 @@ export default function Header() {
                   />
                 </svg>
               </button>
+              </Link>
 
-              <button
-                class="inline-flex items-center justify-center gap-1.5 rounded bg-l-Abobora px-5 py-3 text-sm font-medium text-white transition hover:bg-opacity-35 focus:outline-none focus:ring focus:ring-branco"
-                type="button"
-              >
-                <span class="text-sm font-medium"> Login </span>
+              <Link to={"/login"} class="text-sm font-medium"> 
+                <button
+                  class="inline-flex items-center justify-center gap-1.5 rounded bg-l-Abobora px-5 py-3 text-sm font-medium text-white transition hover:bg-opacity-35 focus:outline-none focus:ring focus:ring-branco"
+                  type="button"
+                >
+                  <span class="text-sm font-medium">Login</span>
 
-                <img src={user} className="size-4" alt="" />
-              </button>
+                  <img src={user} className="size-4" alt="" />
+                </button>
+              </Link>
             </div>
           </div>
         </div>

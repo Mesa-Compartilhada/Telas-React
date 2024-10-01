@@ -19,7 +19,7 @@ export function ListaDoacoes({ getDoacoes, params = null }) {
         doacoes.length > 0
         ? <div className="flex gap-2">
          { doacoes.map((doacao) => 
-            <CardDoacao doacao={ doacao } />
+            <CardDoacao key={doacao.id} doacao={ doacao } />
           ) } 
         </div>
          

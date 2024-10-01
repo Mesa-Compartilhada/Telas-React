@@ -12,9 +12,9 @@ export default function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/cadastro" element={<CadDoadores />} />
           <Route path="/CadRecebedores" element={<CadRecebedores />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/Dashboard" element={<Dashboard />}/>
-          <Route path="/CadDoacao" element={<CadDoacao />}/>
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />}/>
+          <Route path="/cadastrar-doacao" element={<CadDoacao />}/>
         </Routes>
       </BrowserRouter>
     );
