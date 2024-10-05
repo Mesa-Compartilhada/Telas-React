@@ -27,7 +27,7 @@ export default function Dashboard() {
     return (
         <>
           <Header/>
-            <div className="flex justify-center items-center h-screen">
+            <div className="flex justify-center items-center pb-10">
                 <div ref={mapElement} className="w-[1000px] h-[480px]"></div>
             </div>
 
