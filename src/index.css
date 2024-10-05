@@ -49,17 +49,14 @@ a:hover{
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url(./assets/fundo_login.svg);
+  background-image: url(./assets/fundo_bolas.svg);
   background-size: cover;
 }
-.vidro {
-  /* From https://css.glass */
-  background: rgba(147, 188, 193, 0.4392156862745098);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(147, 188, 193, 0.76);
+.gradiente {
+/* From https://css.glass */
+    background: rgb(237, 237, 237);
+      background: linear-gradient(4deg, rgba(237, 237, 237, 1) 0%, rgba(255, 255, 255, 1) 70%);
+    border: #f4f4f4 solid 2px
 }
 @media (max-width: 768px) {
   .banner {

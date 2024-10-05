@@ -60,7 +60,7 @@ export default function FAQ() {
                   <p className="font-inter mt-4 text-base font-light text-gray-500">
                     <ul>
                       {faq.answer.map((item) => {
-                        return <li className=" list-disc ">{item}</li>;
+                        return <li className="text-black list-disc ">{item}</li>;
                       })}
                     </ul>
                   </p>

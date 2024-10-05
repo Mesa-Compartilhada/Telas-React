@@ -3,6 +3,9 @@ import { login } from "../../lib/api/empresa";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../../components/inputs/InputField";
 
+import logo from "../../assets/MC_Logo.svg"
+
+
 export default function Login() {
 
   const navigate = useNavigate()
@@ -49,9 +52,10 @@ export default function Login() {
   return (
     <>
       <div className="centraliza">
-        <div className="" style={{ width: "44rem" }}>
+        <div className="shadow-xl rounded-2xl p-7 gradiente" style={{ width: "44rem" }}>
           <div className="flex flex-col">
-            <h5 className="text-2xl">Login</h5>
+            <img src={logo} className="md:w-64 w-40 pt-2 md:p-3 self-center" alt="" />
+            <h5 className="text-xl">Login</h5>
             <small className="text-xs ml-2 opacity-80 my-2">{mensagem || <>&nbsp;</>}</small>
             <form className="mt-3 flex flex-col gap-2">
               <InputField type={"email"} label={"Email"} name={"email"} id={"email"} msg={mensagens.email} change={(e) => setDadosLogin({...dadosLogin, email: e.target.value})} />
