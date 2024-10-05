@@ -1,8 +1,14 @@
 import logo from "../../assets/MC_Logo.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthData } from "../../auth/AuthWrapper";
 
 export default function Header() {
   const navigator = useNavigate()
+  const { user, logoutUser } = AuthData()
+
+  const logout = () => {
+    logoutUser()
+  }
 
   return (
     <>
@@ -29,13 +35,13 @@ export default function Header() {
             <div className="flex items-center gap-4">
               {/* Botão Criar Doação */}
               {
-                localStorage.getItem("user-mesa-compartilhada") !== null
-                && JSON.parse(localStorage.getItem("user-mesa-compartilhada")).tipo === 1
+                user !== null
+                && user.tipo === 1
                 ?
                 <button
                   className="inline-flex items-center justify-center gap-1.5 rounded border bg-azul px-5 py-3 text-white transition focus:outline-none focus:ring focus:ring-branco"
                   type="button">
-                  <Link className="text-sm font-medium" to={"/cadastrar-doacao"}> Criar Doação </Link>
+                  <Link className="text-sm font-medium" to={"/cadastro-doacao"}> Criar Doação </Link>
                 </button>
                 :
                 ""
@@ -46,7 +52,7 @@ export default function Header() {
               <button
                 className="inline-flex items-center justify-center gap-1.5 rounded bg-l-Abobora px-5 py-3 text-sm font-medium text-white transition hover:bg-opacity-35 focus:outline-none focus:ring focus:ring-branco"
                 type="button"
-                onClick={() => [localStorage.removeItem("user-mesa-compartilhada"), navigator("/")]}>
+                onClick={() => logout()}>
                 <span className="text-sm font-medium"> Sair </span>
 
               </button>

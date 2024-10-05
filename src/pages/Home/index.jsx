@@ -12,8 +12,11 @@ import ODS10 from "../../assets/SDG-10.svg";
 import ODS12 from "../../assets/SDG-12.svg";
 import ODS17 from "../../assets/SDG-17.svg";
 import ODS2 from "../../assets/SDG-2.svg";
+import { AuthData } from "../../auth/AuthWrapper.js";
 
 export default function Home() {
+  const { user } = AuthData()
+
   return (
     <>
       <div className="bg-white h-full">
@@ -22,14 +25,14 @@ export default function Home() {
         <div className=" pt-5 lg:p-0">
           <div className="container text-l-Abobora flex flex-col lg:flex-row justify-center lg:gap-10 pb-10">
             <div className="self-center lg:max-w-lg">
-              <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl drop-shadow-lg shadow-azul-escuro">
+              <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl drop-shadow-lg shadow-azul-escuro">
                 Reduzir o desperdício e{" "}
-                <span class="underline underline-offset-3 decoration-8 decoration-azul">
+                <span className="underline underline-offset-3 decoration-8 decoration-azul">
                   compartilhar
                 </span>{" "}
                 com quem mais precisa
               </h1>
-              <p class="text-lg font-normal text-azul-escuro lg:text-xl ">
+              <p className="text-lg font-normal text-azul-escuro lg:text-xl ">
                 O Mesa Compartilhada nasceu com o objetivo de combater a fome e
                 promover a solidariedade em nossa comunidade. Além da doação de
                 alimentos, buscamos conscientizar a população sobre a
@@ -61,13 +64,13 @@ export default function Home() {
           <h1 className="text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-center pt-6 text-l-Abobora">
             Quem somos
           </h1>
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 p-10 md:p-20">
-            <div class="rounded-xl bg-white p-6 text-center shadow-xl">
-              <div class="mx-auto flex h-16 w-16 -translate-y-12 transform items-center justify-center rounded-full bg-azul shadow-lg shadow-azul-escuro">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 p-10 md:p-20">
+            <div className="rounded-xl bg-white p-6 text-center shadow-xl">
+              <div className="mx-auto flex h-16 w-16 -translate-y-12 transform items-center justify-center rounded-full bg-azul shadow-lg shadow-azul-escuro">
                 <img src={alvo} className="size-6" alt="" />
               </div>
-              <h1 class="font-extrabold mb-3 text-xl lg:px-14">Objetivos</h1>
-              <p class="px-4 text-azul-escuro text-justify">
+              <h1 className="font-extrabold mb-3 text-xl lg:px-14">Objetivos</h1>
+              <p className="px-4 text-azul-escuro text-justify">
                 Somos um projeto que tem como objetivo conectar empresas
                 fornecedoras de alimentos que fazem descarte de refeições,
                 produtos in natura e não perecíveis perto do vencimento e que
@@ -78,13 +81,13 @@ export default function Home() {
             </div>
             <div
               data-aos-delay="150"
-              class="rounded-xl bg-white p-6 text-center shadow-xl"
+              className="rounded-xl bg-white p-6 text-center shadow-xl"
             >
-              <div class="mx-auto flex h-16 w-16 -translate-y-12 transform items-center justify-center rounded-full shadow-lg bg-azul shadow-azul-escuro">
+              <div className="mx-auto flex h-16 w-16 -translate-y-12 transform items-center justify-center rounded-full shadow-lg bg-azul shadow-azul-escuro">
                 <img src={check} className="size-6" alt="" />
               </div>
-              <h1 class="font-extrabold mb-3 text-xl lg:px-14 ">Impacto</h1>
-              <p class="px-4 text-azul-escuro text-justify">
+              <h1 className="font-extrabold mb-3 text-xl lg:px-14 ">Impacto</h1>
+              <p className="px-4 text-azul-escuro text-justify">
                 Assim contribuimos para a diminuição do desperdicio de alimentos
                 e auxiliamos no acesso a alimentação de pessoas em situação de
                 vulnerabilidade social construido uma sociedade mais solidária e

@@ -1,6 +1,11 @@
-import AppRoutes from "./routes/routes";
+import { BrowserRouter } from "react-router-dom";
+import { AuthWrapper } from "./auth/AuthWrapper";
 
 function App() {
-  return <AppRoutes />;
+  return (
+    <BrowserRouter>
+      <AuthWrapper />
+    </BrowserRouter>
+  );
 }
 export default App;

@@ -1,21 +1,22 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import CadDoadores from "../pages/cadDoadores";
-import CadRecebedores from "../pages/cadRecebedores";
 import Home from "../pages/Home";
 import Login from "../pages/login";
 import Dashboard from "../pages/Dashboard";
 import CadDoacao from "../pages/cadDoacao";
+import { AuthData } from "../auth/AuthWrapper";
+
 export default function AppRoutes() {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cadastro" element={<CadDoadores />} />
-          <Route path="/CadRecebedores" element={<CadRecebedores />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />}/>
-          <Route path="/cadastrar-doacao" element={<CadDoacao />}/>
-        </Routes>
-      </BrowserRouter>
-    );
+    
+  const { user } = AuthData()
+  
+  return (
+    <Routes>
+      { <Route path="/" element={<Home />} /> }
+      { <Route path="/cadastro" element={!user ? <CadDoadores /> : <Home />} /> }
+      { <Route path="/login" element={!user ? <Login /> : <Home />} /> }
+      { <Route path="/dashboard" element={ user ? <Dashboard /> : <Home /> }/> }
+      { <Route path="/cadastro-doacao" element={ user && user.tipo === 1 ? <CadDoacao /> : <Home /> }/> }
+    </Routes>
+  );
 }

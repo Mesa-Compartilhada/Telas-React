@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { login } from "../../lib/api/empresa";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../../components/inputs/InputField";
 import seta from "../../assets/seta_voltar.svg";
 import logo from "../../assets/MC_Logo.svg"
+import { AuthData } from "../../auth/AuthWrapper";
 
 
 export default function Login() {
 
   const navigate = useNavigate()
+  const { loginUser } = AuthData()
   const [dadosLogin, setDadosLogin] = useState({})
   const [mensagem, setMensagem] = useState()
   const [mensagens, setMensagens] = useState({
@@ -27,7 +28,6 @@ export default function Login() {
       senha = "A senha deve ter no mínimo 8 caracteres"
       r = false
     }
-    console.log(mensagens)
     setMensagens({email, senha})
     return r
   }
@@ -35,13 +35,10 @@ export default function Login() {
   async function fazerLogin() {
     validarDados()
     if(dadosLogin.email && dadosLogin.senha) {
-      const result = await login(dadosLogin.email, dadosLogin.senha);
+      const result = await loginUser(dadosLogin.email, dadosLogin.senha);
       if(result) {
-          const { id, tipo } = result
-          const usuario = { id, tipo }
-          localStorage.setItem("user-mesa-compartilhada", JSON.stringify(usuario))
-          setMensagens({})
-          navigate("/dashboard")
+        navigate("/dashboard")
+
       }
       else {
         setMensagem("Dados incorretos")
