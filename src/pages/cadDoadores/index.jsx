@@ -9,6 +9,8 @@ import icone_empresa from "./../../assets/icone_empresa.svg"
 import icone_ponto_map from "./../../assets/icone_ponto_mapa.svg"
 import icone_usuario from "./../../assets/icone_usuario.svg"
 import { ListaDoacao } from "../../components/listaDoacoes/ListaDoacoes";
+import { Link } from "react-router-dom";
+import seta from "../../assets/seta_voltar.svg"
 
 export default function CadDoadores() {
 
@@ -111,39 +113,89 @@ export default function CadDoadores() {
   }
 
   return (
-    <div className="">
-      <div className="mx-16 lg:mx-80 my-4">
+    <div className="centraliza">
+      <div className="mx-10 lg:mx-20 my-4 border-4 md:w-3/5 p-10 shadow-xl rounded-2xl gradiente">
+        <Link className="text-xs ml-3 flex gap-1 flex-row-reverse" to={"/"}>
+          <img src={seta} className="w-4" alt="" />
+          voltar ao inicio
+        </Link>
         <h1 className="text-4xl m-4">Cadastre sua empresa</h1>
 
         <div className="flex flex-col items-center gap-4 my-4">
           <div className="mb-2 flex flex-row">
-            <img className={pagina !== 1 ? "opacity-25" : ""} src={icone_empresa} alt="Ícone de empresa" width={pagina !== 1 ? 35 : 60} />
-            <img className={pagina !== 2 ? "opacity-25" : ""} src={icone_ponto_map} alt="Ícone de ponto no mapa" width={pagina !== 2 ? 35 : 60} />
-            <img className={pagina !== 3 ? "opacity-25" : ""} src={icone_usuario} alt="Ícone de acesso de usuário" width={pagina !== 3 ? 35 : 60} />
+            <img
+              className={pagina !== 1 ? "opacity-25" : ""}
+              src={icone_empresa}
+              alt="Ícone de empresa"
+              width={pagina !== 1 ? 35 : 60}
+            />
+            <img
+              className={pagina !== 2 ? "opacity-25" : ""}
+              src={icone_ponto_map}
+              alt="Ícone de ponto no mapa"
+              width={pagina !== 2 ? 35 : 60}
+            />
+            <img
+              className={pagina !== 3 ? "opacity-25" : ""}
+              src={icone_usuario}
+              alt="Ícone de acesso de usuário"
+              width={pagina !== 3 ? 35 : 60}
+            />
           </div>
           <div className="flex flex-row">
-            <button className="text-white mt-2 mr-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}>{"Voltar"}</button>
-            <button className="text-white mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80" onClick={() => avançarPagina({ ...empresa, ...endereco })} disabled={pagina >= 3}>{"Avançar"}</button>
+            <button
+              className="text-white mt-2 mr-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80"
+              onClick={() => setPagina(pagina - 1)}
+              disabled={pagina <= 1}
+            >
+              {"Voltar"}
+            </button>
+            <button
+              className="text-white mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80"
+              onClick={() => avançarPagina({ ...empresa, ...endereco })}
+              disabled={pagina >= 3}
+            >
+              {"Avançar"}
+            </button>
           </div>
         </div>
 
         <form>
-          {
-            pagina === 1 ? <DadosBasicos mensagens={mensagens} empresa={empresa} setEmpresa={setEmpresa} />
-              : pagina === 2 ? <Endereco mensagens={mensagens} endereco={endereco} setEndereco={setEndereco} />
-                : <DadosLogin mensagens={mensagens} empresa={empresa} setEmpresa={setEmpresa} cadastrarEmpresa={cadastrarEmpresa} />
-          }
+          {pagina === 1 ? (
+            <DadosBasicos
+              mensagens={mensagens}
+              empresa={empresa}
+              setEmpresa={setEmpresa}
+            />
+          ) : pagina === 2 ? (
+            <Endereco
+              mensagens={mensagens}
+              endereco={endereco}
+              setEndereco={setEndereco}
+            />
+          ) : (
+            <DadosLogin
+              mensagens={mensagens}
+              empresa={empresa}
+              setEmpresa={setEmpresa}
+              cadastrarEmpresa={cadastrarEmpresa}
+            />
+          )}
         </form>
 
-        {
-          pagina === 3
-          &&
-          
-          <button className="text-white pushable mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80" type="button" onClick={() => cadastrarEmpresa()}>
+        {pagina === 3 && (
+          <button
+            className="text-white pushable mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80"
+            type="button"
+            onClick={() => cadastrarEmpresa()}
+          >
             <span className="edge"></span>
             <span className="front">Enviar</span>
           </button>
-        }
+        )}
+        <Link className="text-xs ml-3" to={"/Login"}>
+          Já possui cadastro?
+        </Link>
       </div>
     </div>
   );
