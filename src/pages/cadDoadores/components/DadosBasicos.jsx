@@ -28,7 +28,7 @@ export function DadosBasicos(props) {
       
       <InputField type={"text"} label={"Nome fantasia"} name={"nome"} id={"nome"} defaultValue={empresa.nome} msg={mensagens.nome} change={(e) => setEmpresa({...empresa, nome: e.target.value})}/>
       
-      <InputField type={"text"} label={"CNPJ"} name={"cnpj"} id={"cnpj"} defaultValue={empresa.cnpj} msg={mensagens.cnpj} hint={"Nunca vamos compartilhar seu CNPJ com ninguém."} change={(e) => setEmpresa({...empresa, cnpj: e.target.value})} />
+      <InputField type={"text"} label={"CNPJ"} name={"cnpj"} id={"cnpj"} defaultValue={empresa.cnpj} msg={mensagens.cnpj} change={(e) => setEmpresa({...empresa, cnpj: e.target.value})} />
 
       <SelectField name={"tipo"} label={"Tipo empresa:"} id={"tipo"} options={{0: "Selecione um tipo", 1: "Doadora", 2: "Recebedora"}} msg={mensagens.tipo} defaultValue={empresa.tipo} change={(e) => setEmpresa({...empresa, tipo: e.target.value})} />
       
