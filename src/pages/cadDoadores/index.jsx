@@ -8,7 +8,6 @@ import { DadosLogin } from "./components/DadosLogin";
 import icone_empresa from "./../../assets/icone_empresa.svg"
 import icone_ponto_map from "./../../assets/icone_ponto_mapa.svg"
 import icone_usuario from "./../../assets/icone_usuario.svg"
-import { ListaDoacao } from "../../components/listaDoacoes/ListaDoacoes";
 import { Link } from "react-router-dom";
 import seta from "../../assets/seta_voltar.svg"
 
@@ -22,6 +21,8 @@ export default function CadDoadores() {
   const [endereco, setEndereco] = useState({})
   // State para mensagens de erro nos inputs
   const [mensagens, setMensagens] = useState({})
+  // State para mensagem de erro após tentativa de cadastro
+  const [erro, setErro] = useState("")
 
   function validarDados(dados) {
     let nome, cnpj, tipo, categoria, cep, numero, email, senha, confirmacaoDeSenha
@@ -95,8 +96,11 @@ export default function CadDoadores() {
         }
         
         let empresaAdicionada = await addEmpresa(novaEmpresa)
-        if(empresaAdicionada) {
+        if(empresaAdicionada.status) {
           navigate("/login")
+        }
+        else {
+          setErro(empresaAdicionada.message)
         }
       }
     }
@@ -159,7 +163,7 @@ export default function CadDoadores() {
             </button>
           </div>
         </div>
-
+        <p className="text-red-500 text-xs my-1">{erro ? "Erro: " + erro : <>&nbsp;</>}</p>
         <form>
           {pagina === 1 ? (
             <DadosBasicos

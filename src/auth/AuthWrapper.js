@@ -3,7 +3,7 @@ import AppRoutes from "../routes/routes";
 import { login } from "../lib/api/empresa";
 import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext()
+export const AuthContext = createContext()
 export const AuthData = () => useContext(AuthContext)
 
 export const AuthWrapper = () => {
@@ -32,7 +32,7 @@ export const AuthWrapper = () => {
   }
 
   return (
-    <AuthContext.Provider value={{user, loginUser, logoutUser}}>
+    <AuthContext.Provider value={{user: user ?? null, loginUser, logoutUser}}>
       <AppRoutes />
     </AuthContext.Provider>
   )

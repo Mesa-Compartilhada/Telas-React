@@ -34,8 +34,8 @@ export function DadosBasicos(props) {
       
       {
         empresa.tipo === "1"
-        ? <SelectField name={"categoria"} label={"Categoria de estabelecimento:"} id={"categoria"} options={categoriaDoadora} msg={mensagens.categoria} disabled={!empresa.tipo || empresa.tipo === "0"} change={(e) => setEmpresa({...empresa, categoria: e.target.value})} />
-        : <SelectField name={"categoria"} label={"Categoria de instituição:"} id={"categoria"} options={categoriaRecebedora} msg={mensagens.categoria} disabled={!empresa.tipo || empresa.tipo === "0"} change={(e) => setEmpresa({...empresa, categoria: e.target.value})} />
+        ? <SelectField name={"categoria"} label={"Categoria de estabelecimento:"} id={"categoria"} options={categoriaDoadora} msg={mensagens.categoria} defaultValue={empresa.categoria} disabled={!empresa.tipo || empresa.tipo === "0"} change={(e) => setEmpresa({...empresa, categoria: e.target.value})} />
+        : <SelectField name={"categoria"} label={"Categoria de instituição:"} id={"categoria"} options={categoriaRecebedora} msg={mensagens.categoria} defaultValue={empresa.categoria} disabled={!empresa.tipo || empresa.tipo === "0"} change={(e) => setEmpresa({...empresa, categoria: e.target.value})} />
       }
     </div>
   )

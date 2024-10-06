@@ -45,16 +45,14 @@ export async function addEmpresa(empresa) {
         'Content-Type': 'application/json;charset=UTF-8'
       },
     });
-    if(result == 400) {
-      console.log(result)
-      return false
+    let message = await result.json()
+    if(result.status == 400) {
+      return { status: false, message: Object.values(message)[0] }
     }
-    result = await result.json()
-    console.log(result)
-    return result
+    return { status: true, message: `Empresa adicionada` }
   } catch(error) {
     console.log(error)
-    return false
+    return { status: false, message: `Erro inesperado: ${error}` }
   }
   
 }
