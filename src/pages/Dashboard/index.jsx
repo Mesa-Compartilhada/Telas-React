@@ -8,6 +8,7 @@ import tt from '@tomtom-international/web-sdk-maps';
 import { useRef, useEffect, useState } from 'react';
 
 import { getDoacoesByStatus } from "../../lib/api/doacao.js";
+import { STATUS_DOACAO } from "../../constants/doacao.js";
 
 export default function Dashboard() {
     const mapElement = useRef();
@@ -32,7 +33,7 @@ export default function Dashboard() {
             </div>
 
             <section className="flex justify-center">
-                <ListaDoacoes getDoacoes={getDoacoesByStatus} params={"Disponivel"} />
+                <ListaDoacoes getDoacoes={getDoacoesByStatus} params={STATUS_DOACAO.DISPONIVEL} />
             </section>
         </>
     )

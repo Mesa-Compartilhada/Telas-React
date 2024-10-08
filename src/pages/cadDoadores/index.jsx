@@ -25,7 +25,7 @@ export default function CadDoadores() {
   const [erro, setErro] = useState("")
 
   function validarDados(dados) {
-    let nome, cnpj, tipo, categoria, cep, numero, email, senha, confirmacaoDeSenha
+    let nome, cnpj, tipo, categoria, cep, logradouro, bairro, cidade, estado, numero, email, senha, confirmacaoDeSenha
     let r = true
     if(pagina === 1) {
       if(!dados.nome || dados.nome.length <= 0) {
@@ -57,8 +57,19 @@ export default function CadDoadores() {
         cep = "Insira um CEP válido"
         r = false
       }
+      if(dados.cep && dados.cep.length > 0) {
+        let cepPattern = /^\d{8}$/;
+        if(!cepPattern.test(dados.cep)) {
+          cep = "Insira um CEP válido (XXXXXXXX)"
+          r = false
+        }
+      }
       if(!dados.numero || dados.numero.length <= 0) {
         numero = "Insira um número válido"
+        r = false
+      }
+      if(!dados.logradouro || !dados.bairro || !dados.cidade || !dados.estado) {
+        cep = "Insira um CEP válido"
         r = false
       }
     }

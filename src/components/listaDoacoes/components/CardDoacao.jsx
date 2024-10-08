@@ -12,7 +12,7 @@ export function CardDoacao(props) {
       <p className="text-lg truncate">{doacao.nome}</p>
       <a className="opacity-80 text-xs truncate" href="#">{doacao.empresaDoadora.nome}</a>
       <div className="flex flex-row gap-2 my-2">
-        <small className="opacity-80 bg-blue-700 text-white p-1 rounded-md text-xs truncate">{doacao.dataEncerrada}</small>
+        <small className="opacity-80 bg-blue-700 text-white p-1 rounded-md text-xs truncate">{doacao.dataMaxRetirada}</small>
         <small className="opacity-80 bg-green-700 text-white p-1 rounded-md text-xs truncate">{doacao.status}</small>
       </div>
       <p className="opacity-80 text-sm">{doacao.descricao}</p>
