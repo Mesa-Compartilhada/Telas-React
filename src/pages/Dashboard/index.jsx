@@ -32,8 +32,12 @@ export default function Dashboard() {
                 <div ref={mapElement} className="w-[1000px] h-[480px]"></div>
             </div>
 
-            <section className="flex justify-center">
+            <section className="grid place-content-center gap-4">
+                <h1 className="text-2xl">Doações disponíveis</h1>
                 <ListaDoacoes getDoacoes={getDoacoesByStatus} params={STATUS_DOACAO.DISPONIVEL} />
+                <hr />
+                <h1 className="text-2xl">Doações em andamento</h1>
+                <ListaDoacoes getDoacoes={getDoacoesByStatus} params={STATUS_DOACAO.ANDAMENTO} />
             </section>
         </>
     )
