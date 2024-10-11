@@ -14,7 +14,7 @@ export function CardDoacao(props) {
   return (
     <div className="flex flex-col w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md" key={doacao.id}>
       <p className="text-lg truncate">{doacao.nome}</p>
-      <a className="opacity-80 text-xs truncate" href="#">{doacao.empresaDoadora.nome}</a>
+      <a className="opacity-80 text-xs truncate" href="#">{doacao.empresaDoadora?.nome ?? ""}</a>
       <div className="flex flex-row gap-2 my-2">
         <small className="opacity-80 bg-blue-700 text-white p-1 rounded-md text-xs truncate">{doacao.dataMaxRetirada}</small>
         <small className={`${doacao.status === STATUS_DOACAO.DISPONIVEL ? "bg-green-700" : "bg-yellow-700"} opacity-80 text-white p-1 rounded-md text-xs truncate`}>{doacao.status}</small>

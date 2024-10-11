@@ -1,6 +1,10 @@
 export async function getEmpresas() {
   let result = await fetch("http://localhost:8080/apimc/empresa", {
-      method: "GET"
+      method: "GET",
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
     }
   )
   result = await result.json()
@@ -9,11 +13,20 @@ export async function getEmpresas() {
 
 export async function getEmpresaById(id) {
   let result = await fetch(`http://localhost:8080/apimc/empresa/${id}`, {
-      method: "GET"
+      method: "GET",
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
     }
   )
-  result = await result.json()
-  return result
+  let message = await result.json()
+  if(result === 404) {
+    return { status: false, message: Object.values(message)[0] };
+  }
+  else {
+    return { status: true, empresa: message }
+  }
 }
 
 export async function getEmpresaByEmail(email) {

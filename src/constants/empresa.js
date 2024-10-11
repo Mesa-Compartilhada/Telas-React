@@ -1,6 +1,6 @@
 export const TIPO_EMPRESA = {
-  DOADORA: 1,
-  RECEBEDORA: 2
+  DOADORA: "DOADORA",
+  RECEBEDORA: "RECEBEDORA"
 }
 
 export const STATUS_EMPRESA = {

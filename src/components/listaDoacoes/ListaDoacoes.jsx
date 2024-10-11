@@ -3,20 +3,21 @@ import { CardDoacao } from "./components/CardDoacao"
 
 export function ListaDoacoes({ getDoacoes, params = null }) {
 
-  const [doacoes, setDoacoes] = useState([])
+  const [doacoes, setDoacoes] = useState(null)
 
   useEffect(() => {
-    const getListaDeDoacoes = async () => {
-      let result = !params ? await getDoacoes() : await getDoacoes(params)
-      setDoacoes(result)
-    }
     getListaDeDoacoes()
-  }, [])
+  }, [doacoes])
+
+  const getListaDeDoacoes = async () => {
+    let result = !params ? await getDoacoes() : await getDoacoes(params)
+    setDoacoes(result)
+  }
 
   return(
     <>
       {
-        doacoes.length > 0
+        doacoes != null && doacoes.length > 0
         ? <div className="flex gap-2">
          { doacoes.map((doacao) => 
             <CardDoacao key={doacao.id} doacao={ doacao } />

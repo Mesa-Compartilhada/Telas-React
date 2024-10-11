@@ -1,3 +1,5 @@
+import { getEmpresaById } from "./empresa"
+
 export async function getDoacoes() {
   try {
     let result = await fetch("http://localhost:8080/apimc/doacao", {
@@ -95,10 +97,14 @@ export async function updateStatusDoacao(status, doacaoId, empresaRecebedoraId) 
       console.log(Object.values(message)[0])
       return { status: false, message: Object.values(message)[0] }
     }
-    console.log(message)
     return { status: true, message: message }
   } catch(error) {
     console.log(error)
     return false
   }
+}
+
+export async function getDoacoesEmpresa(id) {
+  const result = await getEmpresaById(id)
+  return result.empresa.doacoes
 }

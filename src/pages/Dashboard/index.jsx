@@ -7,12 +7,15 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css'
 import tt from '@tomtom-international/web-sdk-maps';
 import { useRef, useEffect, useState } from 'react';
 
-import { getDoacoesByStatus } from "../../lib/api/doacao.js";
+import { AuthData } from "../../auth/AuthWrapper.js";
+import { TIPO_EMPRESA } from "../../constants/empresa.js";
+import { getDoacoesByStatus, getDoacoesEmpresa } from "../../lib/api/doacao.js";
 import { STATUS_DOACAO } from "../../constants/doacao.js";
 
 export default function Dashboard() {
     const mapElement = useRef();
     const [map, setMap] = useState({});
+    const { user } = AuthData()
 
     useEffect(() => {
         let map = tt.map({
@@ -33,11 +36,17 @@ export default function Dashboard() {
             </div>
 
             <section className="grid place-content-center gap-4">
-                <h1 className="text-2xl">Doações disponíveis</h1>
-                <ListaDoacoes getDoacoes={getDoacoesByStatus} params={STATUS_DOACAO.DISPONIVEL} />
-                <hr />
-                <h1 className="text-2xl">Doações em andamento</h1>
-                <ListaDoacoes getDoacoes={getDoacoesByStatus} params={STATUS_DOACAO.ANDAMENTO} />
+                {
+                    TIPO_EMPRESA.RECEBEDORA === user.tipo
+                    &&
+                    <>
+                        <h1 className="text-2xl">Doações disponíveis</h1>
+                        <ListaDoacoes getDoacoes={getDoacoesByStatus} params={STATUS_DOACAO.DISPONIVEL} />
+                        <hr />
+                        <h1 className="text-2xl">Doações em andamento</h1>
+                        <ListaDoacoes getDoacoes={getDoacoesEmpresa} params={user.id} />
+                    </>
+                }
             </section>
         </>
     )
