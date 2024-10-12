@@ -93,8 +93,7 @@ export async function updateStatusDoacao(status, doacaoId, empresaRecebedoraId) 
       },
     });
     const message = await result.json()
-    if(result === "400") {
-      console.log(Object.values(message)[0])
+    if(result.status === 400) {
       return { status: false, message: Object.values(message)[0] }
     }
     return { status: true, message: message }

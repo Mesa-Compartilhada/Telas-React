@@ -53,7 +53,7 @@ export default function Dashboard() {
                     </>
                     :
                     <>
-                        <h1 className="text-2xl">Suas doações disponíveis</h1>
+                        <h1 className="text-2xl">Suas doações</h1>
                         <ListaDoacoes getDoacoes={getDoacoesEmpresa} params={user.id} />
                     </>
                 }
