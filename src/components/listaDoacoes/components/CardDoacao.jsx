@@ -1,13 +1,14 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Modal from "../../modal/Modal";
 import { Link } from "react-router-dom";
 import { updateStatusDoacao } from "../../../lib/api/doacao";
 import { AuthData } from "../../../auth/AuthWrapper";
 import { STATUS_DOACAO } from "../../../constants/doacao";
+import { DashboardContext } from "../../../pages/Dashboard";
 
-export function CardDoacao(props) {
-  const { doacao } = props
+export function CardDoacao({ doacao }) {
   const { user } = AuthData()
+  const { doacoesAlteradas, setDoacoesAlteradas } = useContext(DashboardContext)
 
   const [isActive, setIsActive] = useState(false);
 
@@ -26,7 +27,7 @@ export function CardDoacao(props) {
         ?
         <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsActive(!isActive)}>Solicitar</button>
         :
-        <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => updateStatusDoacao(STATUS_DOACAO.DISPONIVEL, doacao.id, user.id)}>Cancelar Solicitação</button>
+        <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => [updateStatusDoacao(STATUS_DOACAO.DISPONIVEL, doacao.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1))]}>Cancelar Solicitação</button>
       }
       
       {
@@ -38,7 +39,7 @@ export function CardDoacao(props) {
             <p className="text-gray-500">Confirme os detalhes da doação solicitada</p>
             <Link to={"/termos"}>Termos e condições</Link>
             <div className="grid grid-cols-2">
-              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.ANDAMENTO, doacao.id, user.id), setIsActive(false)]}>Confirmar</button>
+              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.ANDAMENTO, doacao.id, user.id,).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsActive(false)]}>Confirmar</button>
               <button className="btn-red" onClick={() => setIsActive(false)}>Cancelar</button>
             </div>
           </div>

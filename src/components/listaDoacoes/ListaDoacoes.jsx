@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { CardDoacao } from "./components/CardDoacao"
+import { DashboardContext } from "../../pages/Dashboard"
 
 export function ListaDoacoes({ getDoacoes, params = null }) {
+  const { doacoesAlteradas, setDoacoesAlteradas } = useContext(DashboardContext)
 
   const [doacoes, setDoacoes] = useState(null)
 
   useEffect(() => {
     getListaDeDoacoes()
-  }, [doacoes])
+  }, [doacoesAlteradas])
 
   const getListaDeDoacoes = async () => {
     let result = !params ? await getDoacoes() : await getDoacoes(params)
