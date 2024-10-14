@@ -22,6 +22,7 @@ export default function DadosDoacao(props) {
   return (
     <>
       <h3>Dados da doação:</h3>
+      <br />
       <InputField
         change={(e) => setDoacao({ ...doacao, nome: e.target.value })}
         defaultValue={doacao.nome}
@@ -34,15 +35,26 @@ export default function DadosDoacao(props) {
         type={"text"}
       />
       <InputField
-        change={(e) => setDoacao({ ...doacao, qtd: e.target.value })}
-        defaultValue={doacao.qtd}
-        hint={mensagens.qtd ?? ""}
+        change={(e) => setDoacao({ ...doacao, descricao: e.target.value })}
+        defaultValue={doacao.descricao}
+        hint={mensagens.descricao ?? ""}
         disabled={false}
-        id={"qtdAlimentos"}
-        label={"Quantidade de alimentos:"}
-        msg={mensagens.qtd}
-        name={"qtdAlimentos"}
-        type={"number"}
+        id={"descricao"}
+        label={"Descricao da doação:"}
+        msg={mensagens.descricao}
+        name={"descricao"}
+        type={"text"}
+      />
+      <InputField
+        change={(e) => setDoacao({ ...doacao, observacao: e.target.value })}
+        defaultValue={doacao.observacao}
+        hint={mensagens.observacao ?? ""}
+        disabled={false}
+        id={"observacao"}
+        label={"Observação da doação:"}
+        msg={mensagens.observacao}
+        name={"observacao"}
+        type={"text"}
       />
       <SelectField
         change={(e) => setDoacao({ ...doacao, tipo: e.target.value })}
@@ -86,7 +98,8 @@ export default function DadosDoacao(props) {
         name={"dataValidade"}
         type={"date"}
       />
-      <h3>Dados da retirada:</h3><br />
+      <h3>Dados da retirada:</h3>
+      <br />
       <InputField
         change={(e) => setDoacao({ ...doacao, dataRetirada: e.target.value })}
         defaultValue={doacao.dataRetirada}
@@ -99,15 +112,30 @@ export default function DadosDoacao(props) {
         type={"date"}
       />
       <InputField
-        change={(e) => setDoacao({ ...doacao, horaRetirada: e.target.value })}
-        defaultValue={doacao.horaRetirada}
-        hint={mensagens.horaRetirada ?? ""}
+        change={(e) =>
+          setDoacao({ ...doacao, horaRetiradaMin: e.target.value })
+        }
+        defaultValue={doacao.horaRetiradaMin}
+        hint={mensagens.horaRetiradaMin ?? ""}
         disabled={false}
-        id={"horaRetirada"}
+        id={"horaRetiradaMin"}
+        label={"Horário min de retirada:"}
+        msg={mensagens.horaRetiradaMin}
+        name={"horaRetiradaMin"}
+        type={"time"}
+      />
+      <InputField
+        change={(e) =>
+          setDoacao({ ...doacao, horaRetiradaMax: e.target.value })
+        }
+        defaultValue={doacao.horaRetiradaMax}
+        hint={mensagens.horaRetiradaMax ?? ""}
+        disabled={false}
+        id={"horaRetiradaMax"}
         label={"Horário max de retirada:"}
-        msg={mensagens.horaRetirada}
-        name={"horaRetirada"}
-        type={"date"}
+        msg={mensagens.horaRetiradaMax}
+        name={"horaRetiradaMax"}
+        type={"time"}
       />
     </>
   );

@@ -2,31 +2,39 @@ import { useNavigate } from "react-router-dom";
 import DadosDoacao from "./components/dadosDoacao";
 import { useState } from "react";
 import { addDoacao } from "../../lib/api/doacao";
+import { AuthData } from "../../auth/AuthWrapper";
 
 export default function CadDoacao() {
   const navigate = useNavigate();
-
+  const data = new Date().toLocaleDateString();
+  const { user } = AuthData()
   // JSON que armazena as informações da empresa
   const [doacao, setDoacao] = useState({});
   // State para mensagens de erro nos inputs
   const [mensagens, setMensagens] = useState({});
-
   function validarDados(dados) {
-    let nomeDoacao,
-      qtd,
+    debugger;
+    let nome,
+      descricao,
+      observacao,
       tipo,
       conservacao,
       dataFabricacao,
       dataValidade,
       dataRetirada,
-      horaRetirada;
+      horaRetiradaMin,
+      horaRetiradaMax;
     let r = true;
-    if (!dados.nomeDoacao || dados.nomeDoacao.length <= 0) {
-      nomeDoacao = "Insira o nome da empresa";
+    if (!dados.nome || dados.nome.length <= 0) {
+      nome = "Insira o nome da empresa";
       r = false;
     }
-    if (!dados.qtd || dados.qtd.length <= 0) {
-      qtd = "Insira o CNPJ da empresa";
+    if (!dados.descricao || dados.descricao.length <= 0) {
+      descricao = "Insira a descricao da doação";
+      r = false;
+    }
+    if (!dados.observacao || dados.observacao.length <= 0) {
+      observacao = "Insira a observacao da doação";
       r = false;
     }
     if (!dados.tipo || dados.tipo === "0") {
@@ -49,41 +57,53 @@ export default function CadDoacao() {
       dataRetirada = "Insira uma data de retirada válida";
       r = false;
     }
-    if (!dados.horaRetirada || dados.horaRetirada.length <= 0) {
-      horaRetirada = "Confirme sua hora de retirada corretamente";
+    if (!dados.horaRetiradaMin || dados.horaRetiradaMin.length <= 0) {
+      horaRetiradaMin = "Confirme sua hora de retirada corretamente";
+      r = false;
+    }
+    if (!dados.horaRetiradaMax || dados.horaRetiradaMax.length <= 0) {
+      horaRetiradaMax = "Confirme sua hora de retirada corretamente";
       r = false;
     }
     setMensagens({
       ...mensagens,
-      nomeDoacao,
-      qtd,
+      nome,
+      descricao,
+      observacao,
       tipo,
       conservacao,
       dataFabricacao,
       dataValidade,
       dataRetirada,
-      horaRetirada,
+      horaRetiradaMin,
+      horaRetiradaMax,
     });
-    console.log(mensagens);
     return r;
   }
 
   async function cadastrarDoacao() {
+    
     // Validação dos dados
+    console.log(validarDados({ ...doacao }));
+    
     if (validarDados({ ...doacao })) {
       // Enviando dados para a função que chama a rota POST da API
       const novaDoacao = {
         ...doacao,
-        nomeDoacao: doacao.nomeDoacao,
-        tipo: parseInt(doacao.tipo),
-        conservacao: parseInt(doacao.conservacao),
-        qtd: doacao.qtd,
+        nome: doacao.nome,
+        descricao: doacao.descricao,
+        observacao: doacao.observacao,
+        horarioMin: doacao.horaRetiradaMin,
+        horarioMax: doacao.horaRetiradaMax,
+        tipoAlimento: parseInt(doacao.tipo),
+        tipoArmazenamento: parseInt(doacao.conservacao),
         dataFabricacao: doacao.dataFabricacao,
         dataValidade: doacao.dataValidade,
-        dataRetirada: doacao.dataRetirada,
-        horaRetirada: doacao.horaRetirada,
+        dataCriada: data,
+        dataMaxRetirada: doacao.dataRetirada,
+        empredaDoadoraId: user.id
       };
-
+      
       await addDoacao(novaDoacao);
       navigate("/home");
     }
@@ -95,19 +115,11 @@ export default function CadDoacao() {
 
         <div className="mt-5 mb-5 text-center">
           <button
-            className="btn btn-info text-white mt-2"
+            className="btn btn-info text-black mt-2"
             onClick={() => cadastrarDoacao()}
           >
             Cadastrar
           </button>
-          {/* <div className="mb-2">
-                        <img className={pagina !== 1 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/490660/company.svg" alt="Ícone de empresa" width={pagina !== 1 ? 35 : 60} />
-                        <img className={pagina !== 2 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/383565/location-pin.svg" alt="Ícone de ponto no mapa" width={pagina !== 2 ? 35 : 60} />
-                        <img className={pagina !== 3 ? "opacity-25" : ""} src="https://www.svgrepo.com/show/416019/account-user-avatar.svg" alt="Ícone de acesso de usuário" width={pagina !== 3 ? 35 : 60} />
-                    </div>
-
-                    <button className="btn btn-info text-white mt-2 mr-2" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}>{"Voltar"}</button>
-                     */}
         </div>
 
         <form>
