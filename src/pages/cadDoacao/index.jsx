@@ -105,7 +105,7 @@ export default function CadDoacao() {
       };
       
       await addDoacao(novaDoacao);
-      navigate("/home");
+      navigate("/");
     }
   }
   return (

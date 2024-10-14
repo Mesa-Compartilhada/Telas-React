@@ -66,6 +66,7 @@ export async function getDoacoesByStatus(status) {
 }
 
 export async function addDoacao(doacao) {
+  console.log(JSON.stringify(doacao));
   try {
     let result = await fetch("http://localhost:8080/apimc/doacao", {
       method: "POST",
