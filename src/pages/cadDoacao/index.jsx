@@ -6,7 +6,7 @@ import { AuthData } from "../../auth/AuthWrapper";
 
 export default function CadDoacao() {
   const navigate = useNavigate();
-  const data = new Date().toLocaleDateString();
+  const data = new Date().toISOString().split('T')[0];
   const { user } = AuthData()
   // JSON que armazena as informações da empresa
   const [doacao, setDoacao] = useState({});
@@ -101,7 +101,7 @@ export default function CadDoacao() {
         dataValidade: doacao.dataValidade,
         dataCriada: data,
         dataMaxRetirada: doacao.dataRetirada,
-        empredaDoadoraId: user.id
+        empresaDoadoraId: user.id
       };
       
       await addDoacao(novaDoacao);
