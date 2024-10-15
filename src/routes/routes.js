@@ -6,6 +6,7 @@ import Dashboard from "../pages/Dashboard";
 import CadDoacao from "../pages/cadDoacao";
 import { AuthData } from "../auth/AuthWrapper";
 import { TIPO_EMPRESA } from "../constants/empresa";
+import MeusDados from "../pages/MeusDados"
 
 export default function AppRoutes() {
     
@@ -18,6 +19,7 @@ export default function AppRoutes() {
       { <Route path="/login" element={!user ? <Login /> : <Home />} /> }
       { <Route path="/dashboard" element={ user ? <Dashboard /> : <Home /> }/> }
       { <Route path="/cadastro-doacao" element={ user && TIPO_EMPRESA[user.tipo] === 1 ? <CadDoacao /> : <Home /> }/> }
+      { <Route path="/meus-dados" element={ user ? <MeusDados />: <Home />}/> }
     </Routes>
   );
 }
