@@ -27,7 +27,7 @@ export default function Header() {
             {/* Navegação (Disponíveis, Meus Dados, Histórico) */}
             <nav className="flex space-x-8">
               <a href="#disponiveis" className="text-sm font-medium text-gray-900 link-default">Disponíveis</a>
-              <a href="#meus-dados" className="text-sm font-medium text-gray-900 link-default" >Meus Dados</a>
+              <a href="/meus-dados" className="text-sm font-medium text-gray-900 link-default" >Meus Dados</a>
               <a href="#historico" className="text-sm font-medium text-gray-900 link-default"> Histórico</a>
             </nav>
 
