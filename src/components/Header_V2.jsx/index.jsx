@@ -13,16 +13,16 @@ export default function Header() {
   return (
     <>
       <header>
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div className="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
           <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
             {/* Logo */}
-            <div>
+            <Link to={"/dashboard"}>
               <img
                 className="md:w-64 w-40 pt-2 md:p-3 self-center"
                 src={logo}
                 alt="Logo do WebSite, uma fruteira"
               />
-            </div>
+            </Link>
 
             {/* Navegação (Disponíveis, Meus Dados, Histórico) */}
             <nav className="flex space-x-8">

@@ -25,7 +25,7 @@ export default function CadDoadores() {
   const [erro, setErro] = useState("")
 
   function validarDados(dados) {
-    let nome, cnpj, tipo, categoria, cep, logradouro, bairro, cidade, estado, numero, email, senha, confirmacaoDeSenha
+    let nome, cnpj, tipo, categoria, cep, numero, email, senha, confirmacaoDeSenha
     let r = true
     if(pagina === 1) {
       if(!dados.nome || dados.nome.length <= 0) {
@@ -70,6 +70,10 @@ export default function CadDoadores() {
       }
       if(!dados.logradouro || !dados.bairro || !dados.cidade || !dados.estado) {
         cep = "Insira um CEP válido"
+        r = false
+      }
+      if(dados.cidade !== "Diadema") {
+        cep = "O CEP precisa ser do município de Diadema"
         r = false
       }
     }

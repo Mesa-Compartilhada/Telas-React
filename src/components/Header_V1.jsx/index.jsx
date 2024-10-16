@@ -10,7 +10,7 @@ export default function Header() {
   return (
     <>
       <header className="bg-l-pessego">
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div className="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
           <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <img
