@@ -108,3 +108,29 @@ export async function getDoacoesEmpresa(id) {
   const result = await getEmpresaById(id)
   return result.empresa.doacoes
 }
+
+export async function getDoacoesByStatusAndEmpresaDoadoraId(status, id) {
+  try {
+    let result = await fetch(`http://localhost:8080/apimc/doacao/status/${status}/empresa-doadora/${id}`, {
+      method: "GET"
+    })
+    result = await result.json()
+    return result
+  } catch(error) {
+    console.log(error)
+    return false
+  }
+}
+
+export async function getDoacoesByStatusAndEmpresaRecebedorId(status, id) {
+  try {
+    let result = await fetch(`http://localhost:8080/apimc/doacao/status/${status}/empresa-recebedora/${id}`, {
+      method: "GET"
+    })
+    result = await result.json()
+    return result
+  } catch(error) {
+    console.log(error)
+    return false
+  }
+}
