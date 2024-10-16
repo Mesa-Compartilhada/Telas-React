@@ -13,7 +13,6 @@ export default function CadDoacao() {
   // State para mensagens de erro nos inputs
   const [mensagens, setMensagens] = useState({});
   function validarDados(dados) {
-    debugger;
     let nome,
       descricao,
       observacao,
@@ -26,7 +25,7 @@ export default function CadDoacao() {
       horaRetiradaMax;
     let r = true;
     if (!dados.nome || dados.nome.length <= 0) {
-      nome = "Insira o nome da empresa";
+      nome = "Insira o nome da doação";
       r = false;
     }
     if (!dados.descricao || dados.descricao.length <= 0) {
@@ -41,7 +40,7 @@ export default function CadDoacao() {
       tipo = "Selecione o tipo da doação";
       r = false;
     }
-    if (!dados.conservacao || dados.conservacao.length <= 0) {
+    if (!dados.conservacao || dados.conservacao === "0") {
       conservacao = "Selecione o modo de conservação";
       r = false;
     }
@@ -110,7 +109,7 @@ export default function CadDoacao() {
   }
   return (
     <>
-      <div className="container p-5">
+      <div className="mx-auto my-4 md:w-3/5 p-10 rounded-2xl">
         <h1>Cadastre sua Doação</h1>
 
         <div className="mt-5 mb-5 text-center">

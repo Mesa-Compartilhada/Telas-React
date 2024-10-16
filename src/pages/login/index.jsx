@@ -24,7 +24,7 @@ export default function Login() {
       email = "Insira o email"
       r = false
     }
-    if(!dadosLogin.senha || dadosLogin.senha.length <= 8) {
+    if(!dadosLogin.senha || dadosLogin.senha.length < 8) {
       senha = "A senha deve ter no mínimo 8 caracteres"
       r = false
     }

@@ -12,10 +12,8 @@ import ODS10 from "../../assets/SDG-10.svg";
 import ODS12 from "../../assets/SDG-12.svg";
 import ODS17 from "../../assets/SDG-17.svg";
 import ODS2 from "../../assets/SDG-2.svg";
-import { AuthData } from "../../auth/AuthWrapper.js";
 
 export default function Home() {
-  const { user } = AuthData()
 
   return (
     <>

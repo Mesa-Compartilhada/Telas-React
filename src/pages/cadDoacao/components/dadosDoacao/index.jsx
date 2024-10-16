@@ -6,6 +6,7 @@ export default function DadosDoacao(props) {
 
   // Categorias de doacao para preencher os dropdown
   const categoriaDoacao = {
+    0: "Selecione uma categoria",
     1: "Caseira",
     2: "Industrializado",
     3: "Perecível",
@@ -13,6 +14,7 @@ export default function DadosDoacao(props) {
     5: "In Natura",
   };
   const formaConservacao = {
+    0: "Selecione uma forma de conservação",
     1: "Armazenamento em local seco",
     2: "Pronto para consumo",
     3: "Refrigeração",
@@ -20,13 +22,12 @@ export default function DadosDoacao(props) {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-5">
       <h3>Dados da doação:</h3>
       <br />
       <InputField
         change={(e) => setDoacao({ ...doacao, nome: e.target.value })}
         defaultValue={doacao.nome}
-        hint={mensagens.nome ?? ""}
         disabled={false}
         id={"nomeDoacao"}
         label={"Nome da doação:"}
@@ -37,7 +38,6 @@ export default function DadosDoacao(props) {
       <InputField
         change={(e) => setDoacao({ ...doacao, descricao: e.target.value })}
         defaultValue={doacao.descricao}
-        hint={mensagens.descricao ?? ""}
         disabled={false}
         id={"descricao"}
         label={"Descricao da doação:"}
@@ -48,7 +48,6 @@ export default function DadosDoacao(props) {
       <InputField
         change={(e) => setDoacao({ ...doacao, observacao: e.target.value })}
         defaultValue={doacao.observacao}
-        hint={mensagens.observacao ?? ""}
         disabled={false}
         id={"observacao"}
         label={"Observação da doação:"}
@@ -79,7 +78,6 @@ export default function DadosDoacao(props) {
       <InputField
         change={(e) => setDoacao({ ...doacao, dataFabricacao: e.target.value })}
         defaultValue={doacao.dataFabricacao}
-        hint={mensagens.dataFabricacao ?? ""}
         disabled={false}
         id={"dataFabricacao"}
         label={"Data de fabricação:"}
@@ -90,7 +88,6 @@ export default function DadosDoacao(props) {
       <InputField
         change={(e) => setDoacao({ ...doacao, dataValidade: e.target.value })}
         defaultValue={doacao.dataValidade}
-        hint={mensagens.dataValidade ?? ""}
         disabled={false}
         id={"dataValidade"}
         label={"Data de validade:"}
@@ -103,7 +100,6 @@ export default function DadosDoacao(props) {
       <InputField
         change={(e) => setDoacao({ ...doacao, dataRetirada: e.target.value })}
         defaultValue={doacao.dataRetirada}
-        hint={mensagens.dataRetirada ?? ""}
         disabled={false}
         id={"dataRetirada"}
         label={"Data máx de retirada:"}
@@ -116,7 +112,6 @@ export default function DadosDoacao(props) {
           setDoacao({ ...doacao, horaRetiradaMin: e.target.value })
         }
         defaultValue={doacao.horaRetiradaMin}
-        hint={mensagens.horaRetiradaMin ?? ""}
         disabled={false}
         id={"horaRetiradaMin"}
         label={"Horário min de retirada:"}
@@ -129,7 +124,6 @@ export default function DadosDoacao(props) {
           setDoacao({ ...doacao, horaRetiradaMax: e.target.value })
         }
         defaultValue={doacao.horaRetiradaMax}
-        hint={mensagens.horaRetiradaMax ?? ""}
         disabled={false}
         id={"horaRetiradaMax"}
         label={"Horário max de retirada:"}
@@ -137,6 +131,6 @@ export default function DadosDoacao(props) {
         name={"horaRetiradaMax"}
         type={"time"}
       />
-    </>
+    </div>
   );
 }
