@@ -28,6 +28,12 @@ export default function Dashboard() {
             center: [-46.61991444711061, -23.68551324571913],
             zoom: 14
         });
+        //let doacao = await getDoacoesByStatus("Disponivel")
+
+        var marker = new tt.Marker()
+        .setLngLat([-46.6176, -23.67331])
+        .addTo(map);
+
         setMap(map);
         return () => map.remove();
     }, []);
