@@ -3,7 +3,7 @@ import { CardDoacao } from "./components/CardDoacao"
 import { DashboardContext } from "../../pages/Dashboard"
 
 export function ListaDoacoes({ getDoacoes, params = [] }) {
-  const { doacoesAlteradas } = useContext(DashboardContext)
+  const { doacoesAlteradas, setDoacoesAlteradas } = useContext(DashboardContext)
 
   const [doacoes, setDoacoes] = useState(null)
 
@@ -20,7 +20,7 @@ export function ListaDoacoes({ getDoacoes, params = [] }) {
     <>
       {
         doacoes != null && doacoes.length > 0
-        ? <div className="flex gap-2">
+        ? <div className="flex gap-2 overflow-x-auto">
          { doacoes.map((doacao) => 
             <CardDoacao key={doacao.id} doacao={ doacao } />
           ) } 

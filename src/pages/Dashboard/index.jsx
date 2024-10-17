@@ -9,7 +9,7 @@ import { useRef, useEffect, useState, createContext } from 'react';
 
 import { AuthData } from "../../auth/AuthWrapper.js";
 import { TIPO_EMPRESA } from "../../constants/empresa.js";
-import { getDoacoesByStatus, getDoacoesByStatusAndEmpresaDoadoraId, getDoacoesByStatusAndEmpresaRecebedorId, getDoacoesEmpresa } from "../../lib/api/doacao.js";
+import { getDoacoes, getDoacoesByStatus, getDoacoesByStatusAndEmpresaDoadoraId, getDoacoesByStatusAndEmpresaRecebedorId, getDoacoesEmpresa } from "../../lib/api/doacao.js";
 import { STATUS_DOACAO } from "../../constants/doacao.js";
 
 export const DashboardContext = createContext()
@@ -40,7 +40,7 @@ export default function Dashboard() {
                 <div ref={mapElement} className="w-[1000px] h-[480px]"></div>
             </div>
 
-            <section className="grid place-content-center gap-4">
+            <section className="grid place-content-center p-24 gap-4">
                 {
                     TIPO_EMPRESA.RECEBEDORA === user.tipo
                     ?

@@ -58,6 +58,7 @@ export async function getDoacoesByStatus(status) {
       method: "GET"
     })
     result = await result.json()
+    console.log(result)
     return result
   } catch(error) {
     console.log(error)
