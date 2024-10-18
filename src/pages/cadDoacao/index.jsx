@@ -6,8 +6,8 @@ import { AuthData } from "../../auth/AuthWrapper";
 
 export default function CadDoacao() {
   const navigate = useNavigate();
-  const data = new Date().toISOString().split('T')[0];
-  const { user } = AuthData()
+  const data = new Date().toISOString().split("T")[0];
+  const { user } = AuthData();
   // JSON que armazena as informações da empresa
   const [doacao, setDoacao] = useState({});
   // State para mensagens de erro nos inputs
@@ -81,10 +81,9 @@ export default function CadDoacao() {
   }
 
   async function cadastrarDoacao() {
-    
     // Validação dos dados
     console.log(validarDados({ ...doacao }));
-    
+
     if (validarDados({ ...doacao })) {
       // Enviando dados para a função que chama a rota POST da API
       const novaDoacao = {
@@ -100,27 +99,18 @@ export default function CadDoacao() {
         dataValidade: doacao.dataValidade,
         dataCriada: data,
         dataMaxRetirada: doacao.dataRetirada,
-        empresaDoadoraId: user.id
+        empresaDoadoraId: user.id,
       };
-      
+
       await addDoacao(novaDoacao);
       navigate("/");
     }
   }
   return (
-    <>
-      <div className="mx-auto my-4 md:w-3/5 p-10 rounded-2xl">
-        <h1>Cadastre sua Doação</h1>
-
-        <div className="mt-5 mb-5 text-center">
-          <button
-            className="btn btn-info text-black mt-2"
-            onClick={() => cadastrarDoacao()}
-          >
-            Cadastrar
-          </button>
-        </div>
-
+    <div className="centraliza !h-full">
+      <div className="mx-10 lg:mx-20 my-4 md:w-3/5 border-4 p-10 shadow-xl rounded-2xl gradiente">
+        <h1 className="text-3xl text-center">Cadastre sua Doação</h1>
+        <br />
         <form>
           <DadosDoacao
             mensagens={mensagens}
@@ -129,7 +119,16 @@ export default function CadDoacao() {
             setDoacao={setDoacao}
           />
         </form>
+
+        <div className="mt-5 mb-5 text-center h-">
+          <button
+            className="btn btn-primary text-black mt-2 w-2/6 h-full"
+            onClick={() => cadastrarDoacao()}
+          >
+            Cadastrar
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

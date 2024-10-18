@@ -24,7 +24,6 @@ export default function DadosDoacao(props) {
   return (
     <div className="flex flex-col gap-5">
       <h3>Dados da doação:</h3>
-      <br />
       <InputField
         change={(e) => setDoacao({ ...doacao, nome: e.target.value })}
         defaultValue={doacao.nome}
@@ -96,7 +95,6 @@ export default function DadosDoacao(props) {
         type={"date"}
       />
       <h3>Dados da retirada:</h3>
-      <br />
       <InputField
         change={(e) => setDoacao({ ...doacao, dataRetirada: e.target.value })}
         defaultValue={doacao.dataRetirada}
