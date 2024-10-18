@@ -81,9 +81,6 @@ export default function CadDoacao() {
   }
 
   async function cadastrarDoacao() {
-    // Validação dos dados
-    console.log(validarDados({ ...doacao }));
-
     if (validarDados({ ...doacao })) {
       // Enviando dados para a função que chama a rota POST da API
       const novaDoacao = {
@@ -103,7 +100,7 @@ export default function CadDoacao() {
       };
 
       await addDoacao(novaDoacao);
-      navigate("/");
+      navigate("/dashboard");
     }
   }
   return (

@@ -9,7 +9,7 @@ import { useRef, useEffect, useState, createContext } from 'react';
 
 import { AuthData } from "../../auth/AuthWrapper.js";
 import { TIPO_EMPRESA } from "../../constants/empresa.js";
-import { getDoacoes, getDoacoesByStatus, getDoacoesByStatusAndEmpresaDoadoraId, getDoacoesByStatusAndEmpresaRecebedorId, getDoacoesEmpresa } from "../../lib/api/doacao.js";
+import { getDoacoes, getDoacoesByStatus, getDoacoesByStatusAndEmpresaDoadoraId, getDoacoesByStatusAndEmpresaRecebedoraId, getDoacoesEmpresa } from "../../lib/api/doacao.js";
 import { STATUS_DOACAO } from "../../constants/doacao.js";
 
 export const DashboardContext = createContext()
@@ -83,12 +83,15 @@ export default function Dashboard() {
                         <ListaDoacoes getDoacoes={getDoacoesByStatus} params={[STATUS_DOACAO.DISPONIVEL]} />
                         <hr />
                         <h1 className="text-2xl">Suas solicitações em andamento</h1>
-                        <ListaDoacoes getDoacoes={getDoacoesByStatusAndEmpresaRecebedorId} params={[STATUS_DOACAO.ANDAMENTO, user.id]} />
+                        <ListaDoacoes getDoacoes={getDoacoesByStatusAndEmpresaRecebedoraId} params={[STATUS_DOACAO.ANDAMENTO, user.id]} />
                     </>
                     :
                     <>
-                        <h1 className="text-2xl">Suas doações</h1>
-                        <ListaDoacoes getDoacoes={getDoacoesEmpresa} params={[user.id]} />
+                        <h1 className="text-2xl">Suas doações disponíveis</h1>
+                        <ListaDoacoes getDoacoes={getDoacoesByStatusAndEmpresaDoadoraId} params={[STATUS_DOACAO.DISPONIVEL, user.id]} />
+                        <hr />
+                        <h1 className="text-2xl">Suas doações em andamento</h1>
+                        <ListaDoacoes getDoacoes={getDoacoesByStatusAndEmpresaDoadoraId} params={[STATUS_DOACAO.ANDAMENTO, user.id]} />
                     </>
                 }
             </section>
