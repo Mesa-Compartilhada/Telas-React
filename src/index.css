@@ -99,17 +99,14 @@ a:hover{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--laranja);
+  background-image: url(./assets/fundo_bolas_laranja_v2.svg);
   background-size: cover;
-  height: 80vh;
 }
 
-.palavra{
-  margin-right: 150px;
-}
-
-.palavra2{
-  margin-right: 100px;
+.linha-preta {
+  border-top: 2px solid black; /* Espessura da linha */
+  width: 100%; /* Largura da linha */
+  margin: 20px 0; /* Espaçamento acima e abaixo da linha */
 }
 
 .btn-primary{
