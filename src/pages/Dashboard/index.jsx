@@ -21,16 +21,16 @@ export default function Dashboard() {
     const { user } = AuthData()
     const [doacoesAlteradas, setDoacoesAlteradas] = useState(0)
 
-    const [coordenadas, setCoordenadas] = useState(null);
-    async function getListaDoacoes() {
+    const [popEmpresa, setPopEmpresa] = useState(null);
+    async function getListaEmpresa() {
         let doacao = await getDoacoesByStatus(STATUS_DOACAO.DISPONIVEL)
-        let temp = []
+        let tempPop = []
         doacao.forEach(item => {
-            let coordenada = {lng:item.empresaDoadora.endereco.longitude, lat:item.empresaDoadora.endereco.latitude}
-            temp.push(coordenada)
+            tempPop.push(item.empresaDoadora)
         });
-        setCoordenadas(temp)
+        setPopEmpresa(tempPop)
     } 
+
     useEffect(() => {
         let map = tt.map({
             key: "aiGyPvdRv0jDJEKp1FFXqSyMbAunpuNH",
@@ -38,25 +38,33 @@ export default function Dashboard() {
             center: [-46.61991444711061, -23.68551324571913],
             zoom: 14
         });
-        getListaDoacoes()
+        
+        getListaEmpresa()
         setMap(map);
         return () => map.remove();
     }, []);
 
     useEffect(() => {
-        if (coordenadas) {
+        if (popEmpresa) {
             let mapa = map
-            var marker 
-            coordenadas.forEach(item => {
-                marker = new tt.Marker()
-                .setLngLat(item)
+            var marker
+            let popup
+            var markerHeight = 50
+            let popupOffsets = {
+                'bottom': [0, -markerHeight]
+            }
+            popEmpresa.forEach(item => {
+                popup = new tt.Popup({offset: popupOffsets, className: 'my-class'})
+                .setLngLat({lng:item.endereco.longitude, lat:item.endereco.latitude})
+                .setHTML(item.nome)
                 .addTo(mapa);
-                console.log(item)
+                marker = new tt.Marker()
+                .setLngLat({lng:item.endereco.longitude, lat:item.endereco.latitude}).setPopup(popup)
+                .addTo(mapa)
             });
             setMap(mapa)
-                
         }
-    }, [coordenadas]); 
+    }, [popEmpresa]);
 
     return (
         <DashboardContext.Provider value={{doacoesAlteradas: doacoesAlteradas, setDoacoesAlteradas: setDoacoesAlteradas}}>
