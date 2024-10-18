@@ -58,7 +58,6 @@ export async function getDoacoesByStatus(status) {
       method: "GET"
     })
     result = await result.json()
-    console.log(result)
     return result
   } catch(error) {
     console.log(error)
@@ -67,7 +66,6 @@ export async function getDoacoesByStatus(status) {
 }
 
 export async function addDoacao(doacao) {
-  console.log(JSON.stringify(doacao));
   try {
     let result = await fetch("http://localhost:8080/apimc/doacao", {
       method: "POST",
