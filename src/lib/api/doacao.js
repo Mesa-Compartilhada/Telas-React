@@ -82,11 +82,11 @@ export async function addDoacao(doacao) {
   }
 }
 
-export async function updateStatusDoacao(status, doacaoId, empresaRecebedoraId) {
+export async function updateStatusDoacao(status, doacaoId, empresaSolicitanteId, empresaRecebedoraId = null, ) {
   try {
     let result = await fetch(`http://localhost:8080/apimc/doacao/status/${doacaoId}`, {
       method: "PUT",
-      body: JSON.stringify({ status, empresaRecebedoraId }),
+      body: JSON.stringify({ status, empresaRecebedoraId, empresaSolicitanteId }),
       headers: {
         'Accept': 'application/json, text/plain',
         'Content-Type': 'application/json;charset=UTF-8'
