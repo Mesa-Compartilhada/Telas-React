@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { CardDoacao } from "./components/CardDoacao"
 import { DashboardContext } from "../../pages/Dashboard"
 
-export function ListaDoacoes({ getDoacoes, params = null }) {
+export function ListaDoacoes({ getDoacoes, params = [] }) {
   const { doacoesAlteradas, setDoacoesAlteradas } = useContext(DashboardContext)
 
   const [doacoes, setDoacoes] = useState(null)
@@ -12,7 +12,7 @@ export function ListaDoacoes({ getDoacoes, params = null }) {
   }, [doacoesAlteradas])
 
   const getListaDeDoacoes = async () => {
-    let result = !params ? await getDoacoes() : await getDoacoes(params)
+    let result = await getDoacoes(...params)
     setDoacoes(result)
   }
 
@@ -20,7 +20,7 @@ export function ListaDoacoes({ getDoacoes, params = null }) {
     <>
       {
         doacoes != null && doacoes.length > 0
-        ? <div className="flex gap-2">
+        ? <div className="flex gap-2 overflow-x-auto">
          { doacoes.map((doacao) => 
             <CardDoacao key={doacao.id} doacao={ doacao } />
           ) } 

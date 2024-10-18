@@ -6,14 +6,13 @@ import { AuthData } from "../../auth/AuthWrapper";
 
 export default function CadDoacao() {
   const navigate = useNavigate();
-  const data = new Date().toLocaleDateString();
-  const { user } = AuthData()
+  const data = new Date().toISOString().split("T")[0];
+  const { user } = AuthData();
   // JSON que armazena as informações da empresa
   const [doacao, setDoacao] = useState({});
   // State para mensagens de erro nos inputs
   const [mensagens, setMensagens] = useState({});
   function validarDados(dados) {
-    debugger;
     let nome,
       descricao,
       observacao,
@@ -26,7 +25,7 @@ export default function CadDoacao() {
       horaRetiradaMax;
     let r = true;
     if (!dados.nome || dados.nome.length <= 0) {
-      nome = "Insira o nome da empresa";
+      nome = "Insira o nome da doação";
       r = false;
     }
     if (!dados.descricao || dados.descricao.length <= 0) {
@@ -41,7 +40,7 @@ export default function CadDoacao() {
       tipo = "Selecione o tipo da doação";
       r = false;
     }
-    if (!dados.conservacao || dados.conservacao.length <= 0) {
+    if (!dados.conservacao || dados.conservacao === "0") {
       conservacao = "Selecione o modo de conservação";
       r = false;
     }
@@ -82,10 +81,6 @@ export default function CadDoacao() {
   }
 
   async function cadastrarDoacao() {
-    
-    // Validação dos dados
-    console.log(validarDados({ ...doacao }));
-    
     if (validarDados({ ...doacao })) {
       // Enviando dados para a função que chama a rota POST da API
       const novaDoacao = {
@@ -101,27 +96,18 @@ export default function CadDoacao() {
         dataValidade: doacao.dataValidade,
         dataCriada: data,
         dataMaxRetirada: doacao.dataRetirada,
-        empredaDoadoraId: user.id
+        empresaDoadoraId: user.id,
       };
-      
+
       await addDoacao(novaDoacao);
-      navigate("/");
+      navigate("/dashboard");
     }
   }
   return (
-    <>
-      <div className="container p-5">
-        <h1>Cadastre sua Doação</h1>
-
-        <div className="mt-5 mb-5 text-center">
-          <button
-            className="btn btn-info text-black mt-2"
-            onClick={() => cadastrarDoacao()}
-          >
-            Cadastrar
-          </button>
-        </div>
-
+    <div className="centraliza !h-full">
+      <div className="mx-10 lg:mx-20 my-4 md:w-3/5 border-4 p-10 shadow-xl rounded-2xl gradiente">
+        <h1 className="text-3xl text-center">Cadastre sua Doação</h1>
+        <br />
         <form>
           <DadosDoacao
             mensagens={mensagens}
@@ -130,7 +116,16 @@ export default function CadDoacao() {
             setDoacao={setDoacao}
           />
         </form>
+
+        <div className="mt-5 mb-5 text-center h-">
+          <button
+            className="btn btn-primary text-black mt-2 w-2/6 h-full"
+            onClick={() => cadastrarDoacao()}
+          >
+            Cadastrar
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

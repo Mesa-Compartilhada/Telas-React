@@ -66,7 +66,6 @@ export async function getDoacoesByStatus(status) {
 }
 
 export async function addDoacao(doacao) {
-  console.log(JSON.stringify(doacao));
   try {
     let result = await fetch("http://localhost:8080/apimc/doacao", {
       method: "POST",
@@ -107,4 +106,30 @@ export async function updateStatusDoacao(status, doacaoId, empresaRecebedoraId) 
 export async function getDoacoesEmpresa(id) {
   const result = await getEmpresaById(id)
   return result.empresa.doacoes
+}
+
+export async function getDoacoesByStatusAndEmpresaDoadoraId(status, id) {
+  try {
+    let result = await fetch(`http://localhost:8080/apimc/doacao/status/${status}/empresa-doadora/${id}`, {
+      method: "GET"
+    })
+    result = await result.json()
+    return result
+  } catch(error) {
+    console.log(error)
+    return false
+  }
+}
+
+export async function getDoacoesByStatusAndEmpresaRecebedoraId(status, id) {
+  try {
+    let result = await fetch(`http://localhost:8080/apimc/doacao/status/${status}/empresa-recebedora/${id}`, {
+      method: "GET"
+    })
+    result = await result.json()
+    return result
+  } catch(error) {
+    console.log(error)
+    return false
+  }
 }

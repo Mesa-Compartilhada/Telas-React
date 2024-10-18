@@ -11,15 +11,14 @@ export function DadosBasicos(props) {
     2: "Hortifrutti", 
     3: "Mercado", 
     4: "Padaria", 
-    5: "Fast Food",
-    6: "Outro"
+    5: "Fast Food"
   }
   const categoriaRecebedora = {
     0: "Selecione uma categoria",
     1: "Organização não governamental", 
-    2: "Organização Religiosa", 
-    3: "Unidade básica de saúde",
-    4: "Outro"
+    2: "OSC", 
+    3: "Religiosa",
+    4: "Banco de Alimentos"
   }
 
   return(

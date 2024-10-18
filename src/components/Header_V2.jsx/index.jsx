@@ -1,9 +1,9 @@
 import logo from "../../assets/MC_Logo.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthData } from "../../auth/AuthWrapper";
+import { TIPO_EMPRESA } from "../../constants/empresa";
 
 export default function Header() {
-  const navigator = useNavigate()
   const { user, logoutUser } = AuthData()
 
   const logout = () => {
@@ -13,20 +13,20 @@ export default function Header() {
   return (
     <>
       <header>
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div className="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
           <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
             {/* Logo */}
-            <div>
+            <Link to={"/dashboard"}>
               <img
                 className="md:w-64 w-40 pt-2 md:p-3 self-center"
                 src={logo}
                 alt="Logo do WebSite, uma fruteira"
               />
-            </div>
+            </Link>
 
             {/* Navegação (Disponíveis, Meus Dados, Histórico) */}
             <nav className="flex space-x-8">
-              <a href="#disponiveis" className="text-sm font-medium text-gray-900 link-default">Disponíveis</a>
+              { user && TIPO_EMPRESA[user.tipo] == TIPO_EMPRESA.DOADORA && <a href="/cadastro-doacao" className="text-sm font-medium text-gray-900 link-default">Nova doação</a> }
               <a href="/meus-dados" className="text-sm font-medium text-gray-900 link-default" >Meus Dados</a>
               <a href="#historico" className="text-sm font-medium text-gray-900 link-default"> Histórico</a>
             </nav>

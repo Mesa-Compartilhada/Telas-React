@@ -24,7 +24,7 @@ export default function Login() {
       email = "Insira o email"
       r = false
     }
-    if(!dadosLogin.senha || dadosLogin.senha.length <= 8) {
+    if(!dadosLogin.senha || dadosLogin.senha.length < 8) {
       senha = "A senha deve ter no mínimo 8 caracteres"
       r = false
     }
@@ -57,7 +57,7 @@ export default function Login() {
             </Link>
             <img src={logo} className="md:w-64 w-40 pt-2 md:p-3 self-center" alt="" />
             <h5 className="text-xl">Login</h5>
-            <small className="text-xs ml-2 opacity-80 my-2">{mensagem || <>&nbsp;</>}</small>
+            <small className="text-xs ml-2 opacity-80 my-2 text-red-500">{mensagem || <>&nbsp;</>}</small>
             <form className="mt-3 flex flex-col gap-2">
               <InputField type={"email"} label={"Email"} name={"email"} id={"email"} msg={mensagens.email} change={(e) => setDadosLogin({...dadosLogin, email: e.target.value})} />
               

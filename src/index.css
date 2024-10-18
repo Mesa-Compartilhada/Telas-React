@@ -17,7 +17,7 @@
   font-weight: bold;
   text-decoration: none;
 }
-a:hover{
+a:hover {
   text-decoration: none;
   color: inherit;
 }
@@ -53,10 +53,14 @@ a:hover{
   background-size: cover;
 }
 .gradiente {
-/* From https://css.glass */
-    background: rgb(237, 237, 237);
-      background: linear-gradient(4deg, rgba(237, 237, 237, 1) 0%, rgba(255, 255, 255, 1) 70%);
-    border: #f4f4f4 solid 2px
+  /* From https://css.glass */
+  background: rgb(237, 237, 237);
+  background: linear-gradient(
+    4deg,
+    rgba(237, 237, 237, 1) 0%,
+    rgba(255, 255, 255, 1) 70%
+  );
+  border: #f4f4f4 solid 2px;
 }
 @media (max-width: 768px) {
   .banner {
@@ -108,22 +112,29 @@ a:hover{
   width: 100%; /* Largura da linha */
   margin: 20px 0; /* Espaçamento acima e abaixo da linha */
 }
+.palavra {
+  margin-right: 150px;
+}
 
-.btn-primary{
-  @apply bg-l-Abobora text-white p-1 px-2 ml-auto rounded-lg hover:cursor-pointer hover:bg-opacity-80
+.palavra2 {
+  margin-right: 100px;
 }
-.btn-red{
-  @apply bg-red-700 text-white p-1 px-2 ml-auto rounded-lg hover:cursor-pointer hover:bg-opacity-80
+
+.btn-primary {
+  @apply bg-l-Abobora text-white p-1 px-2 ml-auto rounded-lg hover:cursor-pointer hover:bg-opacity-80;
 }
-.input-default{
-  @apply rounded-lg p-2 bg-neutral-100
+.btn-red {
+  @apply bg-red-700 text-white p-1 px-2 ml-auto rounded-lg hover:cursor-pointer hover:bg-opacity-80;
 }
-.input-error{
-  @apply rounded-lg p-2 outline outline-red-500
+.input-default {
+  @apply rounded-lg p-2 bg-neutral-100;
 }
-.label-default{
-  @apply absolute top-2.5 left-2 text-neutral-800 text-xs -translate-y-7 duration-200 peer-placeholder-shown:text-sm peer-placeholder-shown:-translate-y-0 peer-focus:-translate-y-7 peer-placeholder-shown:text-opacity-50 peer-focus:text-xs peer-focus:text-opacity-100 select-none hover:cursor-text
+.input-error {
+  @apply rounded-lg p-2 outline outline-red-500;
 }
-.link-default{
-  @apply border-b-2 border-transparent hover:border-l-Abobora hover:text-l-Abobora
+.label-default {
+  @apply absolute top-2.5 left-2 text-neutral-800 text-xs -translate-y-7 duration-200 peer-placeholder-shown:text-sm peer-placeholder-shown:-translate-y-0 peer-focus:-translate-y-7 peer-placeholder-shown:text-opacity-50 peer-focus:text-xs peer-focus:text-opacity-100 select-none hover:cursor-text;
+}
+.link-default {
+  @apply border-b-2 border-transparent hover:border-l-Abobora hover:text-l-Abobora;
 }

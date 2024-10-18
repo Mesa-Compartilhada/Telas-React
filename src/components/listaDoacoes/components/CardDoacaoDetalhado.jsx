@@ -15,7 +15,7 @@ export function CardDoacao({ doacao }) {
   const [isCancelarActive, setIsCancelarActive] = useState(false);
 
   return (
-    <div className="flex flex-col min-w-64 max-w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md my-6" key={doacao.id}>
+    <div className="flex flex-col w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md my-6" key={doacao.id}>
       <p className="text-lg truncate">{doacao.nome}</p>
       <a className="opacity-80 text-xs truncate" href="#">{doacao.empresaDoadora?.nome ?? ""}</a>
       <div className="flex flex-row gap-2 my-2">

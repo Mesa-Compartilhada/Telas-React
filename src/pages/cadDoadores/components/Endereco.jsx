@@ -21,7 +21,11 @@ export function Endereco(props) {
         cidade: dadosCep.city,
         estado: dadosCep.state,
         pais: "Brasil",
+        latitude: parseFloat(dadosCep.lat),
+        longitude: parseFloat(dadosCep.lng)
       })
+      console.log(endereco);
+      
     }
     else {
       setEndereco({
@@ -32,6 +36,8 @@ export function Endereco(props) {
         cidade: "",
         estado: "",
         pais: "Brasil",
+        latitude: "",
+        longitude: ""
       })
     }
   }
