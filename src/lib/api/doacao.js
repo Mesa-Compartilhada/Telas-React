@@ -121,7 +121,7 @@ export async function getDoacoesByStatusAndEmpresaDoadoraId(status, id) {
   }
 }
 
-export async function getDoacoesByStatusAndEmpresaRecebedorId(status, id) {
+export async function getDoacoesByStatusAndEmpresaRecebedoraId(status, id) {
   try {
     let result = await fetch(`http://localhost:8080/apimc/doacao/status/${status}/empresa-recebedora/${id}`, {
       method: "GET"
