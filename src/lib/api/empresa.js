@@ -70,6 +70,28 @@ export async function addEmpresa(empresa) {
   
 }
 
+export async function updateEmpresaById(id, empresa) {
+  try {
+    let result = await fetch(`http://localhost:8080/apimc/empresa/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(empresa),
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
+    });
+    let message = await result.json()
+    if(result.status == 400) {
+      return { status: false, message: Object.values(message)[0] }
+    }
+    return { status: true, message: `Empresa atualizada` }
+  } catch(error) {
+    console.log(error)
+    return { status: false, message: `Erro inesperado: ${error}` }
+  }
+  
+}
+
 export async function login(email, senha) {
   try {
     let result = await fetch("http://localhost:8080/apimc/empresa/login", {
@@ -85,7 +107,6 @@ export async function login(email, senha) {
     }
     else {
       result = await result.json()
-      console.log(result)
       return result
     }
   } catch(error) {

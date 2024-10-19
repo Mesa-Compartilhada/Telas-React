@@ -2,58 +2,26 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header_V2.jsx/index.jsx";
 import Modal from "../../components/modal/Modal.jsx";
 import { getEmpresaById } from "../../lib/api/empresa.js";
+import FormAtualizar from "./components/FormAtualizar.jsx";
 import { AuthData } from "../../auth/AuthWrapper.js";
-import InputField from "../../components/inputs/InputField.jsx";
-import SelectField from "../../components/inputs/SelectField.jsx";
-import { CATEGORIA_DOADORA, CATEGORIA_RECEBEDORA, STATUS_EMPRESA, TIPO_EMPRESA } from "../../constants/empresa.js";
 
 export default function MeusDados(){
-const categoriaDoadora = {
-    1: "Restaurante", 
-    2: "Hortifrutti", 
-    3: "Mercado", 
-    4: "Padaria", 
-    5: "Fast Food"
-}
-const categoriaRecebedora = {
-    1: "Organização não governamental", 
-    2: "OSC", 
-    3: "Religiosa",
-    4: "Banco de Alimentos"
-}
-const {user} = AuthData()
-const pegarDados = async() => {
-    let setardados = await getEmpresaById(user.id)
-    setDados(setardados.empresa)
-}
-const [dados, setDados] = useState(null)
-useEffect(() => {
-    pegarDados()
-}, [])
-const [isActive, setIsActive] = useState(false)
+    const { user } = AuthData()
+    const [dados, setDados] = useState(null)
+    const [dadosAtualizados, setDadosAtualizados] = useState(null)
+    const pegarDados = async() => {
+        let resultado = await getEmpresaById(user.id)
+        setDados(resultado.empresa)
+    }
+    useEffect(() => {
+        pegarDados()
+    }, [])
 
-const [dadosAtualizados, setDadosAtualizados] = useState(null)
-useEffect(() => {
-    setDadosAtualizados(dados)
-    console.log(dadosAtualizados)
-}, [dados])
-
-
-
-const atualizarDados = async() => {
-    if(dadosAtualizados)
-    setDadosAtualizados({...dadosAtualizados, 
-    tipo: TIPO_EMPRESA[dados.tipo] === TIPO_EMPRESA.DOADORA ? 1 : 2,
-    enderecoId: dadosAtualizados.endereco.id, 
-    status: STATUS_EMPRESA[dados.status],
-    categoria: TIPO_EMPRESA[dados.tipo] === TIPO_EMPRESA.DOADORA ? parseInt(CATEGORIA_DOADORA[dadosAtualizados.categoria]) : parseInt(CATEGORIA_RECEBEDORA[dadosAtualizados.categoria])
-})
-    console.log(dadosAtualizados)
-}
+    const [isActive, setIsActive] = useState(false)
     return(
-        <>
+        <body>
             {dados ? 
-            <body>
+                <>
                 <Header></Header>
                 <div className="flex justify-center items-center bg-[url('./assets/fundo_bolas_laranja_v2.svg')] bg-cover bg-opacity-50">                   
                     <div className="mx-10 lg:mx-20 my-4 border-4 md:w-3/5 p-10 shadow-xl rounded-2xl gradiente">                 
@@ -67,7 +35,7 @@ const atualizarDados = async() => {
                                         <span className="border border-gray-300  rounded p-3 bg-gray-50 mr-[60px]">{dados.tipo}</span>
                                         
                                         <span className="text-gray-600 mr-2">Categoria: </span>
-                                        <span className="border border-gray-300 text-xs rounded p-3 bg-gray-50">{dados.categoria}</span>
+                                        <span className="border border-gray-300 rounded p-3 bg-gray-50">{dados.categoria}</span>
                                     </div>
                                     <div className="mb-4 flex text-sm items-center">
                                         <span className="text-gray-600 mr-2">CNPJ: </span>
@@ -100,38 +68,14 @@ const atualizarDados = async() => {
                                     </div>
                                     <button className="btn-primary" onClick={() => setIsActive(true)}>Editar dados</button>
                                     {isActive && <Modal setIsActive = {setIsActive}>
-                                        <div>
-                                        <h1 className=" text-black text-2xl mb-4"></h1>
-                                        <div className="bg-white rounded-lg shadow-md p-10">
-                                            <h2 className=" text-gray-500 text-2xl mb-10" >Dados a serem editados</h2>
-                                            <div className="mb-4 flex gap-1 items-center ">
-                                                <InputField id={"nomeEmpresa"} name={"nomeEmpresa"} type={"text"} msg={""} change={(e) => setDadosAtualizados({...dadosAtualizados, nome: e.target.value})} label={"Nome:"} defaultValue={dados.nome}></InputField> 
-                                            </div>
-                                            <div className="mb-4 flex gap-1 items-center">
-                                            {
-                                                TIPO_EMPRESA[dados.tipo] === TIPO_EMPRESA.DOADORA
-                                                ? <SelectField name={"categoriaEmpresa"} label={"Categoria:"} id={"categoriaEmpresa"} options={categoriaDoadora} msg={""} defaultValue={CATEGORIA_DOADORA[dados.categoria]}  change={(e) => setDadosAtualizados({...dadosAtualizados, categoria: parseInt(e.target.value)})} />
-                                                : <SelectField name={"categoriaEmpresa"} label={"Categoria:"} id={"categoriaEmpresa"} options={categoriaRecebedora} msg={""} defaultValue={CATEGORIA_RECEBEDORA[dados.categoria]}  change={(e) => setDadosAtualizados({...dadosAtualizados, categoria: parseInt(e.target.value)})} />
-                                            }
-                                            </div>
-                                            <div className="mb-4 flex gap-1 items-center">
-                                            <InputField id={"emailEmpresa"} name={"emailEmpresa"} msg={""}  change={(e) => setDadosAtualizados({...dadosAtualizados, email: e.target.value})} label={"Email:"} defaultValue={dados.email}></InputField> 
-                                            </div>
-                                            <div className="mb-4 flex gap-1 items-center">
-                                            <InputField type={"password"} id={"senhaEmpresa"} name={"senhaEmpresa"} msg={""}  change={(e) => setDadosAtualizados({...dadosAtualizados, senha: e.target.value})} label={"Confirme sua senha:"}></InputField> 
-                                            </div>
-                                                    <button className="btn-red mr-[160px]" onClick={() => setIsActive(false)}>Cancelar</button>
-                                                    <button className="btn-primary" onClick={() => atualizarDados()}>Salvar</button>
-                                            </div>
-                                            
-                                        </div>
+                                        <FormAtualizar dados={dados} dadosAtualizados={dadosAtualizados} setDadosAtualizados={setDadosAtualizados} setIsActive={setIsActive} />
                                     </Modal>}
                             </div>                       
                     </div>
                     </div>
-            </body>
+                </>
             : ""
             }
-        </>
+        </body>
     )
 }
