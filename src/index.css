@@ -107,11 +107,6 @@ a:hover {
   background-size: cover;
 }
 
-.linha-preta {
-  border-top: 2px solid black; /* Espessura da linha */
-  width: 100%; /* Largura da linha */
-  margin: 20px 0; /* Espaçamento acima e abaixo da linha */
-}
 .palavra {
   margin-right: 150px;
 }

@@ -9,14 +9,14 @@ export const STATUS_EMPRESA = {
   INATIVA: 3
 }
 
-export const CATEGORIA_DOADORA = {
+export const CATEGORIA_RECEBEDORA = {
   ONG: 1,
   OSC: 2,
   RELIGIOSA: 3,
   BANCODEALIMENTOS: 4
 }
 
-export const CATEGORIA_RECEBEDORA = {
+export const CATEGORIA_DOADORA = {
   RESTAURANTE: 1,
   HORTIFRUTTI: 2,
   MERCADO: 3,
