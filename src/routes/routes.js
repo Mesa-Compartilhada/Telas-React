@@ -1,12 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import CadDoadores from "../pages/cadDoadores";
-import Home from "../pages/Home";
-import Login from "../pages/login";
-import Dashboard from "../pages/Dashboard";
-import CadDoacao from "../pages/cadDoacao";
 import { AuthData } from "../auth/AuthWrapper";
 import { TIPO_EMPRESA } from "../constants/empresa";
-import MeusDados from "../pages/MeusDados"
+import CadDoacao from "../pages/cadDoacao";
+import CadDoadores from "../pages/cadDoadores";
+import Dashboard from "../pages/Dashboard";
+import Historico from "../pages/Historico";
+import Home from "../pages/Home";
+import Login from "../pages/login";
+import MeusDados from "../pages/MeusDados";
 
 export default function AppRoutes() {
     
@@ -20,6 +21,7 @@ export default function AppRoutes() {
       { <Route path="/dashboard" element={ user ? <Dashboard /> : <Home /> }/> }
       { <Route path="/cadastro-doacao" element={ user && TIPO_EMPRESA[user.tipo] === TIPO_EMPRESA.DOADORA ? <CadDoacao /> : <Home /> }/> }
       { <Route path="/meus-dados" element={ user ? <MeusDados />: <Home />}/> }
+      { <Route path="/historico" element={ user ? <Historico/> : <Home/>}/>}
     </Routes>
   );
 }
