@@ -7,14 +7,18 @@ import { STATUS_DOACAO } from "../../../constants/doacao";
 import { DashboardContext } from "../../../pages/Dashboard";
 import { TIPO_EMPRESA } from "../../../constants/empresa";
 
+import icon_ok from "../../../assets/icon_ok.svg"
+import icon_time from "../../../assets/icon_time.svg"
+
 export function CardDoacao({ doacao }) {
   const { user } = AuthData()
   const tipoEmpresa = TIPO_EMPRESA[user.tipo]
   const { doacoesAlteradas, setDoacoesAlteradas } = useContext(DashboardContext)
 
   const [isSolicitarActive, setIsSolicitarActive] = useState(false);
-  const [isCancelarActive, setIsCancelarActive] = useState(false);
+  const [isCancelarSolicitacaoActive, setIsCancelarSolicitacaoActive] = useState(false);
   const [isConcluirActive, setIsConcluirActive] = useState(false);
+  const [isCancelarDoacao, setIsCancelarDoacao] = useState(false)
 
   return (
     <div className="flex flex-col min-w-64 max-w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md my-6" key={doacao.id}>
@@ -26,29 +30,37 @@ export function CardDoacao({ doacao }) {
       </div>
       <p className="opacity-80 text-sm truncate">{doacao.descricao}</p>
       <p className="opacity-80 text-sm truncate">{doacao.observacao}</p>
+
       {
-        user.tipo === TIPO_EMPRESA.RECEBEDORA
-        &&
+        doacao.status === STATUS_DOACAO.DISPONIVEL
+        ?
         (
-          doacao.status === STATUS_DOACAO.DISPONIVEL
+          user.tipo === TIPO_EMPRESA.RECEBEDORA
           ?
           <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsSolicitarActive(!isSolicitarActive)}>Solicitar</button>
           :
-          <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsCancelarActive(!isCancelarActive)}>Cancelar Solicitação</button>
+          <button className="my-2 p-2 rounded-md bg-red-700 text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsCancelarDoacao(!isCancelarDoacao)}>Cancelar doação</button>
+        )
+        : doacao.status === STATUS_DOACAO.ANDAMENTO
+        && 
+        (
+          user.tipo === TIPO_EMPRESA.RECEBEDORA
+          &&
+          <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsCancelarSolicitacaoActive(!isCancelarSolicitacaoActive)}>Cancelar solicitação</button>
         )
       }
 
       {
         doacao.status === STATUS_DOACAO.ANDAMENTO && user.tipo === TIPO_EMPRESA.DOADORA
         &&
-        <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsConcluirActive(!isConcluirActive)}>
+        <button className="my-2 p-2 rounded-md bg-azul text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsConcluirActive(!isConcluirActive)}>
           { !doacao.empresaDoadoraConcluida ? "Confirmar entrega" : "Cancelar confirmação de entrega" }
         </button>
       }
       {
         doacao.status === STATUS_DOACAO.ANDAMENTO && user.tipo === TIPO_EMPRESA.RECEBEDORA
         &&
-        <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsConcluirActive(!isConcluirActive)}>
+        <button className="my-2 p-2 rounded-md bg-azul text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsConcluirActive(!isConcluirActive)}>
           { !doacao.empresaRecebedoraConcluida ? "Confirmar recebimento" : "Cancelar confirmação de recebimento" }
         </button>
       }
@@ -59,10 +71,9 @@ export function CardDoacao({ doacao }) {
         <Modal setIsActive={setIsSolicitarActive}>
           <div className="flex flex-col gap-4 p-4">
             <h1 className="text-2xl">Confirmar Solicitação</h1>
-            <p className="text-gray-500">Confirme os detalhes da doação solicitada</p>
-            <Link rel="noopener noreferrer" target="_blank" to={"/termos"}>Termos e condições</Link>
+            <p className="text-gray-500">Após a doação ser solicitada, receba o alimento nas dependências da empresa</p>
             <div className="grid grid-cols-2">
-              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.ANDAMENTO, doacao.id, user.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsSolicitarActive(false)]}>Confirmar Solicitação</button>
+              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.ANDAMENTO, doacao.id, user.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsSolicitarActive(false)]}>Confirmar solicitação</button>
               <button className="btn-red" onClick={() => setIsSolicitarActive(false)}>Cancelar</button>
             </div>
           </div>
@@ -70,15 +81,15 @@ export function CardDoacao({ doacao }) {
       }
 
       {
-        isCancelarActive
+        isCancelarSolicitacaoActive
         &&
-        <Modal setIsActive={setIsCancelarActive}>
+        <Modal setIsActive={setIsCancelarSolicitacaoActive}>
           <div className="flex flex-col gap-4 p-4">
             <h1 className="text-2xl">Cancelar Solicitação</h1>
-            <p className="text-gray-500">Confirme os detalhes da doação solicitada a ser cancelada</p>
+            <p className="text-gray-500">Após a solicitação ser cancelada, a doação ficará disponível para outras instituições a solicitarem</p>
             <div className="grid grid-cols-2">
-              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.DISPONIVEL, doacao.id, user.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsCancelarActive(false)]}>Confirmar Cancelamento</button>
-              <button className="btn-red" onClick={() => setIsCancelarActive(false)}>Cancelar</button>
+              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.DISPONIVEL, doacao.id, user.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsCancelarSolicitacaoActive(false)]}>Confirmar cancelamento</button>
+              <button className="btn-red" onClick={() => setIsCancelarSolicitacaoActive(false)}>Cancelar</button>
             </div>
           </div>
         </Modal>
@@ -91,10 +102,17 @@ export function CardDoacao({ doacao }) {
           <div className="flex flex-col gap-4 p-4">
             
             <h1 className="text-2xl">Entrega</h1>
-            
-            <small>{`${doacao.empresaRecebedora.nome}: ${doacao.empresaRecebedoraConcluida ? "OK" : "não confirmada"}` }</small>
-            <small>{`Você: ${doacao.empresaDoadoraConcluida ? "OK" : "não confirmada"}` }</small>
-            <small>{ !doacao.empresaDoadoraConcluida ? "Deseja confirmar a entrega da doação?" : "Deseja cancelar a confirmação da entrega da doação?" }</small>
+            <div className="flex flex-row">
+              <p>{`${doacao.empresaRecebedora.nome}:`} </p> 
+              <img src={ doacao.empresaRecebedoraConcluida ? icon_ok : icon_time } alt="Ícone de OK" className="size-4 ml-2 mt-1" />
+            </div>
+
+            <div className="flex flex-row">
+              <p>Você:</p> 
+              <img src={ doacao.empresaDoadoraConcluida ? icon_ok : icon_time } alt="Ícone de OK" className="size-4 ml-2 mt-1" />
+            </div>
+
+            <p>{ !doacao.empresaDoadoraConcluida ? "Deseja confirmar a entrega da doação?" : "Deseja cancelar a confirmação da entrega da doação?" }</p>
 
             <div className="grid grid-cols-2">
               <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.CONCLUIDA, doacao.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsConcluirActive(false)]}>
@@ -116,9 +134,17 @@ export function CardDoacao({ doacao }) {
             
             <h1 className="text-2xl">Recebimento</h1>
             
-            <small>{`${doacao.empresaDoadora.nome}: ${doacao.empresaDoadoraConcluida ? "OK" : "não confirmada"}` }</small>
-            <small>{`Você: ${doacao.empresaRecebedoraConcluida ? "OK" : "não confirmada"}` }</small>
-            <small>{ !doacao.empresaRecebedoraConcluida ? "Deseja confirmar o recebimento da doação?" : "Deseja cancelar a confirmação de recebimento da doação?" }</small>
+            <div className="flex flex-row">
+              <p>{`${doacao.empresaDoadora.nome}:`} </p> 
+              <img src={ doacao.empresaDoadoraConcluida ? icon_ok : icon_time } alt="Ícone de OK" className="size-4 ml-2 mt-1" />
+            </div>
+
+            <div className="flex flex-row">
+              <p>Você:</p> 
+              <img src={ doacao.empresaRecebedoraConcluida ? icon_ok : icon_time } alt="Ícone de OK" className="size-4 ml-2 mt-1" />
+            </div>
+            
+            <p>{ !doacao.empresaRecebedoraConcluida ? "Deseja confirmar o recebimento da doação?" : "Deseja cancelar a confirmação de recebimento da doação?" }</p>
 
             <div className="grid grid-cols-2">
               <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.CONCLUIDA, doacao.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsConcluirActive(false)]}>
@@ -127,6 +153,21 @@ export function CardDoacao({ doacao }) {
                 }
               </button>
               <button className="btn-red" onClick={() => setIsConcluirActive(false)}>Cancelar</button>
+            </div>
+          </div>
+        </Modal>
+      }
+
+      {
+        isCancelarDoacao
+        &&
+        <Modal setIsActive={setIsCancelarDoacao}>
+          <div className="flex flex-col gap-4 p-4">
+            <h1 className="text-2xl">Cancelar Doação</h1>
+            <p>Após o cancelamento, sua doação ficará indisponível e não poderá ser solicitada pelas instituições</p>
+            <div className="grid grid-cols-2">
+              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.CANCELADA, doacao.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsCancelarDoacao(false)]}>Confirmar cancelamento</button>
+              <button className="btn-red" onClick={() => setIsCancelarDoacao(false)}>Cancelar</button>
             </div>
           </div>
         </Modal>

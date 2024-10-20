@@ -82,7 +82,7 @@ export async function addDoacao(doacao) {
   }
 }
 
-export async function updateStatusDoacao(status, doacaoId, empresaSolicitanteId, empresaRecebedoraId = null, ) {
+export async function updateStatusDoacao(status, doacaoId, empresaSolicitanteId, empresaRecebedoraId = null ) {
   try {
     let result = await fetch(`http://localhost:8080/apimc/doacao/status/${doacaoId}`, {
       method: "PUT",

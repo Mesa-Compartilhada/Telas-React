@@ -3,6 +3,7 @@ import DadosDoacao from "./components/dadosDoacao";
 import { useState } from "react";
 import { addDoacao } from "../../lib/api/doacao";
 import { AuthData } from "../../auth/AuthWrapper";
+import Header from "../../components/Header_V2.jsx";
 
 export default function CadDoacao() {
   const navigate = useNavigate();
@@ -104,28 +105,31 @@ export default function CadDoacao() {
     }
   }
   return (
-    <div className="centraliza !h-full">
-      <div className="mx-10 lg:mx-20 my-4 md:w-3/5 border-4 p-10 shadow-xl rounded-2xl gradiente">
-        <h1 className="text-3xl text-center">Cadastre sua Doação</h1>
-        <br />
-        <form>
-          <DadosDoacao
-            mensagens={mensagens}
-            setMensagens={setMensagens}
-            doacao={doacao}
-            setDoacao={setDoacao}
-          />
-        </form>
+    <>
+      <Header />
+      <div className="centraliza !h-full">
+        <div className="mx-10 lg:mx-20 my-4 md:w-3/5 border-4 p-10 shadow-xl rounded-2xl gradiente">
+          <h1 className="text-3xl text-center">Cadastre sua Doação</h1>
+          <br />
+          <form>
+            <DadosDoacao
+              mensagens={mensagens}
+              setMensagens={setMensagens}
+              doacao={doacao}
+              setDoacao={setDoacao}
+            />
+          </form>
 
-        <div className="mt-5 mb-5 text-center h-">
-          <button
-            className="btn btn-primary text-black mt-2 w-2/6 h-full"
-            onClick={() => cadastrarDoacao()}
-          >
-            Cadastrar
-          </button>
+          <div className="mt-5 mb-5 text-center h-">
+            <button
+              className="btn btn-primary text-black mt-2 w-2/6 h-full"
+              onClick={() => cadastrarDoacao()}
+            >
+              Cadastrar
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
