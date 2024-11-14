@@ -70,11 +70,14 @@ export default function Dashboard() {
         <DashboardContext.Provider value={{doacoesAlteradas: doacoesAlteradas, setDoacoesAlteradas: setDoacoesAlteradas}}>
         <>
           <Header/>
-            <div className="flex justify-center items-center pb-10">
-                <div ref={mapElement} className="w-[1000px] h-[480px]"></div>
+            <div className="grid place-content-center py-4 px-24 gap-4">
+                <h1 className="text-2xl">Localize empresas doadoras:</h1>
+                <div ref={mapElement} className="w-[1160px] h-[360px]"></div>
             </div>
 
-            <section className="grid place-content-center p-24 gap-4">
+            <hr />
+
+            <section className="grid place-content-center py-6 px-24 gap-2">
                 {
                     TIPO_EMPRESA.RECEBEDORA === user.tipo
                     ?

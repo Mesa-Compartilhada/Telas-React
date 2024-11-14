@@ -23,7 +23,7 @@ export function CardDoacao({ doacao }) {
   return (
     <div className="flex flex-col min-w-64 max-w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md my-6" key={doacao.id}>
       <p className="text-lg truncate">{doacao.nome}</p>
-      <a className="opacity-80 text-xs truncate" href="#">{doacao.empresaDoadora?.nome ?? ""}</a>
+      <a className="opacity-80 text-xs truncate">{doacao.empresaDoadora?.nome ?? ""}</a>
       <div className="flex flex-row gap-2 my-2">
         <small className="opacity-80 bg-blue-700 text-white p-1 rounded-md text-xs truncate">{doacao.dataMaxRetirada}</small>
         <small className={`${doacao.status === STATUS_DOACAO.DISPONIVEL ? "bg-green-700" : "bg-yellow-700"} opacity-80 text-white p-1 rounded-md text-xs truncate`}>{doacao.status}</small>
@@ -37,30 +37,30 @@ export function CardDoacao({ doacao }) {
         (
           user.tipo === TIPO_EMPRESA.RECEBEDORA
           ?
-          <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsSolicitarActive(!isSolicitarActive)}>Solicitar</button>
+          <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80 text-xs" onClick={() => setIsSolicitarActive(!isSolicitarActive)}>Solicitar</button>
           :
-          <button className="my-2 p-2 rounded-md bg-red-700 text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsCancelarDoacao(!isCancelarDoacao)}>Cancelar doação</button>
+          <button className="my-2 p-2 rounded-md bg-red-700 text-branco w-1/2 hover:bg-opacity-80 text-xs" onClick={() => setIsCancelarDoacao(!isCancelarDoacao)}>Cancelar doação</button>
         )
         : doacao.status === STATUS_DOACAO.ANDAMENTO
         && 
         (
           user.tipo === TIPO_EMPRESA.RECEBEDORA
           &&
-          <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsCancelarSolicitacaoActive(!isCancelarSolicitacaoActive)}>Cancelar solicitação</button>
+          <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80 text-xs" onClick={() => setIsCancelarSolicitacaoActive(!isCancelarSolicitacaoActive)}>Cancelar solicitação</button>
         )
       }
 
       {
         doacao.status === STATUS_DOACAO.ANDAMENTO && user.tipo === TIPO_EMPRESA.DOADORA
         &&
-        <button className="my-2 p-2 rounded-md bg-azul text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsConcluirActive(!isConcluirActive)}>
+        <button className="my-2 p-2 rounded-md bg-azul text-branco w-1/2 hover:bg-opacity-80 text-xs" onClick={() => setIsConcluirActive(!isConcluirActive)}>
           { !doacao.empresaDoadoraConcluida ? "Confirmar entrega" : "Cancelar confirmação de entrega" }
         </button>
       }
       {
         doacao.status === STATUS_DOACAO.ANDAMENTO && user.tipo === TIPO_EMPRESA.RECEBEDORA
         &&
-        <button className="my-2 p-2 rounded-md bg-azul text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsConcluirActive(!isConcluirActive)}>
+        <button className="my-2 p-2 rounded-md bg-azul text-branco w-1/2 hover:bg-opacity-80 text-xs" onClick={() => setIsConcluirActive(!isConcluirActive)}>
           { !doacao.empresaRecebedoraConcluida ? "Confirmar recebimento" : "Cancelar confirmação de recebimento" }
         </button>
       }
