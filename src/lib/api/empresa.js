@@ -21,7 +21,7 @@ export async function getEmpresaById(id) {
     }
   )
   let message = await result.json()
-  if(result === 404) {
+  if(!result.ok) {
     return { status: false, message: Object.values(message)[0] };
   }
   else {
