@@ -24,6 +24,7 @@ export default function AppRoutes() {
       { <Route path="/meus-dados" element={ user ? <MeusDados />: <Home />}/> }
       { <Route path="/historico" element={ user ? <Historico/> : <Home/>}/>}
       { <Route path="/perfil/:id" element={ user ? <Perfil/> : <Home/>}/>}
+      { <Route path="/perfil" element={ user ? <Perfil/> : <Home/>}/>}
     </Routes>
   );
 }

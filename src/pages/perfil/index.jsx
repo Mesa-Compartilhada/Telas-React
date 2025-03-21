@@ -1,7 +1,9 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { AuthData } from "../../auth/AuthWrapper"
 import { useEffect, useState } from "react"
 import { getEmpresaById } from "../../lib/api/empresa"
+import { CardPerfil } from "./components/CardPerfil"
+import Header from "../../components/Header_V2.jsx"
 
 export const Perfil = () => {
     const { user } = AuthData()
@@ -10,7 +12,14 @@ export const Perfil = () => {
     const [perfil, setPerfil] = useState()
 
     const getPerfil = async () => {
-        const result = await getEmpresaById(id)
+        let result
+        if(id) {
+            result = await getEmpresaById(id)
+        }
+        else {
+            result = await getEmpresaById(user.id)
+        }
+        
         if(result.empresa) {
             setPerfil(result.empresa)
         }
@@ -22,24 +31,16 @@ export const Perfil = () => {
 
     return (
         <>
+            <Header />
             {
                 perfil &&
-                user.id === perfil.id
-                &&
                 <div>
-                    <p>Seu Perfil: </p>
-                    <p>{perfil.nome}</p>    
-                </div>
-                
-            }
-
-            {   
-                perfil &&
-                user.id !== perfil.id
-                &&
-                <div>
-                    <p>Perfil de: </p>
-                    <p>{perfil.nome}</p>    
+                    <CardPerfil empresa={perfil} />
+                    {
+                        perfil.id === user.id
+                        &&
+                        <Link to={"/meus-dados"}>Alterar seus dados</Link>
+                    }
                 </div>
             }
 
