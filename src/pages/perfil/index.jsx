@@ -34,7 +34,7 @@ export const Perfil = () => {
             <Header />
             {
                 perfil &&
-                <div>
+                <div className="text-center flex flex-col gap-2">
                     <CardPerfil empresa={perfil} />
                     {
                         perfil.id === user.id

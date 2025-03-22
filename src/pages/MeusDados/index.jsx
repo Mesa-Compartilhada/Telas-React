@@ -19,7 +19,7 @@ export default function MeusDados(){
 
     const [isActive, setIsActive] = useState(false)
     return(
-        <body>
+        <>
             {dados ? 
                 <>
                 <Header></Header>
@@ -76,6 +76,6 @@ export default function MeusDados(){
                 </>
             : ""
             }
-        </body>
+        </>
     )
 }
