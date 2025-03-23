@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import {
-  Cell,
-  Legend,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Text,
+    Cell,
+    Legend,
+    Pie,
+    PieChart,
 } from "recharts";
 import { STATUS_DOACAO } from "../../../constants/doacao";
 import { TIPO_EMPRESA } from "../../../constants/empresa";
 export const PieChartDoacoes = ({ empresa }) => {
-  const [doacoesRecentes, setDoacoesRecentes] = useState(0);
   const [tipoAlimentodoacoesRecentes, setTipoAlimentodoacoesRecentes] =
     useState([]);
 
@@ -32,12 +29,9 @@ export const PieChartDoacoes = ({ empresa }) => {
         name: tipo,
         value: contagem[tipo],
       }));
-      console.log(doacoes);
-      console.log(dadosAlimentos);
-      setDoacoesRecentes(doacoes);
       setTipoAlimentodoacoesRecentes(dadosAlimentos);
     }
-  }, []);
+  }, [empresa.doacoes, empresa.tipo]);
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8E4162"];
   const RADIAN = Math.PI / 180;
