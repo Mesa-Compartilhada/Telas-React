@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { getEmpresaById } from "../../lib/api/empresa"
 import { CardPerfil } from "./components/CardPerfil"
 import Header from "../../components/Header_V2.jsx"
+import { PieChartDoacoes } from "./components/PieChartDoacoes.jsx"
 
 export const Perfil = () => {
     const { user } = AuthData()
@@ -41,6 +42,7 @@ export const Perfil = () => {
                         &&
                         <Link to={"/meus-dados"}>Alterar seus dados</Link>
                     }
+                    <PieChartDoacoes empresa={perfil}/>
                 </div>
             }
 
