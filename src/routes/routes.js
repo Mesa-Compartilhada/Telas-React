@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import Login from "../pages/login";
 import MeusDados from "../pages/MeusDados";
 import { Perfil } from "../pages/perfil";
+import PaginaSolta from "../pages/paginaSolta"
 
 export default function AppRoutes() {
     
@@ -25,6 +26,7 @@ export default function AppRoutes() {
       { <Route path="/historico" element={ user ? <Historico/> : <Home/>}/>}
       { <Route path="/perfil/:id" element={ user ? <Perfil/> : <Home/>}/>}
       { <Route path="/perfil" element={ user ? <Perfil/> : <Home/>}/>}
+      { <Route path="/paginasolta" element={ user ? <PaginaSolta />: <Home/>}/>}
     </Routes>
   );
 }

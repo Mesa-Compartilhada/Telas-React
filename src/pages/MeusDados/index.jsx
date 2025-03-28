@@ -5,6 +5,7 @@ import { getEmpresaById } from "../../lib/api/empresa.js";
 import FormAtualizar from "./components/FormAtualizar.jsx";
 import { AuthData } from "../../auth/AuthWrapper.js";
 
+
 export default function MeusDados(){
     const { user } = AuthData()
     const [dados, setDados] = useState(null)
@@ -23,8 +24,8 @@ export default function MeusDados(){
             {dados ? 
                 <>
                 <Header></Header>
-                <div className="flex justify-center items-center bg-[url('./assets/fundo_bolas_laranja_v2.svg')] bg-cover bg-opacity-50">                   
-                    <div className="mx-10 lg:mx-20 my-4 border-4 md:w-3/5 p-10 shadow-xl rounded-2xl gradiente">                 
+                <div className="flex justify-center items-center bg-[url('./assets/fundo_bolas_laranja_v2.svg')] h-screen bg-no-repeat bg-cover bg-opacity-50">                   
+                    <div className="mx-10 lg:mx-20 my-4 border-4 md:w-3/5 p-10 shadow-xl rounded-2xl  gradiente">                 
                         <h2>
                             <span className=" text-black text-xl mb-4 mr-[400px]">{dados.nome} </span>
                         </h2>
@@ -70,7 +71,7 @@ export default function MeusDados(){
                                     {isActive && <Modal setIsActive = {setIsActive}>
                                         <FormAtualizar dados={dados} dadosAtualizados={dadosAtualizados} setDadosAtualizados={setDadosAtualizados} setIsActive={setIsActive} />
                                     </Modal>}
-                            </div>                       
+                            </div>                   
                     </div>
                     </div>
                 </>
