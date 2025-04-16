@@ -16,6 +16,8 @@ export default function CadDoacao() {
   function validarDados(dados) {
     let nome,
       descricao,
+      quantidade,
+      unidadeMedida,
       observacao,
       tipo,
       conservacao,
@@ -31,6 +33,16 @@ export default function CadDoacao() {
     }
     if (!dados.descricao || dados.descricao.length <= 0) {
       descricao = "Insira a descricao da doação";
+      r = false;
+    }
+
+    if (!dados.descricao || dados.quantidade.length <= 0) {
+      quantidade = "Insira a quantidade da doação";
+      r = false;
+    }
+
+    if (!dados.descricao || dados.unidadeMedida.length <= 0) {
+      unidadeMedida = "Insira a unidade de medida da doação";
       r = false;
     }
     if (!dados.observacao || dados.observacao.length <= 0) {
@@ -69,6 +81,8 @@ export default function CadDoacao() {
       ...mensagens,
       nome,
       descricao,
+      quantidade,
+      unidadeMedida,
       observacao,
       tipo,
       conservacao,
@@ -84,10 +98,16 @@ export default function CadDoacao() {
   async function cadastrarDoacao() {
     if (validarDados({ ...doacao })) {
       // Enviando dados para a função que chama a rota POST da API
+       let quantidadeConvertida = doacao.unidadeMedida === "2" || doacao.unidadeMedida === "4" ? doacao.quantidade * 1000 : doacao.quantidade
+       console.log(quantidadeConvertida)
+       console.log( typeof quantidadeConvertida)
       const novaDoacao = {
         ...doacao,
+    
         nome: doacao.nome,
         descricao: doacao.descricao,
+        quantidade: quantidadeConvertida,
+        unidadeMedida: doacao.unidadeMedida === "1" || doacao.unidadeMedida === "2" ? "2": "1",
         observacao: doacao.observacao,
         horarioMin: doacao.horaRetiradaMin,
         horarioMax: doacao.horaRetiradaMax,
@@ -99,7 +119,8 @@ export default function CadDoacao() {
         dataMaxRetirada: doacao.dataRetirada,
         empresaDoadoraId: user.id,
       };
-
+      console.log(novaDoacao)
+      debugger
       await addDoacao(novaDoacao);
       navigate("/dashboard");
     }

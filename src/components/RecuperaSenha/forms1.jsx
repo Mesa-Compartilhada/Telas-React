@@ -10,7 +10,7 @@ export default function Forms1(){
                 <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Recuperação de Senha</h1>
                 <form>
                     <div className="mb-4">
-                        <InputField label="E-mail"></InputField>
+                        <InputField change={() => {  }}  label="E-mail"></InputField>
                     </div>
                 </form>
                 <p class="mt-4 text-sm text-gray-600 text-center">

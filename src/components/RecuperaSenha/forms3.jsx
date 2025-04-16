@@ -10,10 +10,10 @@ export default function Forms3(){
                 <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Recuperação de Senha</h1>
                 <form>
                     <div className="mb-4">
-                        <InputField label="Nova senha:"></InputField>
+                        <InputField change={() => {}} label="Nova senha:"></InputField>
                     </div>
                     <div className="mb-4">
-                        <InputField label="Repita sua nova senha:"></InputField>
+                        <InputField change={() => {}} label="Repita sua nova senha:"></InputField>
                     </div>
                 </form>
                 <p class="mt-4 text-sm text-gray-600 text-center">

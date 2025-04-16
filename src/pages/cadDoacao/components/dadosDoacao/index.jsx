@@ -20,7 +20,14 @@ export default function DadosDoacao(props) {
     3: "Refrigeração",
     4: "Congelamento",
   };
-
+  
+  const unidadeMedida = {
+    0: "Selecione a unidade de medida",
+    1: "Gramas (g)",
+    2: "Quilo (Kg)",
+    3: "Mililitro (Ml)",
+    4: "Litro (L)"
+  };
   return (
     <div className="flex flex-col gap-5">
       <h3>Dados da doação:</h3>
@@ -44,6 +51,36 @@ export default function DadosDoacao(props) {
         name={"descricao"}
         type={"text"}
       />
+
+      <div className="flex flex-row justify-between gap-3" >
+      <InputField
+        change={(e) => setDoacao({ ...doacao, quantidade: e.target.value })}
+        defaultValue={doacao.quantidade}
+        disabled={false}
+        id={"quantidade"}
+        label={"Quantidade da doação:"}
+        msg={mensagens.quantidade}
+        name={"quantidade"}
+        type={"number"}
+        inputFull={true}
+      />
+
+      <SelectField
+        change={(e) => {
+          console.log(e.target.value)
+          setDoacao({ ...doacao, unidadeMedida: e.target.value })
+        }}
+        defaultValue={doacao.unidadeMedida}
+        disabled={false}
+        id={"unidadeMedida"}
+        label={"Unidade de Medida da doação:"}
+        msg={mensagens.unidadeMedida ?? ""}
+        name={"unidadeMedida"}
+        options={unidadeMedida}
+      />
+
+      </div>
+
       <InputField
         change={(e) => setDoacao({ ...doacao, observacao: e.target.value })}
         defaultValue={doacao.observacao}
