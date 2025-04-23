@@ -1,19 +1,17 @@
 import InputField from "../../components/inputs/InputField"
 import { AuthData } from "../../auth/AuthWrapper.js";
-import { getEmpresaById } from "../../lib/api/empresa.js";
 
-export default function Forms2(){
+export default function Forms2({ callback }) {
     const { user } = AuthData()
-    console.log(user)
     return(
         <>
                 <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Recuperação de Senha</h1>
-                <form>
+                <div>
                     <div className="mb-4">
-                        <InputField change={() => {}} label="Digite o token que enviamos ao seu email"></InputField>
+                        <InputField change={(e) => {callback(e.target.value)}} id={"token"} label="Digite o token que enviamos ao seu email"></InputField>
                     </div>
-                </form>
-                <p class="mt-4 text-sm text-gray-600 text-center">
+                </div>
+                <p className="mt-4 text-sm text-gray-600 text-center">
                     Lembrou sua senha? <a href="/login" className="text-blue-500 hover:underline">Ir para o Login</a>
                 </p>
         </>

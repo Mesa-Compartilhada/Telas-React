@@ -3,11 +3,14 @@ import _Forms1 from "../../components/RecuperaSenha/forms1.jsx"
 import _Forms2 from "../../components/RecuperaSenha/forms2.jsx"
 import _Forms3 from "../../components/RecuperaSenha/forms3.jsx"
 import Header from "../../components/Header_V2.jsx";
+import { recuperarSenha } from "../../lib/api/empresa.js";
 export default function Principal(){
     const [pagina, setPagina] = useState(1);
     function avançarPagina() {
         setPagina(pagina + 1);
     }
+    const [token, setToken] = useState()
+    const [senha, setSenha] = useState()
     return(
         <>
                 <>
@@ -21,16 +24,21 @@ export default function Principal(){
                                                 <_Forms1
                                                 />
                                             ) : pagina === 2 ? (
-                                                <_Forms2
+                                                <_Forms2 callback={ (token) => setToken(token) }
                                                 />
                                             ) : (
-                                                <_Forms3
+                                                <_Forms3 callback={ (senha) => setSenha(senha) }
                                                 />
                                             )}
                                     </form>
                                     <div className="flex flex-row">
                                         <button className="text-white mt-2 mr-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}>{"Voltar"}</button>
                                         <button className="text-white mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80"onClick={() => avançarPagina()} disabled={pagina >= 3}>{"Avançar"}</button>
+                                        {
+                                            pagina === 3
+                                            &&
+                                            <button className="ml-auto text-white mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80"onClick={() => { recuperarSenha(token, senha) }}>{"Finalizar"}</button>
+                                        }
                                     </div>
                                 </div>
                             </div>

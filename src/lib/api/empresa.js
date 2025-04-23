@@ -114,3 +114,50 @@ export async function login(email, senha) {
     return false
   }
 }
+
+export async function getPasswordToken(email) {
+  try {
+    let result = await fetch(`http://localhost:8080/apimc/token/${email}`, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
+    })
+    let message = await result.json()
+    console.log(message)
+    if(result.status !== 200) {
+      return { status: false, message: Object.values(message)[0] }
+    }
+    else {
+      return { status: true, message: Object.values(message)[0] }
+    }
+  } catch(error) {
+    console.log(error)
+    return { status: true, message: `Erro inesperado ${error}` }
+  }
+}
+
+export async function recuperarSenha(token, senha) {
+  try {
+    let result = await fetch(`http://localhost:8080/apimc/empresa/recuperar-senha`, {
+      method: "POST",
+      body: JSON.stringify({token, senha}),
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
+    })
+    let message = await result.json()
+    console.log(message)
+    if(result.status !== 200) {
+      return { status: false, message: Object.values(message)[0] }
+    }
+    else {
+      return { status: true, message: Object.values(message)[0] }
+    }
+  } catch(error) {
+    console.log(error)
+    return { status: true, message: `Erro inesperado ${error}` }
+  }
+}
