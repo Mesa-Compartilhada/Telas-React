@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom"
 import { AuthData } from "../../auth/AuthWrapper"
 import { useEffect, useState } from "react"
 import { getEmpresaById } from "../../lib/api/empresa"
-import { CardPerfil } from "./components/CardPerfil"
+import { CardPerfil } from "../../components/perfil/CardPerfil.jsx"
 import Header from "../../components/Header_V2.jsx"
 import { PieChartDoacoes } from "./components/PieChartDoacoes.jsx"
 

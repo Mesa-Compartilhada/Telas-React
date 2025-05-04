@@ -1,7 +1,7 @@
 import { MapPin, Envelope, User } from "@phosphor-icons/react"
-import { TIPO_EMPRESA } from "../../../constants/empresa"
+import { TIPO_EMPRESA } from "../../constants/empresa"
 import { useEffect, useState } from "react"
-import { STATUS_DOACAO } from "../../../constants/doacao"
+import { STATUS_DOACAO } from "../../constants/doacao"
 export  const CardPerfil = ({ empresa }) => {
     const [doacoesRecentes, setDoacoesRecentes] = useState(0)
 
@@ -20,7 +20,6 @@ export  const CardPerfil = ({ empresa }) => {
                 }
                 return false
             })
-            console.log(doacoes)
             setDoacoesRecentes(doacoes)
         }
     }, [])
