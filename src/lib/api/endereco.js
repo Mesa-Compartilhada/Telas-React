@@ -1,6 +1,6 @@
 export async function addEndereco(endereco) {
   try {
-    let result = await fetch("http://localhost:8080/apimc/endereco", {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/endereco`, {
       method: "POST",
       body: JSON.stringify(endereco),
       headers: {

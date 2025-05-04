@@ -1,5 +1,5 @@
 export async function getEmpresas() {
-  let result = await fetch("http://localhost:8080/apimc/empresa", {
+  let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa`, {
       method: "GET",
       headers: {
         'Accept': 'application/json, text/plain',
@@ -12,7 +12,7 @@ export async function getEmpresas() {
 }
 
 export async function getEmpresaById(id) {
-  let result = await fetch(`http://localhost:8080/apimc/empresa/${id}`, {
+  let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa/${id}`, {
       method: "GET",
       headers: {
         'Accept': 'application/json, text/plain',
@@ -31,7 +31,7 @@ export async function getEmpresaById(id) {
 
 export async function getEmpresaByEmail(email) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/empresa/email/${email}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa/email/${email}`, {
       method: "GET"
       }
     )
@@ -50,7 +50,7 @@ export async function getEmpresaByEmail(email) {
 
 export async function addEmpresa(empresa) {
   try {
-    let result = await fetch("http://localhost:8080/apimc/empresa", {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa`, {
       method: "POST",
       body: JSON.stringify(empresa),
       headers: {
@@ -72,7 +72,7 @@ export async function addEmpresa(empresa) {
 
 export async function updateEmpresaById(id, empresa) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/empresa/${id}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa/${id}`, {
       method: "PUT",
       body: JSON.stringify(empresa),
       headers: {
@@ -94,7 +94,7 @@ export async function updateEmpresaById(id, empresa) {
 
 export async function login(email, senha) {
   try {
-    let result = await fetch("http://localhost:8080/apimc/empresa/login", {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa/login`, {
       method: "POST", 
       body: JSON.stringify({email, senha}),
       headers: {
@@ -117,7 +117,7 @@ export async function login(email, senha) {
 
 export async function getPasswordToken(email) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/token/${email}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/token/${email}`, {
       method: "POST",
       headers: {
         'Accept': 'application/json, text/plain',
@@ -140,7 +140,7 @@ export async function getPasswordToken(email) {
 
 export async function recuperarSenha(token, senha) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/empresa/recuperar-senha`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa/recuperar-senha`, {
       method: "POST",
       body: JSON.stringify({token, senha}),
       headers: {

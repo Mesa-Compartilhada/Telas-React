@@ -2,7 +2,7 @@ import { getEmpresaById } from "./empresa"
 
 export async function getDoacoes() {
   try {
-    let result = await fetch("http://localhost:8080/apimc/doacao", {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao`, {
       method: "GET"
     })
     result = await result.json()
@@ -15,7 +15,7 @@ export async function getDoacoes() {
   
 export async function getDoacaoById(id) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/doacao/${id}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/${id}`, {
       method: "GET"
     })
     result = await result.json()
@@ -28,7 +28,7 @@ export async function getDoacaoById(id) {
 
 export async function getDoacoesByEmpresaDoadoraId(id) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/doacao/empresa-doadora/${id}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/empresa-doadora/${id}`, {
       method: "GET"
     })
     result = await result.json()
@@ -41,7 +41,7 @@ export async function getDoacoesByEmpresaDoadoraId(id) {
 
 export async function getDoacoesByEmpresaRecebedoraId(id) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/doacao/empresa-recebedora/${id}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/empresa-recebedora/${id}`, {
       method: "GET"
     })
     result = await result.json()
@@ -54,7 +54,7 @@ export async function getDoacoesByEmpresaRecebedoraId(id) {
 
 export async function getDoacoesByStatus(status) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/doacao/status/${status}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/status/${status}`, {
       method: "GET"
     })
     result = await result.json()
@@ -67,7 +67,7 @@ export async function getDoacoesByStatus(status) {
 
 export async function addDoacao(doacao) {
   try {
-    let result = await fetch("http://localhost:8080/apimc/doacao", {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao`, {
       method: "POST",
       body: JSON.stringify(doacao),
       headers: {
@@ -84,7 +84,7 @@ export async function addDoacao(doacao) {
 
 export async function updateStatusDoacao(status, doacaoId, empresaSolicitanteId, empresaRecebedoraId = null ) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/doacao/status/${doacaoId}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/status/${doacaoId}`, {
       method: "PUT",
       body: JSON.stringify({ status, empresaRecebedoraId, empresaSolicitanteId }),
       headers: {
@@ -110,7 +110,7 @@ export async function getDoacoesEmpresa(id) {
 
 export async function getDoacoesByStatusAndEmpresaDoadoraId(status, id) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/doacao/status/${status}/empresa-doadora/${id}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/status/${status}/empresa-doadora/${id}`, {
       method: "GET"
     })
     result = await result.json()
@@ -123,7 +123,7 @@ export async function getDoacoesByStatusAndEmpresaDoadoraId(status, id) {
 
 export async function getDoacoesByStatusAndEmpresaRecebedoraId(status, id) {
   try {
-    let result = await fetch(`http://localhost:8080/apimc/doacao/status/${status}/empresa-recebedora/${id}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/status/${status}/empresa-recebedora/${id}`, {
       method: "GET"
     })
     result = await result.json()
