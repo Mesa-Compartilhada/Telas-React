@@ -138,10 +138,10 @@ a:hover {
 }
 
 .btn-primary {
-  @apply bg-l-Abobora text-white p-1 px-2 ml-auto rounded-lg hover:cursor-pointer hover:bg-opacity-80;
+  @apply bg-l-Abobora text-white p-1 px-2 rounded-lg hover:cursor-pointer hover:bg-opacity-80;
 }
 .btn-red {
-  @apply bg-red-700 text-white p-1 px-2 ml-auto rounded-lg hover:cursor-pointer hover:bg-opacity-80;
+  @apply bg-red-700 text-white p-1 px-2 rounded-lg hover:cursor-pointer hover:bg-opacity-80;
 }
 .input-default {
   @apply rounded-lg p-2 bg-neutral-100;

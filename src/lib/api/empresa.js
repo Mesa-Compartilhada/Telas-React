@@ -125,7 +125,28 @@ export async function getPasswordToken(email) {
       },
     })
     let message = await result.json()
-    console.log(message)
+    if(result.status !== 200) {
+      return { status: false, message: Object.values(message)[0] }
+    }
+    else {
+      return { status: true, message: Object.values(message)[0] }
+    }
+  } catch(error) {
+    console.log(error)
+    return { status: true, message: `Erro inesperado ${error}` }
+  }
+}
+
+export async function verificarToken(token) {
+  try {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/token/${token}`, {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
+    })
+    let message = await result.json()
     if(result.status !== 200) {
       return { status: false, message: Object.values(message)[0] }
     }

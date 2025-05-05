@@ -4,6 +4,8 @@ import Modal from "../../components/modal/Modal.jsx";
 import { getEmpresaById } from "../../lib/api/empresa.js";
 import FormAtualizar from "./components/FormAtualizar.jsx";
 import { AuthData } from "../../auth/AuthWrapper.js";
+import FormEmail from "../../components/RecuperaSenha/formEmail.jsx";
+import { FormRecuperarSenha } from "./components/formRecuperarSenha.jsx";
 
 
 export default function MeusDados(){
@@ -18,7 +20,10 @@ export default function MeusDados(){
         pegarDados()
     }, [])
 
-    const [isActive, setIsActive] = useState(false)
+    const [editarDadosModal, setEditarDadosModal] = useState(false)
+
+    const [recuperarSenhaModal, setRecuperarSenhaModal] = useState(false)
+
     return(
         <>
             {dados ? 
@@ -67,10 +72,23 @@ export default function MeusDados(){
                                         <span className="text-gray-600 mr-2">N°: </span>
                                         <span className="border border-gray-300 rounded p-3 bg-gray-50">{dados.endereco.numero}</span>
                                     </div>
-                                    <button className="btn-primary" onClick={() => setIsActive(true)}>Editar dados</button>
-                                    {isActive && <Modal setIsActive = {setIsActive}>
-                                        <FormAtualizar dados={dados} dadosAtualizados={dadosAtualizados} setDadosAtualizados={setDadosAtualizados} setIsActive={setIsActive} />
-                                    </Modal>}
+                                    <div className="flex gap-4">
+                                        <button className="btn-primary" onClick={() => setEditarDadosModal(true)}>Editar dados</button>
+                                        {
+                                            editarDadosModal && 
+                                            <Modal setIsActive = {setEditarDadosModal}>
+                                                <FormAtualizar dados={dados} dadosAtualizados={dadosAtualizados} setDadosAtualizados={setDadosAtualizados} setIsActive={setEditarDadosModal} />
+                                            </Modal>
+                                        }
+
+                                        <button className="btn-primary" onClick={() => { setRecuperarSenhaModal(true) }}>Recuperar senha</button>
+                                        {
+                                            recuperarSenhaModal &&
+                                            <Modal setIsActive={setRecuperarSenhaModal}>
+                                                <FormRecuperarSenha user={user}/>
+                                            </Modal>
+                                        }
+                                    </div>
                             </div>                   
                     </div>
                     </div>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import _Forms1 from "../../components/RecuperaSenha/forms1.jsx"
-import _Forms2 from "../../components/RecuperaSenha/forms2.jsx"
-import _Forms3 from "../../components/RecuperaSenha/forms3.jsx"
 import Header from "../../components/Header_V2.jsx";
 import { recuperarSenha } from "../../lib/api/empresa.js";
+import FormEmail from "../../components/RecuperaSenha/formEmail.jsx";
+import FormToken from "../../components/RecuperaSenha/formToken.jsx";
+import FormSenha from "../../components/RecuperaSenha/formSenha.jsx";
 export default function Principal(){
     const [pagina, setPagina] = useState(1);
     function avançarPagina() {
@@ -21,13 +21,13 @@ export default function Principal(){
                                 <div>
                                     <form>
                                             {pagina === 1 ? (
-                                                <_Forms1
+                                                <FormEmail
                                                 />
                                             ) : pagina === 2 ? (
-                                                <_Forms2 callback={ (token) => setToken(token) }
+                                                <FormToken callback={ (token) => setToken(token) }
                                                 />
                                             ) : (
-                                                <_Forms3 callback={ (senha) => setSenha(senha) }
+                                                <FormSenha callback={ (senha) => setSenha(senha) }
                                                 />
                                             )}
                                     </form>
