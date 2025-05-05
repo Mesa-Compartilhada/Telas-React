@@ -1,7 +1,7 @@
-import InputField from "../../components/inputs/InputField"
+import InputField from "../inputs/InputField.jsx"
 import { AuthData } from "../../auth/AuthWrapper.js";
 
-export default function Forms2({ callback }) {
+export default function FormToken({ callback }) {
     const { user } = AuthData()
     return(
         <>
@@ -9,6 +9,7 @@ export default function Forms2({ callback }) {
                 <div>
                     <div className="mb-4">
                         <InputField change={(e) => {callback(e.target.value)}} id={"token"} label="Digite o token que enviamos ao seu email"></InputField>
+                        <button className="btn-primary" onClick={() => callback()}>Enviar</button>
                     </div>
                 </div>
                 <p className="mt-4 text-sm text-gray-600 text-center">

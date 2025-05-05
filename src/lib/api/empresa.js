@@ -125,7 +125,6 @@ export async function getPasswordToken(email) {
       },
     })
     let message = await result.json()
-    console.log(message)
     if(result.status !== 200) {
       return { status: false, message: Object.values(message)[0] }
     }
