@@ -4,6 +4,7 @@ import { useState } from "react";
 import { addDoacao } from "../../lib/api/doacao";
 import { AuthData } from "../../auth/AuthWrapper";
 import Header from "../../components/Header_V2.jsx";
+import { toast } from "react-toastify";
 
 export default function CadDoacao() {
   const navigate = useNavigate();
@@ -99,8 +100,6 @@ export default function CadDoacao() {
     if (validarDados({ ...doacao })) {
       // Enviando dados para a função que chama a rota POST da API
        let quantidadeConvertida = doacao.unidadeMedida === "2" || doacao.unidadeMedida === "4" ? doacao.quantidade * 1000 : doacao.quantidade
-       console.log(quantidadeConvertida)
-       console.log( typeof quantidadeConvertida)
       const novaDoacao = {
         ...doacao,
     
@@ -119,9 +118,8 @@ export default function CadDoacao() {
         dataMaxRetirada: doacao.dataRetirada,
         empresaDoadoraId: user.id,
       };
-      console.log(novaDoacao)
-      debugger
       await addDoacao(novaDoacao);
+      toast.success("Doação cadastrada")
       navigate("/dashboard");
     }
   }

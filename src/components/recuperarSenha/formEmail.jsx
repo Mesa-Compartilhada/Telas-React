@@ -1,10 +1,10 @@
 import InputField from "../inputs/InputField"
 import { useState } from "react";
 import { getPasswordToken } from "../../lib/api/empresa";
+import { toast } from "react-toastify";
 
 export default function FormEmail({ emailAtual, callback }) {
     const [email, setEmail] = useState(emailAtual ?? "")
-    const [mensagem, setMensagem] = useState("")
     return(
         <>
                 <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Recuperação de Senha</h1>
@@ -17,7 +17,7 @@ export default function FormEmail({ emailAtual, callback }) {
                                     e.preventDefault()
                                     if(email) {
                                         const result = await getPasswordToken(email)
-                                        setMensagem(result.message)
+                                        result.status ? toast.success(result.message) : toast.error(result.message)
                                         setTimeout(() => {
                                             callback()
                                         }, 3000)
@@ -30,7 +30,6 @@ export default function FormEmail({ emailAtual, callback }) {
                         </div>
                     </div>
                 </div>
-                <small className="text-xs">{mensagem ? mensagem : '\u00A0'}</small>
                 <p className="mt-4 text-sm text-gray-600 text-center">
                     Lembrou sua senha? <a href="/login" className="text-blue-500 hover:underline">Ir para o Login</a>
                 </p>

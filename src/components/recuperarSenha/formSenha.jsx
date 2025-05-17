@@ -1,11 +1,11 @@
 import InputField from "../inputs/InputField.jsx"
 import { recuperarSenha } from "../../lib/api/empresa.js";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function FormSenha({ token, callback }){
     const [senha, setSenha] = useState("")
     const [confirmacaoDeSenha, setConfirmacaoDeSenha] = useState("")
-    const [mensagem, setMensagem] = useState()
     return(
         <>
                 <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Recuperação de Senha</h1>
@@ -20,15 +20,19 @@ export default function FormSenha({ token, callback }){
                         e.preventDefault()
                         if(senha.length >= 8 && senha === confirmacaoDeSenha) {
                             const result = await recuperarSenha(token, senha)
-                            setMensagem(result.message)
-                            callback()
+                            if(result.status) {
+                                toast.success(result.message)
+                                callback()
+                            }
+                            else {
+                                toast.error(result.message)
+                            }
                         }
                         else {
-                            setMensagem("As senhas não coincidem")
+                            toast.error("As senhas não coincidem")
                         }
                     }}>Enviar</button>
                 </div>
-                <small className="text-xs">{mensagem ? mensagem : '\u00A0'}</small>
                 <p className="mt-4 text-sm text-gray-600 text-center">
                     Lembrou sua senha? <a href="/login" className="text-blue-500 hover:underline">Ir para o Login</a>
                 </p>

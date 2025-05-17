@@ -10,6 +10,7 @@ import icone_ponto_map from "./../../assets/icone_ponto_mapa.svg";
 import icone_usuario from "./../../assets/icone_usuario.svg";
 import { Link } from "react-router-dom";
 import seta from "../../assets/seta_voltar.svg";
+import { toast } from "react-toastify";
 
 export default function CadDoadores() {
   const navigate = useNavigate();
@@ -144,6 +145,7 @@ export default function CadDoadores() {
 
         let empresaAdicionada = await addEmpresa(novaEmpresa);
         if (empresaAdicionada.status) {
+          toast.success("Sucesso! Empresa cadastrada")
           navigate("/login");
         } else {
           setErro(empresaAdicionada.message);

@@ -4,10 +4,10 @@ import InputField from "../../../components/inputs/InputField.jsx";
 import SelectField from "../../../components/inputs/SelectField.jsx"; 
 import { CATEGORIA_DOADORA, CATEGORIA_RECEBEDORA, TIPO_EMPRESA } from "../../../constants/empresa.js";
 import { login, updateEmpresaById, getEmpresaById } from "../../../lib/api/empresa.js";
+import { toast } from "react-toastify";
 
 export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualizados, setIsActive }) {
     const { user } = AuthData()
-    const [mensagem, setMensagem] = useState("")
     const [mensagens, setMensagens] = useState({})
     const categoriaDoadora = {
         1: "Restaurante", 
@@ -39,11 +39,11 @@ export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualiz
                 let updateResult
                 if(loginResult !== false) {
                     updateResult = await updateEmpresaById(user.id, novosDados)
-                    setMensagem("")
                     setIsActive(false)
+                    toast.success("Dados atualizados com sucesso")
                 }
                 else {
-                    setMensagem("Dados inválidos")
+                    toast.error("Dados inválidos")
                 }
             }
         }
@@ -103,7 +103,6 @@ export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualiz
                 <button className="btn-red mr-[160px]" onClick={() => setIsActive(false)}>Cancelar</button>
                 <button className="btn-primary" onClick={() => atualizarDados()}>Salvar</button>
             </div>
-            <small className="text-xs ml-2 opacity-80 my-2 text-red-500">{mensagem || <>&nbsp;</>}</small>
         </div>
     )
 }

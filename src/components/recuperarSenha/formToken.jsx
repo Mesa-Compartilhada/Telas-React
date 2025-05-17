@@ -1,10 +1,10 @@
 import InputField from "../inputs/InputField.jsx"
 import { verificarToken } from "../../lib/api/empresa.js";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function FormToken({ callback }) {
     const [token, setToken] = useState("")
-    const [mensagem, setMensagem] = useState("")
     return(
         <>
                 <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Recuperação de Senha</h1>
@@ -15,7 +15,7 @@ export default function FormToken({ callback }) {
                             e.preventDefault()
                             if(token) {
                                 const result = await verificarToken(token)
-                                setMensagem(result.message)
+                                result.status ? toast.success("Token válido") : toast.error("Token expirado ou inválido")
                                 if(result.status) {
                                     setTimeout(() => {
                                         callback(token)
@@ -25,7 +25,6 @@ export default function FormToken({ callback }) {
                         }}>Enviar</button>
                     </div>
                 </div>
-                <small className="text-xs">{mensagem ? mensagem : '\u00A0'}</small>
                 <p className="mt-4 text-sm text-gray-600 text-center">
                     Lembrou sua senha? <a href="/login" className="text-blue-500 hover:underline">Ir para o Login</a>
                 </p>
