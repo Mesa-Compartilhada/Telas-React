@@ -4,8 +4,7 @@ import Modal from "../../components/modal/Modal.jsx";
 import { getEmpresaById } from "../../lib/api/empresa.js";
 import FormAtualizar from "./components/FormAtualizar.jsx";
 import { AuthData } from "../../auth/AuthWrapper.js";
-import FormEmail from "../../components/RecuperaSenha/formEmail.jsx";
-import { FormRecuperarSenha } from "./components/formRecuperarSenha.jsx";
+import FormRecuperarSenha from "./components/formRecuperarSenha.jsx";
 
 
 export default function MeusDados(){
@@ -85,7 +84,7 @@ export default function MeusDados(){
                                         {
                                             recuperarSenhaModal &&
                                             <Modal setIsActive={setRecuperarSenhaModal}>
-                                                <FormRecuperarSenha user={user}/>
+                                                <FormRecuperarSenha user={ user } />
                                             </Modal>
                                         }
                                     </div>

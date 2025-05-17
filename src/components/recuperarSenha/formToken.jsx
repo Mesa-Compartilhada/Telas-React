@@ -13,12 +13,14 @@ export default function FormToken({ callback }) {
                         <InputField change={(e) => {setToken(e.target.value)}} id={"token"} label="Digite o token que enviamos ao seu email"></InputField>
                         <button className="btn-primary" onClick={async (e) => {
                             e.preventDefault()
-                            const result = await verificarToken(token)
-                            setMensagem(result.message)
-                            if(result.status) {
-                                setTimeout(() => {
-                                    callback(token)
-                                }, 3000)
+                            if(token) {
+                                const result = await verificarToken(token)
+                                setMensagem(result.message)
+                                if(result.status) {
+                                    setTimeout(() => {
+                                        callback(token)
+                                    }, 3000)
+                                }
                             }
                         }}>Enviar</button>
                     </div>

@@ -1,10 +1,10 @@
 import { useState } from "react"
-import FormEmail from "../../../components/RecuperaSenha/formEmail"
-import FormToken from "../../../components/RecuperaSenha/formToken"
-import FormSenha from "../../../components/RecuperaSenha/formSenha"
 import { ArrowLeft } from "@phosphor-icons/react"
+import FormEmail from "../../../components/recuperarSenha/formEmail"
+import FormToken from "../../../components/recuperarSenha/formToken"
+import FormSenha from "../../../components/recuperarSenha/formSenha"
 
-export function FormRecuperarSenha({ user }) {
+export default function FormRecuperarSenha({ user }) {
     const [pagina, setPagina] = useState(1)
     const [token, setToken] = useState()
     return(

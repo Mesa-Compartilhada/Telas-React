@@ -27,8 +27,8 @@ export default function Header() {
             {/* Navegação (Disponíveis, Meus Dados, Histórico) */}
             <nav className="flex space-x-8">
               { user && TIPO_EMPRESA[user.tipo] == TIPO_EMPRESA.DOADORA && <a href="/cadastro-doacao" className="text-sm font-medium text-gray-900 link-default">Nova doação</a> }
-              <a href="/meus-dados" className="text-sm font-medium text-gray-900 link-default" >Meus Dados</a>
-              <a href="/historico" className="text-sm font-medium text-gray-900 link-default"> Histórico</a>
+              <Link to="/meus-dados" className="text-sm font-medium text-gray-900 link-default" >Meus Dados</Link>
+              <Link to="/historico" className="text-sm font-medium text-gray-900 link-default"> Histórico</Link>
             </nav>
 
             {/* Botões Criar Doação e Sair */}

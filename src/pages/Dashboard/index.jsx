@@ -8,7 +8,7 @@ import { getDoacoesByStatus, getDoacoesByStatusAndEmpresaDoadoraId, getDoacoesBy
 import { STATUS_DOACAO } from "../../constants/doacao.js";
 
 import { createContext, useState } from 'react';
-import MapaDisponiveis from "./mapaDisponiveis/mapaDisponiveis.jsx";
+import MapaDisponiveis from "./components/mapaDisponiveis.jsx";
 
 export const DashboardContext = createContext()
 

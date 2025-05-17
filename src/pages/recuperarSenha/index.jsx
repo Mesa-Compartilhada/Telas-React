@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import Header from "../../components/Header_V2.jsx";
+import Header from "../../components/Header_V2.jsx/index.jsx";
 import { recuperarSenha } from "../../lib/api/empresa.js";
-import FormEmail from "../../components/RecuperaSenha/formEmail.jsx";
-import FormToken from "../../components/RecuperaSenha/formToken.jsx";
-import FormSenha from "../../components/RecuperaSenha/formSenha.jsx";
-export default function Principal(){
+import FormEmail from "../../components/recuperarSenha/formEmail.jsx";
+import FormToken from "../../components/recuperarSenha/formToken.jsx";
+import FormSenha from "../../components/recuperarSenha/formSenha.jsx";
+import { Link } from "react-router-dom";
+export default function RecuperarSenha() {
     const [pagina, setPagina] = useState(1);
     function avançarPagina() {
         setPagina(pagina + 1);
@@ -14,30 +15,37 @@ export default function Principal(){
     return(
         <>
                 <>
-                    <Header></Header>
                     <div className="flex justify-center items-center bg-[url('./assets/fundo_bolas_laranja_v2.svg')] bg-cover h-screen bg-opacity-50">
                         <div className="justify-center items-center mx-5 lg:mx-40 my-4 border-4 md:w-3/5 p-5 shadow-xl rounded-2xl  gradiente">
                             <div className="bg-white shadow-lg rounded-lg p-8 w-full">                   
                                 <div>
                                     <form>
                                             {pagina === 1 ? (
-                                                <FormEmail
+                                                <FormEmail callback={() => {
+                                                    avançarPagina()
+                                                }}
                                                 />
                                             ) : pagina === 2 ? (
-                                                <FormToken callback={ (token) => setToken(token) }
+                                                <FormToken callback={ (token) => {
+                                                    setToken(token)
+                                                    avançarPagina()
+                                                }
+                                                }
                                                 />
                                             ) : (
-                                                <FormSenha callback={ (senha) => setSenha(senha) }
+                                                <FormSenha token={ token } callback={ (senha) => {
+                                                    setSenha(senha)
+                                                }
+                                                }
                                                 />
                                             )}
                                     </form>
                                     <div className="flex flex-row">
                                         <button className="text-white mt-2 mr-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}>{"Voltar"}</button>
-                                        <button className="text-white mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80"onClick={() => avançarPagina()} disabled={pagina >= 3}>{"Avançar"}</button>
                                         {
                                             pagina === 3
                                             &&
-                                            <button className="ml-auto text-white mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80"onClick={() => { recuperarSenha(token, senha) }}>{"Finalizar"}</button>
+                                            <Link to={"/login"} className="ml-auto text-white mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80 hover:text-white hover:opacity-80">Finalizar</Link>
                                         }
                                     </div>
                                 </div>

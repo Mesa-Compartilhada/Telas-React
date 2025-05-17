@@ -72,6 +72,7 @@ export default function Login() {
                 <span className="front">Entrar</span>
               </button>
               <Link className="text-xs" to={"/cadastro"}>Não possui cadastro?</Link>
+              <Link className="text-xs" to={"/recuperar-senha"}>Esqueceu sua senha?</Link>
             </form>
           </div>
         </div>

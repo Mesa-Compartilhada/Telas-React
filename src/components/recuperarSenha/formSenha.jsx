@@ -3,7 +3,8 @@ import { recuperarSenha } from "../../lib/api/empresa.js";
 import { useState } from "react";
 
 export default function FormSenha({ token, callback }){
-    const [senha, setSenha] = useState()
+    const [senha, setSenha] = useState("")
+    const [confirmacaoDeSenha, setConfirmacaoDeSenha] = useState("")
     const [mensagem, setMensagem] = useState()
     return(
         <>
@@ -13,12 +14,18 @@ export default function FormSenha({ token, callback }){
                         <InputField type="password" change={(e) => { setSenha(e.target.value) }} label="Nova senha:" id={"senha"}></InputField>
                     </div>
                     <div className="mb-4">
-                        <InputField type="password" change={() => {}} label="Repita sua nova senha:" id={"novaSenha"}></InputField>
+                        <InputField type="password" change={(e) => {setConfirmacaoDeSenha(e.target.value)}} label="Repita sua nova senha:" id={"novaSenha"}></InputField>
                     </div>
-                    <button className="btn-primary" onClick={async () => {
-                        callback()
-                        const result = await recuperarSenha(token, senha)
-                        setMensagem(result.message)
+                    <button className="btn-primary" onClick={async (e) => {
+                        e.preventDefault()
+                        if(senha.length >= 8 && senha === confirmacaoDeSenha) {
+                            const result = await recuperarSenha(token, senha)
+                            setMensagem(result.message)
+                            callback()
+                        }
+                        else {
+                            setMensagem("As senhas não coincidem")
+                        }
                     }}>Enviar</button>
                 </div>
                 <small className="text-xs">{mensagem ? mensagem : '\u00A0'}</small>

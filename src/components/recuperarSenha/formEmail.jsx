@@ -1,4 +1,4 @@
-import InputField from "../../components/inputs/InputField"
+import InputField from "../inputs/InputField"
 import { useState } from "react";
 import { getPasswordToken } from "../../lib/api/empresa";
 
@@ -15,11 +15,13 @@ export default function FormEmail({ emailAtual, callback }) {
                             <button className="btn-primary" 
                                 onClick={async (e) => { 
                                     e.preventDefault()
-                                    const result = await getPasswordToken(email)
-                                    setMensagem(result.message)
-                                    setTimeout(() => {
-                                        callback()
-                                    }, 3000)
+                                    if(email) {
+                                        const result = await getPasswordToken(email)
+                                        setMensagem(result.message)
+                                        setTimeout(() => {
+                                            callback()
+                                        }, 3000)
+                                    }
                                 }}>Enviar
                             </button>
                             <button className="btn-primary" onClick={() => callback()}>
