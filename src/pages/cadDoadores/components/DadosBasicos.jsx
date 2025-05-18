@@ -25,7 +25,7 @@ export function DadosBasicos(props) {
     <div className="flex flex-col gap-5">
       <h4 className="text-2xl mb-2">Dados básicos:</h4>
       
-      <InputField type={"text"} label={"Nome fantasia"} name={"nome"} id={"nome"} defaultValue={empresa.nome} msg={mensagens.nome} change={(e) => setEmpresa({...empresa, nome: e.target.value})}/>
+      <InputField type={"text"} label={"Nome fantasia"} name={"nome"} id={"nome"} defaultValue={empresa.nome} msg={mensagens.nome} change={(e) => setEmpresa({...empresa, nome: e.target.value})} />
       
       <InputField type={"text"} label={"CNPJ"} name={"cnpj"} id={"cnpj"} defaultValue={empresa.cnpj} msg={mensagens.cnpj} change={(e) => setEmpresa({...empresa, cnpj: e.target.value})} />
 
