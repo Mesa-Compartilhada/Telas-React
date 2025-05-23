@@ -5,6 +5,7 @@ import seta from "../../assets/seta_voltar.svg";
 import logo from "../../assets/MC_Logo.svg"
 import { AuthData } from "../../auth/AuthWrapper";
 import { toast } from "react-toastify";
+import { SignIn } from "@phosphor-icons/react";
 
 
 export default function Login() {
@@ -62,15 +63,15 @@ export default function Login() {
               <InputField type={"password"} label={"Senha"} name={"senha"} id={"senha"} msg={mensagens.senha} change={(e) => setDadosLogin({...dadosLogin, senha: e.target.value})} />
 
               <button
-                className="btn-primary"
+                className="btn-primary flex items-center gap-2 w-fit ml-auto"
                 type="button"
                 onClick={() => fazerLogin()}
               >
-                <span className="edge"></span>
+                <SignIn size={20} />
                 <span className="front">Entrar</span>
               </button>
-              <Link className="text-xs" to={"/cadastro"}>Não possui cadastro?</Link>
-              <Link className="text-xs" to={"/recuperar-senha"}>Esqueceu sua senha?</Link>
+              <Link className="text-xs link-default w-fit" to={"/cadastro"}>Não possui cadastro?</Link>
+              <Link className="text-xs link-default w-fit" to={"/recuperar-senha"}>Esqueceu sua senha?</Link>
             </form>
           </div>
         </div>

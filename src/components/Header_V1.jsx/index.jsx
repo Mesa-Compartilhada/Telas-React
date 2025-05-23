@@ -50,7 +50,7 @@ export default function Header() {
 
                   <Link to={"/login"} className="text-sm font-medium"> 
                     <button
-                      className="inline-flex items-center justify-center gap-1.5 rounded bg-l-Abobora px-5 py-3 text-sm font-medium text-white transition hover:bg-opacity-35 focus:outline-none focus:ring focus:ring-branco"
+                      className="inline-flex items-center justify-center gap-1.5 rounded bg-azul px-5 py-3 text-sm font-medium text-white transition hover:bg-opacity-35 focus:outline-none focus:ring focus:ring-branco"
                       type="button"
                     >
                       <span className="text-sm font-medium">Login</span>

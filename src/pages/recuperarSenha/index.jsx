@@ -5,6 +5,7 @@ import FormEmail from "../../components/recuperarSenha/formEmail.jsx";
 import FormToken from "../../components/recuperarSenha/formToken.jsx";
 import FormSenha from "../../components/recuperarSenha/formSenha.jsx";
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "@phosphor-icons/react";
 export default function RecuperarSenha() {
     const [pagina, setPagina] = useState(1);
     function avançarPagina() {
@@ -41,11 +42,11 @@ export default function RecuperarSenha() {
                                             )}
                                     </form>
                                     <div className="flex flex-row">
-                                        <button className="text-white mt-2 mr-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}>{"Voltar"}</button>
+                                        <button className="btn-primary flex disabled:opacity-70" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}><ArrowLeft size={20} /> Voltar</button>
                                         {
                                             pagina === 3
                                             &&
-                                            <Link to={"/login"} className="ml-auto text-white mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80 hover:text-white hover:opacity-80">Finalizar</Link>
+                                            <Link to={"/login"} className="btn-primary">Finalizar</Link>
                                         }
                                     </div>
                                 </div>

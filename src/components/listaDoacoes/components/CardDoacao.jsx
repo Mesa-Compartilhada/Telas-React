@@ -165,9 +165,9 @@ export function CardDoacao({ doacao }) {
           <div className="flex flex-col gap-4 p-4">
             <h1 className="text-2xl">Cancelar Doação</h1>
             <p>Após o cancelamento, sua doação ficará indisponível e não poderá ser solicitada pelas instituições</p>
-            <div className="grid grid-cols-2">
-              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.CANCELADA, doacao.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsCancelarDoacao(false)]}>Confirmar cancelamento</button>
-              <button className="btn-red" onClick={() => setIsCancelarDoacao(false)}>Cancelar</button>
+            <div className="grid grid-cols-2 gap-2">
+              <button className="btn-red" onClick={() => [updateStatusDoacao(STATUS_DOACAO.CANCELADA, doacao.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsCancelarDoacao(false)]}>Confirmar</button>
+              <button className="btn-gray" onClick={() => setIsCancelarDoacao(false)}>Manter doação</button>
             </div>
           </div>
         </Modal>

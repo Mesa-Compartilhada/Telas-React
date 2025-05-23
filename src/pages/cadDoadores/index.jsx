@@ -196,14 +196,14 @@ export default function CadDoadores() {
           </div>
           <div className="flex flex-row">
             <button
-              className="text-white mt-2 mr-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80"
+              className="btn-primary disabled:opacity-80"
               onClick={() => setPagina(pagina - 1)}
               disabled={pagina <= 1}
             >
               {"Voltar"}
             </button>
             <button
-              className="text-white mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80"
+              className="btn-primary disabled:opacity-80"
               onClick={() => avançarPagina({ ...empresa, ...endereco })}
               disabled={pagina >= 3}
             >
@@ -239,7 +239,7 @@ export default function CadDoadores() {
 
         {pagina === 3 && (
           <button
-            className="text-white pushable mt-2 bg-l-Abobora p-2 rounded-md disabled:opacity-80 enabled:hover:bg-opacity-80"
+            className="btn-primary"
             type="button"
             onClick={() => cadastrarEmpresa()}
           >
@@ -247,7 +247,7 @@ export default function CadDoadores() {
             <span className="front">Enviar</span>
           </button>
         )}
-        <Link className="text-xs ml-3" to={"/Login"}>
+        <Link className="text-xs ml-3 link-default" to={"/Login"}>
           Já possui cadastro?
         </Link>
       </div>
