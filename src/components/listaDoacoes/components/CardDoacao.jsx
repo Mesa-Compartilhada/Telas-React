@@ -9,6 +9,7 @@ import { TIPO_EMPRESA } from "../../../constants/empresa";
 
 import icon_ok from "../../../assets/icon_ok.svg"
 import icon_time from "../../../assets/icon_time.svg"
+import { Basket, Trash } from "@phosphor-icons/react";
 
 export function CardDoacao({ doacao }) {
   const { user } = AuthData()
@@ -37,16 +38,16 @@ export function CardDoacao({ doacao }) {
         (
           user.tipo === TIPO_EMPRESA.RECEBEDORA
           ?
-          <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsSolicitarActive(!isSolicitarActive)}>Solicitar</button>
+          <button className="btn-secondary w-fit my-2" onClick={() => setIsSolicitarActive(!isSolicitarActive)}><Basket size={20} /></button>
           :
-          <button className="my-2 p-2 rounded-md bg-red-700 text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsCancelarDoacao(!isCancelarDoacao)}>Cancelar doação</button>
+          <button className="btn-red w-fit my-2" onClick={() => setIsCancelarDoacao(!isCancelarDoacao)}><Trash size={20} /></button>
         )
         : doacao.status === STATUS_DOACAO.ANDAMENTO
         && 
         (
           user.tipo === TIPO_EMPRESA.RECEBEDORA
           &&
-          <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsCancelarSolicitacaoActive(!isCancelarSolicitacaoActive)}>Cancelar solicitação</button>
+          <button className="btn-red w-fit my-2" onClick={() => setIsCancelarSolicitacaoActive(!isCancelarSolicitacaoActive)}><Trash size={20} /></button>
         )
       }
 
@@ -72,9 +73,9 @@ export function CardDoacao({ doacao }) {
           <div className="flex flex-col gap-4 p-4">
             <h1 className="text-2xl">Confirmar Solicitação</h1>
             <p className="text-gray-500">Após a doação ser solicitada, receba o alimento nas dependências da empresa</p>
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-2">
               <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.ANDAMENTO, doacao.id, user.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsSolicitarActive(false)]}>Confirmar solicitação</button>
-              <button className="btn-red" onClick={() => setIsSolicitarActive(false)}>Cancelar</button>
+              <button className="btn-gray" onClick={() => setIsSolicitarActive(false)}>Cancelar</button>
             </div>
           </div>
         </Modal>
@@ -86,10 +87,11 @@ export function CardDoacao({ doacao }) {
         <Modal setIsActive={setIsCancelarSolicitacaoActive}>
           <div className="flex flex-col gap-4 p-4">
             <h1 className="text-2xl">Cancelar Solicitação</h1>
-            <p className="text-gray-500">Após a solicitação ser cancelada, a doação ficará disponível para outras instituições a solicitarem</p>
-            <div className="grid grid-cols-2">
-              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.DISPONIVEL, doacao.id, user.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsCancelarSolicitacaoActive(false)]}>Confirmar cancelamento</button>
-              <button className="btn-red" onClick={() => setIsCancelarSolicitacaoActive(false)}>Cancelar</button>
+            <p className="text-gray-500">Após a solicitação ser cancelada, a doação ficará disponível para outras instituições a solicitarem.</p>
+            <p className="text-gray-500">Deseja prosseguir mesmo assim??</p>
+            <div className="grid grid-cols-2 gap-2">
+              <button className="btn-red" onClick={() => [updateStatusDoacao(STATUS_DOACAO.DISPONIVEL, doacao.id, user.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsCancelarSolicitacaoActive(false)]}>Prosseguir</button>
+              <button className="btn-gray" onClick={() => setIsCancelarSolicitacaoActive(false)}>Voltar</button>
             </div>
           </div>
         </Modal>
@@ -99,9 +101,9 @@ export function CardDoacao({ doacao }) {
         isConcluirActive && tipoEmpresa === TIPO_EMPRESA.DOADORA
         &&
         <Modal setIsActive={setIsConcluirActive}>
-          <div className="flex flex-col gap-4 p-4">
+          <div className="flex flex-col gap-4 p-4 text-gray-700">
             
-            <h1 className="text-2xl">Entrega</h1>
+            <h1 className="text-2xl text-black">Entrega</h1>
             <div className="flex flex-row">
               <p>{`${doacao.empresaRecebedora.nome}:`} </p> 
               <img src={ doacao.empresaRecebedoraConcluida ? icon_ok : icon_time } alt="Ícone de OK" className="size-4 ml-2 mt-1" />
@@ -112,15 +114,15 @@ export function CardDoacao({ doacao }) {
               <img src={ doacao.empresaDoadoraConcluida ? icon_ok : icon_time } alt="Ícone de OK" className="size-4 ml-2 mt-1" />
             </div>
 
-            <p>{ !doacao.empresaDoadoraConcluida ? "Deseja confirmar a entrega da doação?" : "Deseja cancelar a confirmação da entrega da doação?" }</p>
+            <p>{ !doacao.empresaDoadoraConcluida ? "Deseja confirmar a entrega da doação?" : "Deseja prosseguir com o cancelamento da confirmação da entrega?" }</p>
 
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-2">
               <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.CONCLUIDA, doacao.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsConcluirActive(false)]}>
                 {
-                  !doacao.empresaDoadoraConcluida ? "Confirmar entrega" : "Cancelar confirmação"
+                  !doacao.empresaDoadoraConcluida ? "Confirmar" : "Prosseguir"
                 }
               </button>
-              <button className="btn-red" onClick={() => setIsConcluirActive(false)}>Cancelar</button>
+              <button className="btn-gray" onClick={() => setIsConcluirActive(false)}>Cancelar</button>
             </div>
           </div>
         </Modal>
@@ -130,9 +132,9 @@ export function CardDoacao({ doacao }) {
         isConcluirActive && tipoEmpresa === TIPO_EMPRESA.RECEBEDORA
         &&
         <Modal setIsActive={setIsConcluirActive}>
-          <div className="flex flex-col gap-4 p-4">
+          <div className="flex flex-col gap-4 p-4 text-gray-700">
             
-            <h1 className="text-2xl">Recebimento</h1>
+            <h1 className="text-2xl text-black">Recebimento</h1>
             
             <div className="flex flex-row">
               <p>{`${doacao.empresaDoadora.nome}:`} </p> 
@@ -144,15 +146,15 @@ export function CardDoacao({ doacao }) {
               <img src={ doacao.empresaRecebedoraConcluida ? icon_ok : icon_time } alt="Ícone de OK" className="size-4 ml-2 mt-1" />
             </div>
             
-            <p>{ !doacao.empresaRecebedoraConcluida ? "Deseja confirmar o recebimento da doação?" : "Deseja cancelar a confirmação de recebimento da doação?" }</p>
+            <p>{ !doacao.empresaRecebedoraConcluida ? "Deseja confirmar o recebimento da doação?" : "Deseja prosseguir com o cancelamento da confirmação de recebimento?" }</p>
 
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-2">
               <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.CONCLUIDA, doacao.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsConcluirActive(false)]}>
                 {
-                  !doacao.empresaRecebedoraConcluida ? "Confirmar recebimento" : "Cancelar confirmação"
+                  !doacao.empresaRecebedoraConcluida ? "Confirmar" : "Prosseguir"
                 }
               </button>
-              <button className="btn-red" onClick={() => setIsConcluirActive(false)}>Cancelar</button>
+              <button className="btn-gray" onClick={() => setIsConcluirActive(false)}>Cancelar</button>
             </div>
           </div>
         </Modal>
