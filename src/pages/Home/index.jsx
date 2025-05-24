@@ -6,7 +6,7 @@ import FAQ from "./components/faq.jsx";
 import logo from "../../assets/MC_Logo.svg";
 import alvo from "../../assets/alvo.svg";
 import check from "../../assets/check.svg";
-import entrega from "../../assets/entrega_mc.png";
+import entrega from "../../assets/entrega_mc.webp";
 import mapa from "../../assets/Mapa.svg";
 import ODS10 from "../../assets/SDG-10.svg";
 import ODS12 from "../../assets/SDG-12.svg";

@@ -83,25 +83,25 @@ export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualiz
         <div>
             <h1 className=" text-black text-2xl mb-4"></h1>
             <div className="bg-white rounded-lg shadow-md p-10">
-            <h2 className=" text-gray-500 text-2xl mb-10" >Dados a serem editados</h2>
-            <div className="mb-4 flex gap-1 items-center ">
-                <InputField id={"nomeEmpresa"} name={"nomeEmpresa"} type={"text"} msg={mensagens.nome} change={(e) => setDadosAtualizados({...dadosAtualizados, nome: e.target.value})} label={"Nome:"} defaultValue={dados.nome}></InputField> 
-            </div>
-            <div className="mb-4 flex gap-1 items-center">
-            {
-                TIPO_EMPRESA[dados.tipo] === TIPO_EMPRESA.DOADORA
-                ? <SelectField name={"categoriaEmpresa"} label={"Categoria:"} id={"categoriaEmpresa"} options={categoriaDoadora} msg={mensagens.categoria} defaultValue={CATEGORIA_DOADORA[dados.categoria]}  change={(e) => setDadosAtualizados({...dadosAtualizados, categoria: e.target.value})} />
-                : <SelectField name={"categoriaEmpresa"} label={"Categoria:"} id={"categoriaEmpresa"} options={categoriaRecebedora} msg={mensagens.categoria} defaultValue={CATEGORIA_RECEBEDORA[dados.categoria]}  change={(e) => setDadosAtualizados({...dadosAtualizados, categoria: e.target.value})} />
-            }
-            </div>
-            <div className="mb-4 flex gap-1 items-center">
-            <InputField type={"email"} id={"emailEmpresa"} name={"emailEmpresa"} msg={mensagens.email}  change={(e) => setDadosAtualizados({...dadosAtualizados, email: e.target.value})} label={"Email:"} defaultValue={dados.email}></InputField> 
-            </div>
-            <div className="mb-4 flex gap-1 items-center">
-            <InputField type={"password"} id={"senhaEmpresa"} name={"senhaEmpresa"} msg={mensagens.senha} change={(e) => setDadosAtualizados({...dadosAtualizados, senha: e.target.value})} label={"Confirme sua senha:"}></InputField> 
-            </div>
-                <button className="btn-red mr-[160px]" onClick={() => setIsActive(false)}>Cancelar</button>
-                <button className="btn-primary" onClick={() => atualizarDados()}>Salvar</button>
+                <h2 className=" text-gray-500 text-2xl mb-10" >Dados a serem editados</h2>
+                <div className="mb-4 flex gap-1 items-center ">
+                    <InputField id={"nomeEmpresa"} name={"nomeEmpresa"} type={"text"} msg={mensagens.nome} change={(e) => setDadosAtualizados({...dadosAtualizados, nome: e.target.value})} label={"Nome:"} defaultValue={dados.nome}></InputField> 
+                </div>
+                <div className="mb-4 flex gap-1 items-center">
+                    {
+                    TIPO_EMPRESA[dados.tipo] === TIPO_EMPRESA.DOADORA
+                    ? <SelectField name={"categoriaEmpresa"} label={"Categoria:"} id={"categoriaEmpresa"} options={categoriaDoadora} msg={mensagens.categoria} defaultValue={CATEGORIA_DOADORA[dados.categoria]}  change={(e) => setDadosAtualizados({...dadosAtualizados, categoria: e.target.value})} />
+                    : <SelectField name={"categoriaEmpresa"} label={"Categoria:"} id={"categoriaEmpresa"} options={categoriaRecebedora} msg={mensagens.categoria} defaultValue={CATEGORIA_RECEBEDORA[dados.categoria]}  change={(e) => setDadosAtualizados({...dadosAtualizados, categoria: e.target.value})} />
+                    }
+                </div>
+                <div className="mb-4 flex gap-1 items-center">
+                    <InputField type={"email"} id={"emailEmpresa"} name={"emailEmpresa"} msg={mensagens.email}  change={(e) => setDadosAtualizados({...dadosAtualizados, email: e.target.value})} label={"Email:"} defaultValue={dados.email}></InputField> 
+                </div>
+                <div className="mb-4 flex gap-1 items-center">
+                    <InputField type={"password"} id={"senhaEmpresa"} name={"senhaEmpresa"} msg={mensagens.senha} change={(e) => setDadosAtualizados({...dadosAtualizados, senha: e.target.value})} label={"Confirme sua senha:"}></InputField> 
+                </div>
+                <button className="btn-primary mr-[160px]" onClick={() => atualizarDados()}>Salvar</button>
+                <button className="btn-gray" onClick={() => setIsActive(false)}>Cancelar</button>
             </div>
         </div>
     )

@@ -18,13 +18,12 @@ export function Endereco(props) {
         cep: cep,
         logradouro: dadosCep.address,
         bairro: dadosCep.district,
-        cidade: dadosCep.city,
+        cidade: dadosCep.city,  
         estado: dadosCep.state,
         pais: "Brasil",
         latitude: parseFloat(dadosCep.lat),
         longitude: parseFloat(dadosCep.lng)
       })
-      console.log(endereco);
       
     }
     else {

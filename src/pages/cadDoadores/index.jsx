@@ -157,8 +157,6 @@ export default function CadDoadores() {
   const [pagina, setPagina] = useState(1);
 
   function avançarPagina(dados) {
-    console.log(empresa);
-    console.log(endereco);
     if (validarDados(dados)) {
       setPagina(pagina + 1);
     }
@@ -194,7 +192,7 @@ export default function CadDoadores() {
               width={pagina !== 3 ? 35 : 60}
             />
           </div>
-          <div className="flex flex-row">
+          <div className="flex flex-row gap-2">
             <button
               className="btn-primary disabled:opacity-80"
               onClick={() => setPagina(pagina - 1)}
@@ -204,10 +202,12 @@ export default function CadDoadores() {
             </button>
             <button
               className="btn-primary disabled:opacity-80"
-              onClick={() => avançarPagina({ ...empresa, ...endereco })}
-              disabled={pagina >= 3}
+              onClick={() => {
+                  pagina < 3 ? avançarPagina({ ...empresa, ...endereco }) : cadastrarEmpresa()
+                }
+              }
             >
-              {"Avançar"}
+              {pagina < 3 ? "Avançar" : "Cadastrar"}
             </button>
           </div>
         </div>
@@ -236,17 +236,6 @@ export default function CadDoadores() {
             />
           )}
         </form>
-
-        {pagina === 3 && (
-          <button
-            className="btn-primary"
-            type="button"
-            onClick={() => cadastrarEmpresa()}
-          >
-            <span className="edge"></span>
-            <span className="front">Enviar</span>
-          </button>
-        )}
         <Link className="text-xs ml-3 link-default" to={"/Login"}>
           Já possui cadastro?
         </Link>
