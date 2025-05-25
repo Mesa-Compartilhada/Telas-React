@@ -12,7 +12,6 @@ export default function Historico() {
     resultado = resultado.filter(doacao => {
       return doacao.status === "CONCLUIDA" || doacao.status === "CANCELADA"
     })
-    console.log(resultado);
     setDados(resultado);
   };
   useEffect(() => {
