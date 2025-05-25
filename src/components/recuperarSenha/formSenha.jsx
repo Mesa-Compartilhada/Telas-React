@@ -21,8 +21,10 @@ export default function FormSenha({ token, callback }){
                         if(senha.length >= 8 && senha === confirmacaoDeSenha) {
                             const result = await recuperarSenha(token, senha)
                             if(result.status) {
-                                toast.success(result.message)
-                                callback()
+                                setTimeout(() => {
+                                    toast.success(result.message)
+                                    callback()
+                                }, 3000)
                             }
                             else {
                                 toast.error(result.message)

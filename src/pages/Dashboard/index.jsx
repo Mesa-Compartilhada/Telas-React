@@ -20,7 +20,7 @@ export default function Dashboard() {
         <DashboardContext.Provider value={{doacoesAlteradas: doacoesAlteradas, setDoacoesAlteradas: setDoacoesAlteradas}}>
         <Header/>
 
-        <section className="grid place-content-center pb-10 gap-4">
+        <section className="grid place-content-center pb-10 px-10 gap-4">
             {
                 TIPO_EMPRESA.RECEBEDORA === user.tipo
                 ?

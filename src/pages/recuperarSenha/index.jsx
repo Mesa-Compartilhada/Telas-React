@@ -41,12 +41,12 @@ export default function RecuperarSenha() {
                                                 />
                                             )}
                                     </form>
-                                    <div className="flex flex-row">
+                                    <div className="flex flex-row gap-4">
                                         <button className="btn-primary flex disabled:opacity-70" onClick={() => setPagina(pagina - 1)} disabled={pagina <= 1}><ArrowLeft size={20} /> Voltar</button>
                                         {
                                             pagina === 3
                                             &&
-                                            <Link to={"/login"} className="btn-primary">Finalizar</Link>
+                                            <Link to={"/login"} className="btn-primary hover:opacity-80 hover:text-white">Finalizar</Link>
                                         }
                                     </div>
                                 </div>

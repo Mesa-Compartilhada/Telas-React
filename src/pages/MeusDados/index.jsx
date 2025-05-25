@@ -84,7 +84,9 @@ export default function MeusDados(){
                                         {
                                             recuperarSenhaModal &&
                                             <Modal setIsActive={setRecuperarSenhaModal}>
-                                                <FormRecuperarSenha user={ user } />
+                                                <FormRecuperarSenha user={ user } callback={ () => {
+                                                    setRecuperarSenhaModal(false)
+                                                } } />
                                             </Modal>
                                         }
                                     </div>

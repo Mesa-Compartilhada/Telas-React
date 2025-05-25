@@ -4,7 +4,7 @@ import FormEmail from "../../../components/recuperarSenha/formEmail"
 import FormToken from "../../../components/recuperarSenha/formToken"
 import FormSenha from "../../../components/recuperarSenha/formSenha"
 
-export default function FormRecuperarSenha({ user }) {
+export default function FormRecuperarSenha({ user, callback }) {
     const [pagina, setPagina] = useState(1)
     const [token, setToken] = useState()
     return(
@@ -25,7 +25,9 @@ export default function FormRecuperarSenha({ user }) {
             {
                 pagina === 3
                 &&
-                <FormSenha token={token} callback={() => {  }}/>
+                <FormSenha token={token} callback={() => { 
+                    callback()
+                 }}/>
             }
             {
                 pagina > 1
