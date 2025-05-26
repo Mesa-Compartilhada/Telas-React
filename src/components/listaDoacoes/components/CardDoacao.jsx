@@ -39,7 +39,7 @@ export function CardDoacao({ doacao }) {
       <div className="transform transition-transform duration-200 hover:scale-105">
 
       </div>
-      <div className="px-4">
+      <div className="flex flex-col gap-2 px-4">
         {
           doacao.status === STATUS_DOACAO.DISPONIVEL
           ?

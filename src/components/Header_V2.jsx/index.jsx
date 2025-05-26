@@ -2,6 +2,7 @@ import logo from "../../assets/MC_Logo.svg";
 import { Link } from "react-router-dom";
 import { AuthData } from "../../auth/AuthWrapper";
 import { TIPO_EMPRESA } from "../../constants/empresa";
+import { ClockCounterClockwise, HandHeart, User } from "@phosphor-icons/react";
 
 export default function Header() {
   const { user, logoutUser } = AuthData()
@@ -26,9 +27,13 @@ export default function Header() {
 
             {/* Navegação (Disponíveis, Meus Dados, Histórico) */}
             <nav className="flex space-x-8">
-              { user && TIPO_EMPRESA[user.tipo] == TIPO_EMPRESA.DOADORA && <a href="/cadastro-doacao" className="text-sm font-medium text-gray-900 link-default">Nova doação</a> }
-              <Link to="/meus-dados" className="text-sm font-medium text-gray-900 link-default" >Meus Dados</Link>
-              <Link to="/historico" className="text-sm font-medium text-gray-900 link-default"> Histórico</Link>
+              { 
+                user && TIPO_EMPRESA[user.tipo] == TIPO_EMPRESA.DOADORA 
+                && 
+                <Link to="/cadastro-doacao" className="text-sm font-medium text-gray-900 link-default flex gap-1"><HandHeart size={20} /> Nova doação</Link> 
+              }
+              <Link to="/meus-dados" className="text-sm font-medium text-gray-900 link-default flex gap-1" ><User size={20} /> Meus Dados</Link>
+              <Link to="/historico" className="text-sm font-medium text-gray-900 link-default flex gap-1"><ClockCounterClockwise size={20} /> Histórico</Link>
             </nav>
 
             {/* Botões Criar Doação e Sair */}

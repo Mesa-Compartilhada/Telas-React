@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { DashboardContext } from "../../pages/Dashboard";
 import { CardDoacao } from "./components/CardDoacao";
+import { Package } from "@phosphor-icons/react";
 
 export function ListaDoacoes({ getDoacoes, params = [] }) {
   const { doacoesAlteradas, setDoacoesAlteradas } =
@@ -26,8 +27,9 @@ export function ListaDoacoes({ getDoacoes, params = [] }) {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col gap-2 max-w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md">
-          <p>Não há doações disponíveis</p>
+        <div className="flex gap-2  bg-white rounded-xl p-10 shadow-gray-300 shadow-md items-center">
+          <Package size={100} />
+          <p className="text-lg">Não há doações disponíveis nessa lista no momento</p>
         </div>
       )}
     </>

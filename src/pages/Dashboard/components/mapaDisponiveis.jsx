@@ -85,9 +85,9 @@ export default function MapaDisponiveis() {
                 empresaSelecionada && abrirModalEmpresa
                 &&
                 <Modal setIsActive={ setAbrirModalEmpresa }>
-                    <div>
+                    <div className='flex flex-col gap-2'>
                         <CardPerfil empresa={empresaSelecionada} />
-                        <Link to={`/perfil/${empresaSelecionada.id}`}>Ir para a página da empresa</Link>
+                        <Link to={`/perfil/${empresaSelecionada.id}`} className='link-default w-fit'>Ir para a página da empresa</Link>
                     </div>
                 </Modal>
             }
