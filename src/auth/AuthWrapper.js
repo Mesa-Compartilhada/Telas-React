@@ -13,14 +13,14 @@ export const AuthWrapper = () => {
   const loginUser = async (email, password) => {
     const result = await login(email, password);
       if(result) {
-        const { id, tipo, email } = result
-        const usuario = { id, tipo, email }
+        const { id, nome, tipo, email } = result
+        const usuario = { id, nome, tipo, email }
         localStorage.setItem("user-mesa-compartilhada", JSON.stringify(usuario))
         setUser(JSON.parse(localStorage.getItem("user-mesa-compartilhada")))
-        return true
+        return { status: true, usuario }
       }
       else {
-        return false
+        return { status: false }
       }
   }
 

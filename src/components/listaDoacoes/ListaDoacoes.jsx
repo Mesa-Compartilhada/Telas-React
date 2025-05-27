@@ -20,7 +20,14 @@ export function ListaDoacoes({ getDoacoes, params = [] }) {
 
   return (
     <>
-      {doacoes != null && doacoes.length > 0 ? (
+      {
+        doacoes === null ? (
+          <div className="flex gap-2  bg-white rounded-xl p-10 shadow-gray-300 shadow-md items-center">
+            <Package size={100} />
+            <p className="text-lg">Carregando...</p>
+          </div>
+        ) :
+        doacoes != null && doacoes.length > 0 ? (
         <div className="flex justify-around flex-wrap overflow-y-auto max-h-[300px] max-w-[1400px] inset-6">
           {doacoes.map((doacao) => (
             <CardDoacao key={doacao.id} doacao={doacao} />

@@ -37,7 +37,9 @@ export default function Login() {
     validarDados()
     if(dadosLogin.email && dadosLogin.senha) {
       const result = await loginUser(dadosLogin.email, dadosLogin.senha);
-      if(result) {
+      if(result.status) {
+        toast.success(`Acessando como empresa ${result.usuario.tipo.toLowerCase()}`)
+        console.log(result.usuario)
         navigate("/dashboard")
       }
       else {

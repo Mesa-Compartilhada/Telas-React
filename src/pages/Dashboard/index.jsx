@@ -7,7 +7,7 @@ import { TIPO_EMPRESA } from "../../constants/empresa.js";
 import { getDoacoesByStatus, getDoacoesByStatusAndEmpresaDoadoraId, getDoacoesByStatusAndEmpresaRecebedoraId } from "../../lib/api/doacao.js";
 import { STATUS_DOACAO } from "../../constants/doacao.js";
 
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import MapaDisponiveis from "./components/mapaDisponiveis.jsx";
 
 export const DashboardContext = createContext()
@@ -19,13 +19,14 @@ export default function Dashboard() {
     return (
         <DashboardContext.Provider value={{doacoesAlteradas: doacoesAlteradas, setDoacoesAlteradas: setDoacoesAlteradas}}>
         <Header/>
+        <p className={`mx-20 mb-10 text-sm ${user.tipo === TIPO_EMPRESA.DOADORA ? 'text-azul-escuro' : 'text-l-Abobora'}`} >{user.tipo === TIPO_EMPRESA.DOADORA ? `Obrigado por doar conosco, ${user.nome}!` : `Obrigado por fazer a diferença, ${user.nome}!`}</p>
 
         <section className="grid place-content-center pb-10 px-10 gap-4">
             {
                 TIPO_EMPRESA.RECEBEDORA === user.tipo
                 ?
                 <>
-                    <h1 className="text-2xl">Doações disponíveis</h1>
+                    <h1 className="text-2xl">Doações disponíveis para solicitar</h1>
                     <ListaDoacoes getDoacoes={getDoacoesByStatus} params={[STATUS_DOACAO.DISPONIVEL]} />
                     <hr />
                     <h1 className="text-2xl">Suas solicitações em andamento</h1>
