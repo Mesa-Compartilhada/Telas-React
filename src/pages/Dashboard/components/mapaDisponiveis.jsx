@@ -1,5 +1,5 @@
 //API
-import '@tomtom-international/web-sdk-maps/dist/maps.css'
+import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import tt from '@tomtom-international/web-sdk-maps';
 
 import { useRef, useEffect, useState } from 'react';
@@ -11,88 +11,106 @@ import { Link } from 'react-router-dom';
 import Modal from '../../../components/modal/Modal.jsx';
 
 export default function MapaDisponiveis() {
-    const [empresaSelecionada, setEmpresaSelecionada] = useState()
-    const [abrirModalEmpresa, setAbrirModalEmpresa] = useState(false)
-    const selecionarEmpresa = async (id) => {
-        const result = await getEmpresaById(id)
-        setEmpresaSelecionada(result.empresa)
-
-        setAbrirModalEmpresa(true)
-    }
+    const [empresaSelecionada, setEmpresaSelecionada] = useState();
+    const [abrirModalEmpresa, setAbrirModalEmpresa] = useState(false);
+    const [popEmpresa, setPopEmpresa] = useState(null);
 
     const mapElement = useRef();
-    const [map, setMap] = useState({});
+    const mapRef = useRef(null);
+    const markersRef = useRef([]);
 
-    const [popEmpresa, setPopEmpresa] = useState(null);
-    async function getListaEmpresa() {
-        let doacao = await getDoacoesByStatus(STATUS_DOACAO.DISPONIVEL)
-        let tempPop = []
-        doacao.forEach(item => {
-            tempPop.push(item.empresaDoadora)
-        });
-        setPopEmpresa(tempPop)
-    } 
+    const selecionarEmpresa = async (id) => {
+        const result = await getEmpresaById(id);
+        setEmpresaSelecionada(result.empresa);
+        setAbrirModalEmpresa(true);
+    };
+
+    const getListaEmpresa = async () => {
+        const doacao = await getDoacoesByStatus(STATUS_DOACAO.DISPONIVEL);
+        const tempPop = doacao.map(item => item.empresaDoadora);
+        setPopEmpresa(tempPop);
+    };
 
     useEffect(() => {
-        let map = tt.map({
-            key: process.env.REACT_APP_TOMTOM_API_KEY,
-            container: mapElement.current,
-            center: [-46.61991444711061, -23.68551324571913],
-            zoom: 14
-        });
-        
-        getListaEmpresa()
-        setMap(map);
-        return () => map.remove();
+        const initMap = async () => {
+            const map = tt.map({
+                key: process.env.REACT_APP_TOMTOM_API_KEY,
+                container: mapElement.current,
+                center: [-46.61991444711061, -23.68551324571913],
+                zoom: 14
+            });
+
+            mapRef.current = map;
+            await getListaEmpresa();
+
+            return () => map.remove();
+        };
+
+        initMap();
     }, []);
 
     useEffect(() => {
-        if (popEmpresa) {
-            let mapa = map
-            var marker
-            let popup
-            var markerHeight = 50
-            let popupOffsets = {
-                'bottom': [0, -markerHeight]
-            }
+        if (popEmpresa && mapRef.current) {
+            const mapa = mapRef.current;
+
+            markersRef.current.forEach(marker => marker.remove());
+            markersRef.current = [];
+
+            const markerHeight = 50;
+            const popupOffsets = { bottom: [0, -markerHeight] };
 
             popEmpresa.forEach(item => {
-                const button = document.createElement("button")
-                button.innerText = item.nome
-                button.className = ""
-                button.addEventListener("click", () => [selecionarEmpresa(item.id), setAbrirModalEmpresa(true)])
+                const button = document.createElement("button");
+                button.innerText = item.nome;
+                button.setAttribute("tabIndex", "-1");
+                button.className = "";
+                button.addEventListener("click", () => {
+                    selecionarEmpresa(item.id);
+                    setAbrirModalEmpresa(true);
+                });
 
-                const popupContent = document.createElement("div")
-                popupContent.appendChild(button)
+                const popupContent = document.createElement("div");
+                popupContent.appendChild(button);
 
-                popup = new tt.Popup({offset: popupOffsets, className: 'my-class'})
-                .setLngLat({lng:item.endereco.longitude, lat:item.endereco.latitude})
-                .setDOMContent(popupContent)
-                .addTo(mapa);
-                marker = new tt.Marker()
-                .setLngLat({lng:item.endereco.longitude, lat:item.endereco.latitude}).setPopup(popup)
-                .addTo(mapa)
+                const popup = new tt.Popup({
+                    offset: popupOffsets,
+                    className: 'my-class',
+                    focus: false
+                })
+                    .setLngLat({
+                        lng: item.endereco.longitude,
+                        lat: item.endereco.latitude
+                    })
+                    .setDOMContent(popupContent);
+
+                const marker = new tt.Marker()
+                    .setLngLat({
+                        lng: item.endereco.longitude,
+                        lat: item.endereco.latitude
+                    })
+                    .setPopup(popup)
+                    .addTo(mapa);
+
+                markersRef.current.push(marker);
             });
-            setMap(mapa)
         }
     }, [popEmpresa]);
 
-    return(
+    return (
         <div className="flex flex-col gap-2 m-5 items-center">
             <h1 className="text-2xl">Mapa de empresas doadoras</h1>
             <div ref={mapElement} className="w-2/3 h-96 m-auto" />
             {
-                empresaSelecionada && abrirModalEmpresa
-                &&
-                <Modal setIsActive={ setAbrirModalEmpresa }>
+                empresaSelecionada && abrirModalEmpresa &&
+                <Modal setIsActive={setAbrirModalEmpresa}>
                     <div className='flex flex-col gap-2'>
                         <CardPerfil empresa={empresaSelecionada} />
-                        <Link to={`/perfil/${empresaSelecionada.id}`} className='link-default w-fit'>Ir para a página da empresa</Link>
+                        <Link to={`/perfil/${empresaSelecionada.id}`} className='link-default w-fit'>
+                            Ir para a página da empresa
+                        </Link>
                     </div>
                 </Modal>
             }
         </div>
-        
-    )
-
+    );
 }

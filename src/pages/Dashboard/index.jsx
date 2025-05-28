@@ -14,6 +14,22 @@ import FiltroDoacoes from "../../components/listaDoacoes/components/FiltroDoacoe
 export const DashboardContext = createContext()
 
 export default function Dashboard() {
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }, []);
+
+    const [mostrarMapa, setMostrarMapa] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+          setMostrarMapa(true);
+          setTimeout(() => window.scrollTo({ top: 0, behavior: "auto" }), 100); // força scroll no momento certo
+        }, 100);
+      
+        return () => clearTimeout(timer);
+      }, []);
+
+      
     const { user } = AuthData()
     const [doacoesAlteradas, setDoacoesAlteradas] = useState(0)
     const [tiposAlimentos, setTiposAlimentos] = useState([1, 2, 3, 4, 5])
@@ -51,7 +67,7 @@ export default function Dashboard() {
             }
         </section>
 
-        <MapaDisponiveis />
+        { mostrarMapa && <MapaDisponiveis /> }
 
         </DashboardContext.Provider>
     )
