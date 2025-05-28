@@ -2,32 +2,27 @@ import { useContext, useEffect, useState } from "react";
 import { DashboardContext } from "../../pages/Dashboard";
 import { CardDoacao } from "./components/CardDoacao";
 import { Package } from "@phosphor-icons/react";
+import { getDoacoesByFilter } from "../../lib/api/doacao";
 
-export function ListaDoacoes({ getDoacoes, params = [] }) {
+export function ListaDoacoes({ getDoacoes, params = [], filtros }) {
   const { doacoesAlteradas, setDoacoesAlteradas } =
     useContext(DashboardContext);
 
   const [doacoes, setDoacoes] = useState(null);
 
+  
   useEffect(() => {
+    const getListaDeDoacoes = async () => {
+      let result = await getDoacoesByFilter(filtros);
+      setDoacoes(result);
+    };
     getListaDeDoacoes();
-  }, [doacoesAlteradas]);
+  }, [filtros]);
 
-  const getListaDeDoacoes = async () => {
-    let result = await getDoacoes(...params);
-    setDoacoes(result);
-  };
 
   return (
     <>
-      {
-        doacoes === null ? (
-          <div className="flex gap-2  bg-white rounded-xl p-10 shadow-gray-300 shadow-md items-center">
-            <Package size={100} />
-            <p className="text-lg">Carregando...</p>
-          </div>
-        ) :
-        doacoes != null && doacoes.length > 0 ? (
+      {doacoes != null && doacoes.length > 0 ? (
         <div className="flex justify-around flex-wrap overflow-y-auto max-h-[300px] max-w-[1400px] inset-6">
           {doacoes.map((doacao) => (
             <CardDoacao key={doacao.id} doacao={doacao} />

@@ -133,3 +133,21 @@ export async function getDoacoesByStatusAndEmpresaRecebedoraId(status, id) {
     return false
   }
 }
+
+export async function getDoacoesByFilter(filtros) {
+  try {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/filtro`, {
+      method: "POST",
+      body: JSON.stringify(filtros),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8'
+      }
+    })
+    result = await result.json()
+    return result
+  } catch(error) {
+    console.log(error)
+    return false
+  }
+}
