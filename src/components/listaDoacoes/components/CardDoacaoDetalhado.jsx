@@ -1,71 +1,67 @@
-import { useContext, useState } from "react"
-import Modal from "../../modal/Modal";
 import { Link } from "react-router-dom";
-import { updateStatusDoacao } from "../../../lib/api/doacao";
-import { AuthData } from "../../../auth/AuthWrapper";
 import { STATUS_DOACAO } from "../../../constants/doacao";
-import { DashboardContext } from "../../../pages/Dashboard";
-import { TIPO_EMPRESA } from "../../../constants/empresa";
+import { useState } from "react";
 
-export function CardDoacao({ doacao }) {
-  const { user } = AuthData()
-  const { doacoesAlteradas, setDoacoesAlteradas } = useContext(DashboardContext)
-
-  const [isSolicitarActive, setIsSolicitarActive] = useState(false);
-  const [isCancelarActive, setIsCancelarActive] = useState(false);
+export function CardDoacaoDetalhado({ doacao }) {
+  const [aba, setAba] = useState(1)
 
   return (
-    <div className="flex flex-col w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md my-6" key={doacao.id}>
+    <div className="p-2">
       <p className="text-lg truncate">{doacao.nome}</p>
-      <a className="opacity-80 text-xs truncate" href="#">{doacao.empresaDoadora?.nome ?? ""}</a>
-      <div className="flex flex-row gap-2 my-2">
-        <small className="opacity-80 bg-blue-700 text-white p-1 rounded-md text-xs truncate">{doacao.dataMaxRetirada}</small>
-        <small className={`${doacao.status === STATUS_DOACAO.DISPONIVEL ? "bg-green-700" : "bg-yellow-700"} opacity-80 text-white p-1 rounded-md text-xs truncate`}>{doacao.status}</small>
-      </div>
-      <p className="opacity-80 text-sm truncate">{doacao.descricao}</p>
-      <p className="opacity-80 text-sm truncate">{doacao.observacao}</p>
-      {
-        user.tipo === TIPO_EMPRESA.RECEBEDORA
-        &&
-        (
-          doacao.status === STATUS_DOACAO.DISPONIVEL
-          ?
-          <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsSolicitarActive(!isSolicitarActive)}>Solicitar</button>
-          :
-          <button className="my-2 p-2 rounded-md bg-l-Abobora text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsCancelarActive(!isCancelarActive)}>Cancelar Solicitação</button>
-        )
-      }
-      
-      {
-        isSolicitarActive
-        &&
-        <Modal setIsActive={setIsSolicitarActive}>
-          <div className="flex flex-col gap-4 p-4">
-            <h1 className="text-2xl">Confirmar Solicitação</h1>
-            <p className="text-gray-500">Confirme os detalhes da doação solicitada</p>
-            <Link rel="noopener noreferrer" target="_blank" to={"/termos"}>Termos e condições</Link>
-            <div className="grid grid-cols-2">
-              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.ANDAMENTO, doacao.id, user.id,).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsSolicitarActive(false)]}>Confirmar Solicitação</button>
-              <button className="btn-red" onClick={() => setIsSolicitarActive(false)}>Cancelar</button>
-            </div>
-          </div>
-        </Modal>
-      }
+      <Link className="text-xs truncate link-default w-fit" to={`/perfil/${ doacao.empresaDoadora?.id }`}>{doacao.empresaDoadora?.nome ?? ""}</Link> 
 
-      {
-        isCancelarActive
-        &&
-        <Modal setIsActive={setIsCancelarActive}>
-          <div className="flex flex-col gap-4 p-4">
-            <h1 className="text-2xl">Cancelar Solicitação</h1>
-            <p className="text-gray-500">Confirme os detalhes da doação solicitada a ser cancelada</p>
-            <div className="grid grid-cols-2">
-              <button className="btn-primary" onClick={() => [updateStatusDoacao(STATUS_DOACAO.DISPONIVEL, doacao.id, user.id).then(() => setDoacoesAlteradas(doacoesAlteradas+1)), setIsCancelarActive(false)]}>Confirmar Cancelamento</button>
-              <button className="btn-red" onClick={() => setIsCancelarActive(false)}>Cancelar</button>
+      <div className="flex items-center">
+        <small className={`${doacao.status === STATUS_DOACAO.DISPONIVEL ? "bg-green-700" : "bg-yellow-700"} opacity-80 text-white p-1 rounded-md text-sm truncate`}>{doacao.status}</small>
+      </div>
+
+      <div className="my-4 flex flex-col gap-y-2">
+        <p className="opacity-80 text-sm">{doacao.descricao}</p>
+        <p className="opacity-80 text-sm">Obs: {doacao.observacao}</p>
+      </div>
+
+      <div className="flex flex-col gap-2 my-2">
+        
+        <div className="flex items-center">
+          <label className="text-xs" htmlFor="">Data de validade: </label>
+          <small className="w-fit opacity-80 bg-yellow-700 text-white p-1 rounded-md text-xs truncate">{doacao.dataValidade}</small>
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-normal">
+        <div className="flex gap-2 my-2">
+          <button className="btn-primary disabled:opacity-50" onClick={() => setAba(1)} disabled={aba===1}>Especificações</button>
+          <button className="btn-primary disabled:opacity-50" onClick={() => setAba(2)} disabled={aba===2}>Datas e horários</button>
+        </div>
+        {
+          aba === 1
+          ?
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center">
+              <label className="text-xs" htmlFor="">Tipo de alimento: </label>
+              <small className="w-fit opacity-80 bg-blue-700 text-white p-1 rounded-md text-xs truncate">{doacao.tipoAlimento}</small>
+            </div>
+            <div className="flex items-center">
+              <label className="text-xs" htmlFor="">Tipo de armazenamento: </label>
+              <small className="w-fit opacity-80 bg-yellow-700 text-white p-1 rounded-md text-xs truncate">{doacao.tipoArmazenamento}</small>
             </div>
           </div>
-        </Modal>
-      }
+          :
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center">
+              <label className="text-xs" htmlFor="">Data máx. de retirada: </label>
+              <small className="w-fit opacity-80 bg-blue-700 text-white p-1 rounded-md text-xs truncate">{doacao.dataMaxRetirada}</small>
+            </div>
+            <div className="flex items-center">
+              <label className="text-xs" htmlFor="">Data de validade: </label>
+              <small className="w-fit opacity-80 bg-yellow-700 text-white p-1 rounded-md text-xs truncate">{doacao.dataValidade}</small>
+            </div>
+            <div className="flex items-center">
+              <label className="text-xs" htmlFor="">Data de fabricação: </label>
+              <small className="w-fit opacity-80 bg-blue-700 text-white p-1 rounded-md text-xs truncate">{doacao.dataFabricacao}</small>
+            </div>
+          </div>
+        }
+      </div>
     </div>
   )
 }

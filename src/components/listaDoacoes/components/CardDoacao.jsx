@@ -10,6 +10,7 @@ import { TIPO_EMPRESA } from "../../../constants/empresa";
 import icon_ok from "../../../assets/icon_ok.svg"
 import icon_time from "../../../assets/icon_time.svg"
 import { Basket, Trash } from "@phosphor-icons/react";
+import { CardDoacaoDetalhado } from "./CardDoacaoDetalhado";
 
 export function CardDoacao({ doacao }) {
   const { user } = AuthData()
@@ -20,12 +21,14 @@ export function CardDoacao({ doacao }) {
   const [isCancelarSolicitacaoActive, setIsCancelarSolicitacaoActive] = useState(false);
   const [isConcluirActive, setIsConcluirActive] = useState(false);
   const [isCancelarDoacao, setIsCancelarDoacao] = useState(false)
+  const [isCardDetalhadoActive, setIsCardDetalhadoActive] = useState(false)
 
   return (
     <div className="min-w-64 max-w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md my-6 ">
       <div className="flex flex-col px-4 transform transition-transform duration-200 hover:scale-105 hover:cursor-pointer z-0" onClick={() => {
-      
+        setIsCardDetalhadoActive(!isCardDetalhadoActive)
       }} key={doacao.id}>
+
         <p className="text-lg truncate">{doacao.nome}</p>
         <Link className="text-xs truncate link-default w-fit" to={`/perfil/${ doacao.empresaDoadora?.id }`}>{doacao.empresaDoadora?.nome ?? ""}</Link> 
         <div className="flex flex-row gap-2 my-2">
@@ -180,6 +183,14 @@ export function CardDoacao({ doacao }) {
                 <button className="btn-gray" onClick={() => setIsCancelarDoacao(false)}>Manter doação</button>
               </div>
             </div>
+          </Modal>
+        }
+
+        {
+          isCardDetalhadoActive
+          &&
+          <Modal setIsActive={setIsCardDetalhadoActive}>
+            <CardDoacaoDetalhado doacao={doacao} />
           </Modal>
         }
       </div>     
