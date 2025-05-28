@@ -23,6 +23,8 @@ export default function CadDoadores() {
   const [mensagens, setMensagens] = useState({});
   // State para mensagem de erro após tentativa de cadastro
   const [erro, setErro] = useState("");
+  
+  const [aceitarTermos, setAceitarTermos] = useState(false)
 
   function validarDados(dados) {
     let nome,
@@ -131,7 +133,11 @@ export default function CadDoadores() {
 
   async function cadastrarEmpresa() {
     // Validação dos dados
-    if (validarDados({ ...empresa, ...endereco })) {
+    if(!aceitarTermos) {
+      toast.error("Termos não aceitos")
+      return
+    }
+    if (validarDados({ ...empresa, ...endereco }) && aceitarTermos) {
       // Enviando dados para a função que chama a rota POST da API
       let enderecoAdicionado = await addEndereco(endereco);
       if (enderecoAdicionado) {
@@ -233,6 +239,8 @@ export default function CadDoadores() {
               empresa={empresa}
               setEmpresa={setEmpresa}
               cadastrarEmpresa={cadastrarEmpresa}
+              aceitarTermos={aceitarTermos}
+              setAceitarTermos={setAceitarTermos}
             />
           )}
         </form>

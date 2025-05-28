@@ -6,7 +6,8 @@ import logo from "../../assets/MC_Logo.svg"
 import { AuthData } from "../../auth/AuthWrapper";
 import { toast } from "react-toastify";
 import { SignIn } from "@phosphor-icons/react";
-
+import Modal from "../../components/modal/Modal";
+import TermosDeUso from "../../components/termosDeUso/TermosDeUso";
 
 export default function Login() {
 
@@ -17,6 +18,7 @@ export default function Login() {
     email: "",
     senha: ""
   })
+
 
   function validarDados() {
     let r = true
@@ -72,6 +74,7 @@ export default function Login() {
                 <SignIn size={20} />
                 <span className="front">Entrar</span>
               </button>
+              
               <Link className="text-xs link-default w-fit" to={"/cadastro"}>Não possui cadastro?</Link>
               <Link className="text-xs link-default w-fit" to={"/recuperar-senha"}>Esqueceu sua senha?</Link>
             </form>
