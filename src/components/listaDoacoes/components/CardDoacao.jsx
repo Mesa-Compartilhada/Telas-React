@@ -24,7 +24,7 @@ export function CardDoacao({ doacao }) {
   const [isCardDetalhadoActive, setIsCardDetalhadoActive] = useState(false)
 
   return (
-    <div className="min-w-64 max-w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md my-6 ">
+    <div className="min-w-64 max-w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md my-6">
       <div className="flex flex-col px-4 transform transition-transform duration-200 hover:scale-105 hover:cursor-pointer z-0" onClick={() => {
         setIsCardDetalhadoActive(!isCardDetalhadoActive)
       }} key={doacao.id}>

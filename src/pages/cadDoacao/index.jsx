@@ -37,12 +37,12 @@ export default function CadDoacao() {
       r = false;
     }
 
-    if (!dados.descricao || dados.quantidade.length <= 0) {
+    if (!dados.quantidade || dados.quantidade.length <= 0) {
       quantidade = "Insira a quantidade da doação";
       r = false;
     }
 
-    if (!dados.descricao || dados.unidadeMedida.length <= 0) {
+    if (!dados.unidadeMedida || dados.unidadeMedida.length <= 0) {
       unidadeMedida = "Insira a unidade de medida da doação";
       r = false;
     }

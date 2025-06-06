@@ -10,6 +10,8 @@ import { STATUS_DOACAO } from "../../constants/doacao.js";
 import { createContext, useEffect, useState } from 'react';
 import MapaDisponiveis from "./components/mapaDisponiveis.jsx";
 import FiltroDoacoes from "../../components/listaDoacoes/components/FiltroDoacoes.jsx";
+import { HandHeart } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
 
 export const DashboardContext = createContext()
 
@@ -39,31 +41,32 @@ export default function Dashboard() {
         <Header/>
         <p className={`mx-20 mb-10 text-sm ${user.tipo === TIPO_EMPRESA.DOADORA ? 'text-azul-escuro' : 'text-l-Abobora'}`} >{user.tipo === TIPO_EMPRESA.DOADORA ? `Obrigado por doar conosco, ${user.nome}!` : `Obrigado por fazer a diferença, ${user.nome}!`}</p>
 
-        <section className="grid place-content-center pb-10 px-10 gap-4">
+        <section className="grid place-content-center pb-10 px-10">
             {
                 TIPO_EMPRESA.RECEBEDORA === user.tipo
                 ?
-                <>
-                    <div className="flex justify-center">
-                        <FiltroDoacoes tiposAlimentos={ tiposAlimentos } setTiposAlimentos={ setTiposAlimentos } />
-                    </div>
+                <div>
                     <h1 className="text-2xl">Doações disponíveis</h1>
+                    <FiltroDoacoes tiposAlimentos={ tiposAlimentos } setTiposAlimentos={ setTiposAlimentos } />
                     <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.DISPONIVEL], "tipoAlimento": tiposAlimentos }} />
                     <hr />
                     <h1 className="text-2xl">Suas solicitações em andamento</h1>
                     <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.ANDAMENTO], "empresaRecebedoraId": user.id }} />
-                </>
+                </div>
                 :
-                <>
-                    <div className="flex justify-center">
+                <div>
+                    <div className="my-4">
+                        <Link to={"/cadastro-doacao"} className="btn-primary w-fit m-auto text-xl flex items-center gap-2 mb-10 hover:text-white hover:opacity-80"><HandHeart size={40} />Doar agora</Link>
+                        <h1 className="text-2xl">Suas doações disponíveis</h1>
                         <FiltroDoacoes tiposAlimentos={ tiposAlimentos } setTiposAlimentos={ setTiposAlimentos } />
+                        <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.DISPONIVEL], "empresaDoadoraId": user.id, "tipoAlimento": tiposAlimentos }} />
                     </div>
-                    <h1 className="text-2xl">Suas doações disponíveis</h1>
-                    <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.DISPONIVEL], "empresaDoadoraId": user.id, "tipoAlimento": tiposAlimentos }} />
                     <hr />
-                    <h1 className="text-2xl">Suas doações em andamento</h1>
-                    <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.ANDAMENTO], "empresaDoadoraId": user.id }} />
-                </>
+                    <div className="my-4">
+                        <h1 className="text-2xl">Suas doações em andamento</h1>
+                        <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.ANDAMENTO], "empresaDoadoraId": user.id }} />
+                    </div>
+                </div>
             }
         </section>
 
