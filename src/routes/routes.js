@@ -10,6 +10,7 @@ import Login from "../pages/login";
 import MeusDados from "../pages/MeusDados";
 import { Perfil } from "../pages/perfil";
 import RecuperarSenha from "../pages/recuperarSenha";
+import Header from "../components/Header_V2.jsx";
 
 export default function AppRoutes() {
     

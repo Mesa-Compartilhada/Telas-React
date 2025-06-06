@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from "react";
 import AppRoutes from "../routes/routes";
 import { login } from "../lib/api/empresa";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header_V2.jsx";
 
 export const AuthContext = createContext()
 export const AuthData = () => useContext(AuthContext)
@@ -33,6 +34,11 @@ export const AuthWrapper = () => {
 
   return (
     <AuthContext.Provider value={{user: user ?? null, loginUser, logoutUser}}>
+      {
+        user
+        &&
+        <Header />
+      }
       <AppRoutes />
     </AuthContext.Provider>
   )

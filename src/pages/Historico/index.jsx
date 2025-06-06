@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { AuthData } from "../../auth/AuthWrapper.js";
-import Header from "../../components/Header_V2.jsx";
 import { getDoacoesEmpresa } from "../../lib/api/doacao.js";
 import LinhaDoacoes  from "./components/LinhaDoacoes.jsx";
 
@@ -21,7 +20,6 @@ export default function Historico() {
     <body>
       {dados ? (
         <>
-          <Header></Header>
           <div className="flex justify-center items-center bg-[url('./assets/fundo_bolas_laranja_v2.svg')] bg-cover bg-opacity-50 h-dvh">
             <div className="mx-10 lg:mx-20 my-4 border-4 md:w-3/5 p-10 shadow-xl rounded-xl gradiente h-3/4 overflow-y-scroll">
               <table class="w-full text-left table-auto min-w-max">
