@@ -1,5 +1,4 @@
 // Components:
-import Header from "../../components/Header_V2.jsx/index.jsx"
 import {ListaDoacoes} from "../../components/listaDoacoes/ListaDoacoes.jsx"
 
 import { AuthData } from "../../auth/AuthWrapper.js";
@@ -38,7 +37,6 @@ export default function Dashboard() {
 
     return (
         <DashboardContext.Provider value={{doacoesAlteradas: doacoesAlteradas, setDoacoesAlteradas: setDoacoesAlteradas}}>
-        <Header/>
         <p className={`mx-20 mb-10 text-sm ${user.tipo === TIPO_EMPRESA.DOADORA ? 'text-azul-escuro' : 'text-l-Abobora'}`} >{user.tipo === TIPO_EMPRESA.DOADORA ? `Obrigado por doar conosco, ${user.nome}!` : `Obrigado por fazer a diferença, ${user.nome}!`}</p>
 
         <section className="grid place-content-center pb-10 px-10">

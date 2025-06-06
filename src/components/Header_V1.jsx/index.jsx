@@ -3,7 +3,7 @@ import logo from "../../assets/MC_Logo.svg";
 import user_icon from "../../assets/user.svg";
 import { AuthData } from "../../auth/AuthWrapper";
 
-export default function Header() {
+export default function HeaderHome() {
 
   const { user } = AuthData()
 

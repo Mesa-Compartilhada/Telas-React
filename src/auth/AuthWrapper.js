@@ -1,7 +1,9 @@
 import { createContext, useContext, useState } from "react";
 import AppRoutes from "../routes/routes";
 import { login } from "../lib/api/empresa";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Header from "../components/Header_V2.jsx";
+import HeaderHome from "../components/Header_V1.jsx/index.jsx";
 
 export const AuthContext = createContext()
 export const AuthData = () => useContext(AuthContext)
@@ -9,6 +11,8 @@ export const AuthData = () => useContext(AuthContext)
 export const AuthWrapper = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user-mesa-compartilhada")))
   const navigator = useNavigate()
+  const location = useLocation()
+  const { pathname } = location
 
   const loginUser = async (email, password) => {
     const result = await login(email, password);
@@ -33,6 +37,16 @@ export const AuthWrapper = () => {
 
   return (
     <AuthContext.Provider value={{user: user ?? null, loginUser, logoutUser}}>
+      {
+        user && pathname !== "/"
+        &&
+        <Header />
+      }
+      {
+        pathname == "/"
+        &&
+        <HeaderHome />
+      }
       <AppRoutes />
     </AuthContext.Provider>
   )

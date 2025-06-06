@@ -2,7 +2,7 @@ import logo from "../../assets/MC_Logo.svg";
 import { Link } from "react-router-dom";
 import { AuthData } from "../../auth/AuthWrapper";
 import { TIPO_EMPRESA } from "../../constants/empresa";
-import { ClockCounterClockwise, HandHeart, User } from "@phosphor-icons/react";
+import { ClockCounterClockwise, HandHeart, Notebook, User } from "@phosphor-icons/react";
 
 export default function Header() {
   const { user, logoutUser } = AuthData()
@@ -27,7 +27,8 @@ export default function Header() {
 
             {/* Navegação (Disponíveis, Meus Dados, Histórico) */}
             <nav className="flex space-x-8">
-              <Link to="/meus-dados" className="text-sm font-medium text-gray-900 link-default flex gap-1" ><User size={20} /> Meus Dados</Link>
+            <Link to="/perfil" className="text-sm font-medium text-gray-900 link-default flex gap-1" ><User size={20} /> Meu Perfil</Link>
+              <Link to="/meus-dados" className="text-sm font-medium text-gray-900 link-default flex gap-1" ><Notebook size={20} /> Meus Dados</Link>
               <Link to="/historico" className="text-sm font-medium text-gray-900 link-default flex gap-1"><ClockCounterClockwise size={20} /> Histórico</Link>
             </nav>
 

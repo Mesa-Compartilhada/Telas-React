@@ -125,7 +125,6 @@ export default function CadDoacao() {
   }
   return (
     <>
-      <Header />
       <div className="centraliza !h-full">
         <div className="mx-10 lg:mx-20 my-4 md:w-3/5 border-4 p-10 shadow-xl rounded-2xl gradiente">
           <h1 className="text-3xl text-center">Cadastre sua Doação</h1>

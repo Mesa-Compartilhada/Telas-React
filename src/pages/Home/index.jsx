@@ -18,7 +18,6 @@ export default function Home() {
   return (
     <>
       <div className="bg-white h-full">
-        <Header />
         {/* Banner */}
         <div className=" pt-5 lg:p-0">
           <div className="container text-l-Abobora flex flex-col lg:flex-row justify-center lg:gap-10 pb-10">
