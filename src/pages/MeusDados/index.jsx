@@ -27,7 +27,6 @@ export default function MeusDados(){
         <>
             {dados ? 
                 <>
-                <Header></Header>
                 <div className="flex justify-center items-center bg-[url('./assets/fundo_bolas_laranja_v2.svg')] bg-no-repeat bg-cover bg-opacity-50">                   
                     <div className="mx-10 lg:mx-20 my-4 border-4 md:w-3/5 p-10 shadow-xl rounded-2xl  gradiente">                 
                         <h2>
