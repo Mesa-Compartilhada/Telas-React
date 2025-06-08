@@ -26,8 +26,8 @@ export function CardDoacao({ doacao }) {
   return (
     <div className="min-w-64 max-w-64 bg-white rounded-xl p-2 shadow-gray-300 shadow-md my-6">
       <div className="flex flex-col px-4 transform transition-transform duration-200 hover:scale-105 hover:cursor-pointer z-0" onClick={() => {
-        setIsCardDetalhadoActive(!isCardDetalhadoActive)
-      }} key={doacao.id}>
+          setIsCardDetalhadoActive(!isCardDetalhadoActive)
+        }} key={doacao.id}>
 
         <p className="text-lg truncate">{doacao.nome}</p>
         <Link className="text-xs truncate link-default w-fit" to={`/perfil/${ doacao.empresaDoadora?.id }`}>{doacao.empresaDoadora?.nome ?? ""}</Link> 
@@ -37,7 +37,6 @@ export function CardDoacao({ doacao }) {
         </div>
         <p className="opacity-80 text-sm truncate">{doacao.descricao}</p>
         <p className="opacity-80 text-sm truncate">{doacao.observacao}</p>
-
       </div>
       <div className="transform transition-transform duration-200 hover:scale-105">
 
