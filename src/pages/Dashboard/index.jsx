@@ -3,7 +3,7 @@ import {ListaDoacoes} from "../../components/listaDoacoes/ListaDoacoes.jsx"
 
 import { AuthData } from "../../auth/AuthWrapper.js";
 import { TIPO_EMPRESA } from "../../constants/empresa.js";
-import { getDoacoesByFilter, getDoacoesByStatus, getDoacoesByStatusAndEmpresaDoadoraId, getDoacoesByStatusAndEmpresaRecebedoraId } from "../../lib/api/doacao.js";
+import { getDoacoesByFilter } from "../../lib/api/doacao.js";
 import { STATUS_DOACAO } from "../../constants/doacao.js";
 
 import { createContext, useEffect, useState } from 'react';

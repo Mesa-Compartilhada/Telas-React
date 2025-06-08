@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { CardDoacao } from "./components/CardDoacao";
 import { Package } from "@phosphor-icons/react";
 import { getDoacoesByFilter } from "../../lib/api/doacao";
-import 'react-loading-skeleton/dist/skeleton.css'
 import CardDoacaoSkeleton from "./components/CardDoacaoSkeleton";
 import FiltroDoacoes from "./components/FiltroDoacoes";
 import { TIPO_ALIMENTO } from "../../constants/doacao";

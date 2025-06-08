@@ -4,8 +4,8 @@ import { useEffect, useState } from "react"
 import { getEmpresaById } from "../../lib/api/empresa"
 import { CardPerfil } from "../../components/perfil/CardPerfil.jsx"
 import { PieChartDoacoes } from "./components/PieChartDoacoes.jsx"
-import Skeleton from "react-loading-skeleton"
-import { SmileySad, User } from "@phosphor-icons/react"
+import { SmileySad } from "@phosphor-icons/react"
+import CardPerfilSkeleton from "./components/CardPerfilSkeleton.jsx"
 
 export const Perfil = () => {
     const { user } = AuthData()
@@ -35,26 +35,14 @@ export const Perfil = () => {
 
     if(isLoading) {
         return (
-            <div>
-                <div className="flex flex-col items-center gap-2">
-                <Skeleton width={100} height={100} />
-                <Skeleton width={200} />
-                <div className="flex gap-4">
-                    <Skeleton width={150} />
-                    <Skeleton width={150} />
-                </div>
-                
-                <p><Skeleton width={200} height={50} /></p>
-                <Skeleton width={200} />
-            </div>
-            </div>
+            <CardPerfilSkeleton />
         )
     }
 
     if(!isLoading && perfil) {
         return (
-            <>
-                <div className="text-center flex flex-col gap-2">
+            <div className="flex justify-center items-center bg-[url('./assets/fundo_bolas_laranja_v2.svg')] bg-cover bg-opacity-50 h-dvh">
+                <div className="mx-10 lg:mx-20 my-4 border-4 p-10 shadow-xl rounded-xl gradiente h-3/4">
                     <CardPerfil empresa={perfil} />
                     {
                         perfil.id === user.id
@@ -63,15 +51,13 @@ export const Perfil = () => {
                     }
                     <PieChartDoacoes empresa={perfil}/>
                 </div>
-            
-                <p>Perfil não encontrado</p>
-            </>
+            </div>
         )
     }
 
     if(!isLoading && !perfil) {
         return (
-            <div>
+            <div className="bg-[url('./assets/fundo_bolas_laranja_v2.svg')] bg-cover bg-opacity-50 h-dvh">
                 <div className="w-fit m-auto gap-2 bg-white rounded-xl p-10 shadow-gray-300 shadow-md">
                     <div className="flex items-center">
                         <SmileySad size={100} />
