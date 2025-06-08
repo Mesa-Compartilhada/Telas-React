@@ -1,6 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import { AuthWrapper } from "./auth/AuthWrapper";
 import { ToastContainer } from "react-toastify";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 function App() {
   return (

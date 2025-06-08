@@ -3,12 +3,11 @@ import {ListaDoacoes} from "../../components/listaDoacoes/ListaDoacoes.jsx"
 
 import { AuthData } from "../../auth/AuthWrapper.js";
 import { TIPO_EMPRESA } from "../../constants/empresa.js";
-import { getDoacoesByFilter, getDoacoesByStatus, getDoacoesByStatusAndEmpresaDoadoraId, getDoacoesByStatusAndEmpresaRecebedoraId } from "../../lib/api/doacao.js";
+import { getDoacoesByFilter } from "../../lib/api/doacao.js";
 import { STATUS_DOACAO } from "../../constants/doacao.js";
 
 import { createContext, useEffect, useState } from 'react';
 import MapaDisponiveis from "./components/mapaDisponiveis.jsx";
-import FiltroDoacoes from "../../components/listaDoacoes/components/FiltroDoacoes.jsx";
 import { HandHeart } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 
@@ -24,7 +23,7 @@ export default function Dashboard() {
     useEffect(() => {
         const timer = setTimeout(() => {
           setMostrarMapa(true);
-          setTimeout(() => window.scrollTo({ top: 0, behavior: "auto" }), 100); // força scroll no momento certo
+          setTimeout(() => window.scrollTo({ top: 0, behavior: "auto" }), 100);
         }, 100);
       
         return () => clearTimeout(timer);
@@ -33,7 +32,6 @@ export default function Dashboard() {
       
     const { user } = AuthData()
     const [doacoesAlteradas, setDoacoesAlteradas] = useState(0)
-    const [tiposAlimentos, setTiposAlimentos] = useState([1, 2, 3, 4, 5])
 
     return (
         <DashboardContext.Provider value={{doacoesAlteradas: doacoesAlteradas, setDoacoesAlteradas: setDoacoesAlteradas}}>
@@ -44,24 +42,22 @@ export default function Dashboard() {
                 TIPO_EMPRESA.RECEBEDORA === user.tipo
                 ?
                 <div>
-                    <h1 className="text-2xl">Doações disponíveis</h1>
-                    <FiltroDoacoes tiposAlimentos={ tiposAlimentos } setTiposAlimentos={ setTiposAlimentos } />
-                    <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.DISPONIVEL], "tipoAlimento": tiposAlimentos }} />
+                    <h1 className="text-2xl my-4">Doações disponíveis</h1>
+                    <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.DISPONIVEL] }} ativarFiltro={true} />
                     <hr />
-                    <h1 className="text-2xl">Suas solicitações em andamento</h1>
+                    <h1 className="text-2xl my-4">Suas solicitações em andamento</h1>
                     <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.ANDAMENTO], "empresaRecebedoraId": user.id }} />
                 </div>
                 :
                 <div>
                     <div className="my-4">
                         <Link to={"/cadastro-doacao"} className="btn-primary w-fit m-auto text-xl flex items-center gap-2 mb-10 hover:text-white hover:opacity-80"><HandHeart size={40} />Doar agora</Link>
-                        <h1 className="text-2xl">Suas doações disponíveis</h1>
-                        <FiltroDoacoes tiposAlimentos={ tiposAlimentos } setTiposAlimentos={ setTiposAlimentos } />
-                        <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.DISPONIVEL], "empresaDoadoraId": user.id, "tipoAlimento": tiposAlimentos }} />
+                        <h1 className="text-2xl my-4">Suas doações disponíveis</h1>
+                        <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.DISPONIVEL], "empresaDoadoraId": user.id }} ativarFiltro={true} />
                     </div>
                     <hr />
                     <div className="my-4">
-                        <h1 className="text-2xl">Suas doações em andamento</h1>
+                        <h1 className="text-2xl my-4">Suas doações em andamento</h1>
                         <ListaDoacoes getDoacoes={getDoacoesByFilter} filtros={{ "status": [STATUS_DOACAO.ANDAMENTO], "empresaDoadoraId": user.id }} />
                     </div>
                 </div>

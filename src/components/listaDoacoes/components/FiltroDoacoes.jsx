@@ -16,7 +16,7 @@ export default function FiltroDoacoes({ tiposAlimentos, setTiposAlimentos }) {
     return (
         <div className="flex justify-start gap-4">
             <div className="self-start">
-                <button className="btn-primary" onClick={() => setAbrirFiltros(!abrirFiltros)}><Funnel size={20} /></button>
+                <button className="btn-primary border-2 border-transparent" onClick={() => setAbrirFiltros(!abrirFiltros)}><Funnel size={20} /></button>
             </div>
             {
                 abrirFiltros
