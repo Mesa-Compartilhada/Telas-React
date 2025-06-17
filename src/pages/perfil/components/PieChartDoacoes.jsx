@@ -7,30 +7,29 @@ import {
 } from "recharts";
 import { STATUS_DOACAO } from "../../../constants/doacao";
 import { TIPO_EMPRESA } from "../../../constants/empresa";
+import { getDoacoesByFilter } from "../../../lib/api/doacao";
 export const PieChartDoacoes = ({ empresa }) => {
   const [tipoAlimentodoacoesRecentes, setTipoAlimentodoacoesRecentes] =
     useState([]);
 
   useEffect(() => {
-    if (empresa.tipo === TIPO_EMPRESA.DOADORA) {
-      let doacoes = empresa.doacoes.filter((item) => {
-        if (item.status === STATUS_DOACAO.CONCLUIDA) {
-          return true;
-        }
-        return false;
-      });
-
-      let contagem = doacoes.reduce((acc, item) => {
-        acc[item.tipoAlimento] = (acc[item.tipoAlimento] || 0) + 1;
-        return acc;
-      }, {});
-
-      let dadosAlimentos = Object.keys(contagem).map((tipo) => ({
-        name: tipo,
-        value: contagem[tipo],
-      }));
-      setTipoAlimentodoacoesRecentes(dadosAlimentos);
+    const fetchData = async () => {
+      if (empresa.tipo === TIPO_EMPRESA.DOADORA) {
+        let doacoes = await getDoacoesByFilter({ "status": [STATUS_DOACAO.CONCLUIDA], "empresaDoadoraId": empresa.id });
+  
+        let contagem = doacoes.reduce((acc, item) => {
+          acc[item.tipoAlimento] = (acc[item.tipoAlimento] || 0) + 1;
+          return acc;
+        }, {});
+  
+        let dadosAlimentos = Object.keys(contagem).map((tipo) => ({
+          name: tipo,
+          value: contagem[tipo],
+        }));
+        setTipoAlimentodoacoesRecentes(dadosAlimentos);
+      }
     }
+    fetchData()
   }, [empresa.doacoes, empresa.tipo]);
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8E4162"];

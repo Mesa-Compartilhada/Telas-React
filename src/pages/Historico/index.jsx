@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { AuthData } from "../../auth/AuthWrapper.js";
-import { getDoacoesEmpresa } from "../../lib/api/doacao.js";
+import { getDoacoesByFilter, getDoacoesEmpresa } from "../../lib/api/doacao.js";
 import LinhaDoacoes  from "./components/LinhaDoacoes.jsx";
 import LinhaDoacoesSkeleton from "./components/LinhaDoacoesSkeleton.jsx";
+import { STATUS_DOACAO } from "../../constants/doacao.js";
+import { TIPO_EMPRESA } from "../../constants/empresa.js";
 
 export default function Historico() {
   const { user } = AuthData();
@@ -10,16 +12,21 @@ export default function Historico() {
   const [isLoading, setIsLoading] = useState(true)
 
   const pegarDados = async () => {
-    let resultado = await getDoacoesEmpresa(user.id);
-    resultado = resultado.filter(doacao => {
-      return doacao.status === "CONCLUIDA" || doacao.status === "CANCELADA"
-    })
+    let resultado
+    if(user.tipo === TIPO_EMPRESA.DOADORA) {
+      resultado = await getDoacoesByFilter({ "status": [STATUS_DOACAO.CONCLUIDA, STATUS_DOACAO.CANCELADA], "empresaDoadoraId": user.id });
+    }
+    else {
+    
+      resultado = await getDoacoesByFilter({ "status": [STATUS_DOACAO.CONCLUIDA, STATUS_DOACAO.CANCELADA], "empresaRecebedoraId": user.id });
+    }
+    console.log(resultado)
     setDados(resultado);
     setIsLoading(false)
   };
   useEffect(() => {
     pegarDados();
-  }, []);
+  }, [user]);
   
   return (
     <div>

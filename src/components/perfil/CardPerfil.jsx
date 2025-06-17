@@ -5,7 +5,7 @@ import { STATUS_DOACAO } from "../../constants/doacao"
 export  const CardPerfil = ({ empresa }) => {
     const [doacoesRecentes, setDoacoesRecentes] = useState(0)
 
-    useEffect(() => {
+    /* useEffect(() => {
         if(empresa.tipo === TIPO_EMPRESA.DOADORA) {
             let doacoes = empresa.doacoes.filter((item) => {
                 let data = new Date()
@@ -22,7 +22,7 @@ export  const CardPerfil = ({ empresa }) => {
             })
             setDoacoesRecentes(doacoes)
         }
-    }, [])
+    }, []) */
 
     return (
         <div className="w-fit bg-white rounded-xl p-6 shadow-gray-300 shadow-md m-auto">
@@ -35,11 +35,11 @@ export  const CardPerfil = ({ empresa }) => {
                     { <MapPin size={20} /> } <span className="cursor-pointer" title={empresa.endereco.cep}>{ empresa.endereco.bairro} </span>
                     { <Envelope size={20} /> }<span className="cursor-pointer" title={empresa.email}> Entre em contato</span>
                 </div>
-                {
+                {/* {
                     <div className="bg-green-500 text-white p-2 rounded-lg">
                         <p>{ doacoesRecentes.length > 0 ? doacoesRecentes.length : 0 } doações concluídas</p>
                     </div>
-                }
+                } */}
             </div>
         </div>
         

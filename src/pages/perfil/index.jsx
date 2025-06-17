@@ -42,7 +42,7 @@ export const Perfil = () => {
     if(!isLoading && perfil) {
         return (
             <div className="flex justify-center items-center bg-[url('./assets/fundo_bolas_laranja_v2.svg')] bg-cover bg-opacity-50 h-dvh">
-                <div className="mx-10 lg:mx-20 my-4 border-4 p-10 shadow-xl rounded-xl gradiente h-3/4">
+                <div className="mx-10 lg:mx-20 my-4 border-4 p-10 shadow-xl rounded-xl gradiente">
                     <CardPerfil empresa={perfil} />
                     {
                         perfil.id === user.id
