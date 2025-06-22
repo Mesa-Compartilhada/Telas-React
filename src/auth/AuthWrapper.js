@@ -1,6 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import AppRoutes from "../routes/routes";
-import { login } from "../lib/api/empresa";
+import { getMe, login } from "../lib/api/empresa";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header_V2.jsx";
 import HeaderHome from "../components/Header_V1.jsx/index.jsx";
@@ -9,34 +9,64 @@ export const AuthContext = createContext()
 export const AuthData = () => useContext(AuthContext)
 
 export const AuthWrapper = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user-mesa-compartilhada")))
+  const [user, setUser] = useState()
+  const [loading, setLoading] = useState(true)
   const navigator = useNavigate()
   const location = useLocation()
   const { pathname } = location
 
+  const restoreUser = async () => {
+    const token = localStorage.getItem("jwt")
+    if(token && !user) {
+      try {
+        const empresa = await getMe()
+        setUser(empresa.user)
+      } catch(error) {
+        console.log("Falha ao recuperar informações do usuário", error)
+        localStorage.removeItem("jwt")
+      }
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => {  
+    restoreUser()
+  }, [])
+
   const loginUser = async (email, password) => {
     const result = await login(email, password);
-      if(result) {
-        const { id, nome, tipo, email } = result
-        const usuario = { id, nome, tipo, email }
-        localStorage.setItem("user-mesa-compartilhada", JSON.stringify(usuario))
-        setUser(JSON.parse(localStorage.getItem("user-mesa-compartilhada")))
-        return { status: true, usuario }
+      if(result.status) {
+        localStorage.setItem("jwt", result.token)
+        try {
+          const empresa = await getMe()
+          restoreUser()
+          return { status: true, user: empresa.user }
+        } catch(error) {
+          console.log("Falha ao recuperar informações do usuário", error)
+          localStorage.removeItem("jwt")
+          return { status: false, user: null }
+        }
       }
       else {
-        return { status: false }
+        return { status: false, user: null }
       }
   }
 
   const logoutUser = () => {
-    localStorage.removeItem("user-mesa-compartilhada")
+    localStorage.removeItem("jwt")
     setUser(null)
     navigator("/")
     return
   }
 
+  if(loading) {
+    return (
+      <div></div>
+    )
+  }
+
   return (
-    <AuthContext.Provider value={{user: user ?? null, loginUser, logoutUser}}>
+    <AuthContext.Provider value={{user: user, loginUser, logoutUser}}>
       {
         user && pathname !== "/"
         &&

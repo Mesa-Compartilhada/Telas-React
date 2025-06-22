@@ -5,7 +5,7 @@ export default function LinhaDoacoesSkeleton() {
     <>
       {
        [...Array(3)].map((_, i) => (
-        <tr>
+        <tr key={i}>
           <td className="w-[150px] p-4 border-b border-blue-gray-50">
             <Skeleton width={100} height={20} />
           </td>

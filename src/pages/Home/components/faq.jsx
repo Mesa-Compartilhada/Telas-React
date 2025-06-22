@@ -81,16 +81,16 @@ export default function FAQ() {
                   <path
                     d="M7.04688 11.9999H16.9469"
                     stroke="#FF6600"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   ></path>
                   <path
                     d="M12 7.05005V16.95"
                     stroke="#FF6600"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     className={`${
                       openFAQ === index ? "opacity-0" : "opacity-100"
                     } transition-opacity duration-100 ease-in-out`}

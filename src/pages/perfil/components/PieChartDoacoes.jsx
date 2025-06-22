@@ -90,7 +90,6 @@ export const PieChartDoacoes = ({ empresa }) => {
                 fill={COLORS[index % COLORS.length]}
               />
             ))}
-            {console.log("aqui" + tipoAlimentodoacoesRecentes)}
           </Pie>
           <Legend />
         </PieChart>

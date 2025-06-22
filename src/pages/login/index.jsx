@@ -35,13 +35,18 @@ export default function Login() {
     return r
   }
 
+  // essa função manda o email e senha pra rota /login da api
+  // a rota entao gera o jwt caso esteja correto
+  // dai uma outra funçao vai pra rota /getMe, pra pegar os dados da empresa
+  // o jwt vai pro localStorage, ja os dados da empresa, pra um context dentro do AuthWrapper
+  // o AuthWrapper fornece esses dados para todos os componentes da aplicação
+  // sendo assim, os dados do usuario sao sempre acessiveis, desde que esteja autenticado
   async function fazerLogin() {
     validarDados()
     if(dadosLogin.email && dadosLogin.senha) {
       const result = await loginUser(dadosLogin.email, dadosLogin.senha);
       if(result.status) {
-        toast.success(`Acessando como empresa ${result.usuario.tipo.toLowerCase()}`)
-        console.log(result.usuario)
+        toast.success(`Acessando como empresa ${result.user.tipo.toLowerCase()}`)
         navigate("/dashboard")
       }
       else {

@@ -50,7 +50,7 @@ export async function getEmpresaByEmail(email) {
 
 export async function addEmpresa(empresa) {
   try {
-    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa/register`, {
       method: "POST",
       body: JSON.stringify(empresa),
       headers: {
@@ -71,13 +71,15 @@ export async function addEmpresa(empresa) {
 }
 
 export async function updateEmpresaById(id, empresa) {
+  const token = localStorage.getItem("jwt")
   try {
     let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa/${id}`, {
       method: "PUT",
       body: JSON.stringify(empresa),
       headers: {
         'Accept': 'application/json, text/plain',
-        'Content-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': `Bearer ${token}`
       },
     });
     let message = await result.json()
@@ -102,13 +104,41 @@ export async function login(email, senha) {
         'Content-Type': 'application/json;charset=UTF-8'
       },
     })
+    const json = await result.json()
+    let loginResult = { status: result.status === 200, token: null, message: null, user: null }
     if(result.status !== 200) {
-      return false
+      loginResult.message = "Credenciais inválidas"
     }
     else {
-      result = await result.json()
-      return result
+      loginResult.token = json.token
     }
+    return loginResult
+  } catch(error) {
+    console.log(error)
+    return false
+  }
+}
+
+export async function getMe() {
+  const token = localStorage.getItem("jwt")
+  try {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa/me`, {
+      method: "GET", 
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': `Bearer ${token}`
+      },
+    })
+    const json = await result.json()
+    const userResult = { status: result.status, message: null, user: null }
+    if(result.status !== 200) {
+      userResult.message = "Usuário não encontrado"
+    }
+    else {
+      userResult.user = json.user
+    }
+    return userResult
   } catch(error) {
     console.log(error)
     return false
@@ -143,7 +173,7 @@ export async function verificarToken(token) {
       method: "GET",
       headers: {
         'Accept': 'application/json, text/plain',
-        'Content-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json;charset=UTF-8',
       },
     })
     let message = await result.json()

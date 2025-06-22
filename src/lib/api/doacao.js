@@ -66,13 +66,15 @@ export async function getDoacoesByStatus(status) {
 }
 
 export async function addDoacao(doacao) {
+  const token = localStorage.getItem("jwt")
   try {
     let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao`, {
       method: "POST",
       body: JSON.stringify(doacao),
       headers: {
         'Accept': 'application/json, text/plain',
-        'Content-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': `Bearer ${token}`
       },
     });
     return result
@@ -83,13 +85,15 @@ export async function addDoacao(doacao) {
 }
 
 export async function updateStatusDoacao(status, doacaoId, empresaSolicitanteId, empresaRecebedoraId = null ) {
+  const token = localStorage.getItem("jwt")
   try {
     let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/status/${doacaoId}`, {
       method: "PUT",
       body: JSON.stringify({ status, empresaRecebedoraId, empresaSolicitanteId }),
       headers: {
         'Accept': 'application/json, text/plain',
-        'Content-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': `Bearer ${token}`
       },
     });
     const message = await result.json()
@@ -135,13 +139,15 @@ export async function getDoacoesByStatusAndEmpresaRecebedoraId(status, id) {
 }
 
 export async function getDoacoesByFilter(filtros) {
+  const token = localStorage.getItem("jwt")
   try {
     let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/filtro`, {
       method: "POST",
       body: JSON.stringify(filtros),
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': `Bearer ${token}`
       }
     })
     result = await result.json()
