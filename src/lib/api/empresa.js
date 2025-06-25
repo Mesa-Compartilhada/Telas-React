@@ -70,10 +70,10 @@ export async function addEmpresa(empresa) {
   
 }
 
-export async function updateEmpresaById(id, empresa) {
+export async function updateEmpresaById(empresa) {
   const token = localStorage.getItem("jwt")
   try {
-    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa/${id}`, {
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/empresa`, {
       method: "PUT",
       body: JSON.stringify(empresa),
       headers: {
@@ -83,7 +83,7 @@ export async function updateEmpresaById(id, empresa) {
       },
     });
     let message = await result.json()
-    if(result.status == 400) {
+    if(result.status !== 200) {
       return { status: false, message: Object.values(message)[0] }
     }
     return { status: true, message: `Empresa atualizada` }

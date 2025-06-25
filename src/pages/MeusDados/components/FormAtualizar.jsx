@@ -35,15 +35,13 @@ export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualiz
                 senha: dadosAtualizados.senha,
             }
             if(validarDados(novosDados)) {
-                let loginResult = await login(dados.email, novosDados.senha)
-                let updateResult
-                if(loginResult !== false) {
-                    updateResult = await updateEmpresaById(user.id, novosDados)
+                const updateResult = await updateEmpresaById(novosDados)
+                if(updateResult.status) {
                     setIsActive(false)
                     toast.success("Dados atualizados com sucesso")
                 }
                 else {
-                    toast.error("Dados inválidos")
+                    toast.error(updateResult.message)
                 }
             }
         }
@@ -51,11 +49,7 @@ export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualiz
 
     const validarDados = (novosDados) => {
         let r = true
-        let senha, nome, email
-        if(!novosDados.senha || novosDados.senha.length < 8) {
-            senha = "Insira uma senha válida"
-            r = false
-        }
+        let nome, email
         if(!novosDados.nome || novosDados.nome.length < 1) {
             nome = "Insira um nome válido"
             r = false
@@ -65,7 +59,7 @@ export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualiz
             r = false
         }
         if(!r) {
-            setMensagens({...mensagens, senha, nome, email})
+            setMensagens({...mensagens, nome, email})
         }
         else {
             setMensagens({})
@@ -96,9 +90,6 @@ export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualiz
                 </div>
                 <div className="mb-4 flex gap-1 items-center">
                     <InputField type={"email"} id={"emailEmpresa"} name={"emailEmpresa"} msg={mensagens.email}  change={(e) => setDadosAtualizados({...dadosAtualizados, email: e.target.value})} label={"Email:"} defaultValue={dados.email}></InputField> 
-                </div>
-                <div className="mb-4 flex gap-1 items-center">
-                    <InputField type={"password"} id={"senhaEmpresa"} name={"senhaEmpresa"} msg={mensagens.senha} change={(e) => setDadosAtualizados({...dadosAtualizados, senha: e.target.value})} label={"Confirme sua senha:"}></InputField> 
                 </div>
                 <button className="btn-primary mr-[160px]" onClick={() => atualizarDados()}>Salvar</button>
                 <button className="btn-gray" onClick={() => setIsActive(false)}>Cancelar</button>
