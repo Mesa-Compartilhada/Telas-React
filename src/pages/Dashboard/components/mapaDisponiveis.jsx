@@ -3,7 +3,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import tt from '@tomtom-international/web-sdk-maps';
 
 import { useRef, useEffect, useState } from 'react';
-import { getDoacoesByStatus } from '../../../lib/api/doacao.js';
+import { getDoacoesByFiltro, getDoacoesByStatus } from '../../../lib/api/doacao.js';
 import { STATUS_DOACAO } from '../../../constants/doacao.js';
 import { CardPerfil } from '../../../components/perfil/CardPerfil.jsx';
 import { getEmpresaById } from '../../../lib/api/empresa.js';
@@ -26,8 +26,10 @@ export default function MapaDisponiveis() {
     };
 
     const getListaEmpresa = async () => {
-        const doacao = await getDoacoesByStatus(STATUS_DOACAO.DISPONIVEL);
-        const tempPop = doacao.map(item => item.empresaDoadora);
+        const doacoes = await getDoacoesByFiltro({"status": [STATUS_DOACAO.DISPONIVEL]});
+        const tempPop = doacoes.filter(item => item.empresaDoadora !== null && item.empresaDoadora !== undefined)
+                        .map(item => item.empresaDoadora);
+
         setPopEmpresa(tempPop);
     };
 

@@ -52,10 +52,17 @@ export async function getDoacoesByEmpresaRecebedoraId(id) {
   }
 }
 
-export async function getDoacoesByStatus(status) {
+export async function getDoacoesByFiltro(filtros) {
+  const token = localStorage.getItem("jwt")
   try {
-    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/status/${status}`, {
-      method: "GET"
+    let result = await fetch(`${process.env.REACT_APP_MESACOMPARTILHADA_API_URI}/doacao/filtro`, {
+      method: "POST",
+      body: JSON.stringify(filtros),
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': `Bearer ${token}`
+      },
     })
     result = await result.json()
     return result
