@@ -14,7 +14,7 @@ import { CardDoacaoDetalhado } from "./CardDoacaoDetalhado";
 
 export function CardDoacao({ doacao }) {
   const { user } = AuthData()
-  const tipoEmpresa = TIPO_EMPRESA[user.tipo]
+  const tipoEmpresa = user.tipo
   const { doacoesAlteradas, setDoacoesAlteradas } = useContext(DashboardContext)
 
   const [isSolicitarActive, setIsSolicitarActive] = useState(false);
