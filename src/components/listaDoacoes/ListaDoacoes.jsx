@@ -30,7 +30,7 @@ export function ListaDoacoes({ filtros, ativarFiltro }) {
   useEffect(() => {
     setFiltrando(true)
     const novas = doacoes.filter((doacao) =>
-      tiposAlimentos.includes(TIPO_ALIMENTO[doacao.tipoAlimento])
+      tiposAlimentos.includes(doacao.tipoAlimento)
     )
     setDoacoesExibidas(novas)
     const timer = setTimeout(() => {
