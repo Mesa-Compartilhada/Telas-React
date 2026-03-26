@@ -22,7 +22,7 @@ export default function AppRoutes() {
       { <Route path="/cadastro" element={!user ? <CadDoadores /> : <Home />} /> }
       { <Route path="/login" element={!user ? <Login /> : <Home />} /> }
       { <Route path="/dashboard" element={ user ? <Dashboard /> : <Home /> }/> }
-      { <Route path="/cadastro-doacao" element={ user && TIPO_EMPRESA[user.tipo] === TIPO_EMPRESA.DOADORA ? <CadDoacao /> : <Home /> }/> }
+      { <Route path="/cadastro-doacao" element={ user && user.tipo === TIPO_EMPRESA.DOADORA ? <CadDoacao /> : <Home /> }/> }
       { <Route path="/meus-dados" element={ user ? <MeusDados />: <Home />}/> }
       { <Route path="/historico" element={ user ? <Historico/> : <Home/>}/>}
       { <Route path="/perfil/:id" element={ user ? <Perfil/> : <Home/>}/>}

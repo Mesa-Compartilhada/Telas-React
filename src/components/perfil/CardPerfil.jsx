@@ -1,5 +1,5 @@
 import { MapPin, Envelope, User } from "@phosphor-icons/react"
-import { TIPO_EMPRESA } from "../../constants/empresa"
+import { CATEGORIA_DOADORA, CATEGORIA_RECEBEDORA, TIPO_EMPRESA } from "../../constants/empresa"
 import { useEffect, useState } from "react"
 import { STATUS_DOACAO } from "../../constants/doacao"
 export  const CardPerfil = ({ empresa }) => {
@@ -29,7 +29,7 @@ export  const CardPerfil = ({ empresa }) => {
             <div className="flex flex-col items-center gap-2">
                 <div className=" rounded-full border-2 border-black p-2">{ <User className="opacity-60" size={100} />}</div>
                 <p>{ empresa.nome }</p>
-                <p>{ empresa.categoria.split("")[0]+empresa.categoria.substring(1).toLowerCase() } - { empresa.tipo.split("")[0]+empresa.tipo.substring(1).toLowerCase() }</p>
+                <p>{ Object.keys(TIPO_EMPRESA).find(key => TIPO_EMPRESA[key] === empresa.tipo) } - { Object.keys(empresa.tipo === 1 ? CATEGORIA_DOADORA : CATEGORIA_RECEBEDORA).find(key => empresa.tipo === 1 ? CATEGORIA_DOADORA[key] : CATEGORIA_RECEBEDORA[key] === empresa.tipo) }</p>
                 
                 <div className="flex content-center gap-2">
                     { <MapPin size={20} /> } <span className="cursor-pointer" title={empresa.endereco.cep}>{ empresa.endereco.bairro} </span>

@@ -59,41 +59,43 @@ export const PieChartDoacoes = ({ empresa }) => {
     );
   };
 
+if(tipoAlimentodoacoesRecentes.length > 0) {
   return (
-    <div className="flex flex-col items-center gap-2">
-      {
-        <PieChart width={500} height={300} title="TITULO">
-          <text
-            x="50%"
-            y="10%"
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize={20}
-            fontWeight="bold"
-            fill="#000"
-          >
-            Doações por tipo de alimento
-          </text>
-          <Pie
-            data={tipoAlimentodoacoesRecentes}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-          >
-            {tipoAlimentodoacoesRecentes.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Legend />
-        </PieChart>
-      }
-    </div>
-  );
+      <div className="flex flex-col items-center gap-2">
+        {
+          <PieChart width={500} height={300} title="TITULO">
+            <text
+              x="50%"
+              y="10%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fontSize={20}
+              fontWeight="bold"
+              fill="#000"
+            >
+              Doações por tipo de alimento
+            </text>
+            <Pie
+              data={tipoAlimentodoacoesRecentes}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              label={renderCustomizedLabel}
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="value"
+            >
+              {tipoAlimentodoacoesRecentes.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Legend />
+          </PieChart>
+        }
+      </div>
+    );
+  }
 };

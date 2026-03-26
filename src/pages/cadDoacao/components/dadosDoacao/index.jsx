@@ -166,6 +166,17 @@ export default function DadosDoacao(props) {
         name={"horaRetiradaMax"}
         type={"time"}
       />
+
+      <p>Imagem da doação:</p>
+      <input type="file" accept="image/png, image/jpeg" id={"imagemCapa"} name={"imagemCapa"} onChange={async (e) => {
+          if(e.target.files && e.target.files.length > 0) {
+            let file = e.target.files[0]
+            const bufferFile = await file.arrayBuffer()
+            const fileBase64 = btoa(new Uint8Array(bufferFile))
+            console.log(fileBase64)
+            setDoacao({ ...doacao, imagemCapa: fileBase64})
+          }
+        }} />
     </div>
   );
 }

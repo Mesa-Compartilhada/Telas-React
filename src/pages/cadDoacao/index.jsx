@@ -117,6 +117,7 @@ export default function CadDoacao() {
         dataCriada: data,
         dataMaxRetirada: doacao.dataRetirada,
         empresaDoadoraId: user.id,
+        imagemCapa: doacao.imagemCapa
       };
       await addDoacao(novaDoacao);
       toast.success("Doação cadastrada")
