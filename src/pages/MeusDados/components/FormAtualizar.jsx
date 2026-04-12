@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { AuthData } from "../../../auth/AuthWrapper.js";
 import InputField from "../../../components/inputs/InputField.jsx"; 
 import SelectField from "../../../components/inputs/SelectField.jsx"; 
-import { CATEGORIA_DOADORA, CATEGORIA_RECEBEDORA, TIPO_EMPRESA } from "../../../constants/empresa.js";
 import { login, updateEmpresaById, getEmpresaById } from "../../../lib/api/empresa.js";
 import { toast } from "react-toastify";
+import { getCategoriaEmpresaLabel } from "../../../constants/empresa/categoriaEmpresa.js";
+import { TipoEmpresa } from "../../../constants/empresa/tipoEmpresa.js";
 
 export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualizados, setIsActive }) {
     const { user } = AuthData()
@@ -28,8 +29,8 @@ export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualiz
             let novosDados = {
                 nome: dadosAtualizados.nome,
                 cnpj: dadosAtualizados.cnpj,
-                tipo: TIPO_EMPRESA[dadosAtualizados.tipo] === TIPO_EMPRESA.DOADORA ? 1 : 2,
-                categoria: parseInt(dadosAtualizados.categoria),
+                tipo: dadosAtualizados.tipo,
+                categoria: dadosAtualizados.categoria,
                 enderecoId: dadosAtualizados.endereco.id,
                 email: dadosAtualizados.email,
                 senha: dadosAtualizados.senha,
@@ -69,8 +70,6 @@ export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualiz
 
     useEffect(() => {
         let temp = {...dados}
-        temp.categoria = TIPO_EMPRESA[dados.tipo] === TIPO_EMPRESA.DOADORA 
-        ? CATEGORIA_DOADORA[dados.categoria] : CATEGORIA_RECEBEDORA[dados.categoria]
         setDadosAtualizados(temp)
     }, [dados])
     return(
@@ -83,9 +82,9 @@ export default function FormAtualizar({ dados, dadosAtualizados, setDadosAtualiz
                 </div>
                 <div className="mb-4 flex gap-1 items-center">
                     {
-                    TIPO_EMPRESA[dados.tipo] === TIPO_EMPRESA.DOADORA
-                    ? <SelectField name={"categoriaEmpresa"} label={"Categoria:"} id={"categoriaEmpresa"} options={categoriaDoadora} msg={mensagens.categoria} defaultValue={CATEGORIA_DOADORA[dados.categoria]}  change={(e) => setDadosAtualizados({...dadosAtualizados, categoria: e.target.value})} />
-                    : <SelectField name={"categoriaEmpresa"} label={"Categoria:"} id={"categoriaEmpresa"} options={categoriaRecebedora} msg={mensagens.categoria} defaultValue={CATEGORIA_RECEBEDORA[dados.categoria]}  change={(e) => setDadosAtualizados({...dadosAtualizados, categoria: e.target.value})} />
+                    dados.tipo === TipoEmpresa.DOADORA
+                    ? <SelectField name={"categoriaEmpresa"} label={"Categoria:"} id={"categoriaEmpresa"} options={categoriaDoadora} msg={mensagens.categoria} defaultValue={dados.categoria}  change={(e) => setDadosAtualizados({...dadosAtualizados, categoria: e.target.value})} />
+                    : <SelectField name={"categoriaEmpresa"} label={"Categoria:"} id={"categoriaEmpresa"} options={categoriaRecebedora} msg={mensagens.categoria} defaultValue={dados.categoria}  change={(e) => setDadosAtualizados({...dadosAtualizados, categoria: e.target.value})} />
                     }
                 </div>
                 <div className="mb-4 flex gap-1 items-center">

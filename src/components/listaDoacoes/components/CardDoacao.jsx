@@ -5,12 +5,12 @@ import { updateStatusDoacao } from "../../../lib/api/doacao";
 import { AuthData } from "../../../auth/AuthWrapper";
 import { STATUS_DOACAO } from "../../../constants/doacao";
 import { DashboardContext } from "../../../pages/Dashboard";
-import { TIPO_EMPRESA } from "../../../constants/empresa";
 
 import icon_ok from "../../../assets/icon_ok.svg"
 import icon_time from "../../../assets/icon_time.svg"
 import { Basket, Trash } from "@phosphor-icons/react";
 import { CardDoacaoDetalhado } from "./CardDoacaoDetalhado";
+import { TipoEmpresa } from "../../../constants/empresa/tipoEmpresa";
 
 export function CardDoacao({ doacao }) {
   const { user } = AuthData()
@@ -46,7 +46,7 @@ export function CardDoacao({ doacao }) {
           doacao.status === STATUS_DOACAO.DISPONIVEL
           ?
           (
-            user.tipo === TIPO_EMPRESA.RECEBEDORA
+            user.tipo === TipoEmpresa.RECEBEDORA
             ?
             <button className="btn-secondary w-fit my-2" onClick={() => setIsSolicitarActive(!isSolicitarActive)}><Basket size={20} /></button>
             :
@@ -55,21 +55,21 @@ export function CardDoacao({ doacao }) {
           : doacao.status === STATUS_DOACAO.ANDAMENTO
           && 
           (
-            user.tipo === TIPO_EMPRESA.RECEBEDORA
+            user.tipo === TipoEmpresa.RECEBEDORA
             &&
             <button className="btn-red w-fit my-2" onClick={() => setIsCancelarSolicitacaoActive(!isCancelarSolicitacaoActive)}><Trash size={20} /></button>
           )
         }
 
         {
-          doacao.status === STATUS_DOACAO.ANDAMENTO && user.tipo === TIPO_EMPRESA.DOADORA
+          doacao.status === STATUS_DOACAO.ANDAMENTO && user.tipo === TipoEmpresa.DOADORA
           &&
           <button className="my-2 p-2 rounded-md bg-azul text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsConcluirActive(!isConcluirActive)}>
             { !doacao.empresaDoadoraConcluida ? "Confirmar entrega" : "Cancelar confirmação de entrega" }
           </button>
         }
         {
-          doacao.status === STATUS_DOACAO.ANDAMENTO && user.tipo === TIPO_EMPRESA.RECEBEDORA
+          doacao.status === STATUS_DOACAO.ANDAMENTO && user.tipo === TipoEmpresa.RECEBEDORA
           &&
           <button className="my-2 p-2 rounded-md bg-azul text-branco w-1/2 hover:bg-opacity-80" onClick={() => setIsConcluirActive(!isConcluirActive)}>
             { !doacao.empresaRecebedoraConcluida ? "Confirmar recebimento" : "Cancelar confirmação de recebimento" }
@@ -108,7 +108,7 @@ export function CardDoacao({ doacao }) {
         }
 
         {
-          isConcluirActive && tipoEmpresa === TIPO_EMPRESA.DOADORA
+          isConcluirActive && tipoEmpresa === TipoEmpresa.DOADORA
           &&
           <Modal setIsActive={setIsConcluirActive}>
             <div className="flex flex-col gap-4 p-4 text-gray-700">
@@ -139,7 +139,7 @@ export function CardDoacao({ doacao }) {
         }
 
         {
-          isConcluirActive && tipoEmpresa === TIPO_EMPRESA.RECEBEDORA
+          isConcluirActive && tipoEmpresa === TipoEmpresa.RECEBEDORA
           &&
           <Modal setIsActive={setIsConcluirActive}>
             <div className="flex flex-col gap-4 p-4 text-gray-700">

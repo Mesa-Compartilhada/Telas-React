@@ -4,7 +4,7 @@ import { getDoacoesByFilter, getDoacoesEmpresa } from "../../lib/api/doacao.js";
 import LinhaDoacoes  from "./components/LinhaDoacoes.jsx";
 import LinhaDoacoesSkeleton from "./components/LinhaDoacoesSkeleton.jsx";
 import { STATUS_DOACAO } from "../../constants/doacao.js";
-import { TIPO_EMPRESA } from "../../constants/empresa.js";
+import { TipoEmpresa } from "../../constants/empresa/tipoEmpresa.js";
 
 export default function Historico() {
   const { user } = AuthData();
@@ -13,7 +13,7 @@ export default function Historico() {
 
   const pegarDados = async () => {
     let resultado
-    if(user.tipo === TIPO_EMPRESA.DOADORA) {
+    if(user.tipo === TipoEmpresa.DOADORA) {
       resultado = await getDoacoesByFilter({ "status": [STATUS_DOACAO.CONCLUIDA, STATUS_DOACAO.CANCELADA], "empresaDoadoraId": user.id });
     }
     else {

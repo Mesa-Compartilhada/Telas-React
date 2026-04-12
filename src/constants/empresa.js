@@ -1,7 +1,4 @@
-export const TIPO_EMPRESA = {
-  DOADORA: 1,
-  RECEBEDORA: 2
-}
+
 
 export const STATUS_EMPRESA = {
   ATIVA: 1,

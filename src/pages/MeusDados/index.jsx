@@ -6,7 +6,8 @@ import FormAtualizar from "./components/FormAtualizar.jsx";
 import { AuthData } from "../../auth/AuthWrapper.js";
 import FormRecuperarSenha from "./components/formRecuperarSenha.jsx";
 import MeusDadosSkeleton from "./components/MeusDadosSkeleton.jsx";
-import { CATEGORIA_DOADORA, CATEGORIA_RECEBEDORA, TIPO_EMPRESA } from "../../constants/empresa.js";
+import { getTipoEmpresaLabel } from "../../constants/empresa/tipoEmpresa.js";
+import { getCategoriaEmpresaLabel } from "../../constants/empresa/categoriaEmpresa.js";
 
 export default function MeusDados() {
     const { user } = AuthData();
@@ -40,10 +41,10 @@ export default function MeusDados() {
                             <h2 className="text-gray-500 text-xl mb-4">Seus Dados</h2>
                             <div className="mb-4 flex text-sm items-center">
                                 <span className="text-gray-600 mr-2">Tipo:</span>
-                                <span className="border border-gray-300 rounded p-3 bg-gray-50 mr-[60px]">{Object.keys(TIPO_EMPRESA).find(key => TIPO_EMPRESA[key] === user.tipo)}</span>
+                                <span className="border border-gray-300 rounded p-3 bg-gray-50 mr-[60px]">{getTipoEmpresaLabel(user.tipo)}</span>
 
                                 <span className="text-gray-600 mr-2">Categoria:</span>
-                                <span className="border border-gray-300 rounded p-3 bg-gray-50">{Object.keys(user.tipo === 1 ? CATEGORIA_DOADORA : CATEGORIA_RECEBEDORA).find(key => user.tipo === 1 ? CATEGORIA_DOADORA[key] : CATEGORIA_RECEBEDORA[key] === user.categoria)}</span>
+                                <span className="border border-gray-300 rounded p-3 bg-gray-50">{getCategoriaEmpresaLabel(user.tipo, user.categoria)}</span>
                             </div>
                             <div className="mb-4 flex text-sm items-center">
                                 <span className="text-gray-600 mr-2">CNPJ:</span>

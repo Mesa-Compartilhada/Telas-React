@@ -2,7 +2,6 @@
 import {ListaDoacoes} from "../../components/listaDoacoes/ListaDoacoes.jsx"
 
 import { AuthData } from "../../auth/AuthWrapper.js";
-import { TIPO_EMPRESA } from "../../constants/empresa.js";
 import { getDoacoesByFilter } from "../../lib/api/doacao.js";
 import { STATUS_DOACAO } from "../../constants/doacao.js";
 
@@ -10,6 +9,7 @@ import { createContext, useEffect, useState } from 'react';
 import MapaDisponiveis from "./components/mapaDisponiveis.jsx";
 import { HandHeart } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
+import { TipoEmpresa } from "../../constants/empresa/tipoEmpresa.js";
 
 export const DashboardContext = createContext()
 
@@ -35,11 +35,11 @@ export default function Dashboard() {
 
     return (
         <DashboardContext.Provider value={{doacoesAlteradas: doacoesAlteradas, setDoacoesAlteradas: setDoacoesAlteradas}}>
-        <p className={`mx-20 mb-10 text-sm ${user.tipo === TIPO_EMPRESA.DOADORA ? 'text-azul-escuro' : 'text-l-Abobora'}`} >{user.tipo === TIPO_EMPRESA.DOADORA ? `Obrigado por doar conosco, ${user.nome}!` : `Obrigado por fazer a diferença, ${user.nome}!`}</p>
+        <p className={`mx-20 mb-10 text-sm ${user.tipo === TipoEmpresa.DOADORA ? 'text-azul-escuro' : 'text-l-Abobora'}`} >{user.tipo === TipoEmpresa.DOADORA ? `Obrigado por doar conosco, ${user.nome}!` : `Obrigado por fazer a diferença, ${user.nome}!`}</p>
 
         <section className="grid place-content-center pb-10 px-10">
             {
-                TIPO_EMPRESA.RECEBEDORA === user.tipo
+                user.tipo === TipoEmpresa.RECEBEDORA
                 ?
                 <div>
                     <h1 className="text-2xl my-4">Doações disponíveis</h1>

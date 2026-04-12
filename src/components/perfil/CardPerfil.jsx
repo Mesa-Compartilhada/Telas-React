@@ -1,7 +1,7 @@
 import { MapPin, Envelope, User } from "@phosphor-icons/react"
-import { CATEGORIA_DOADORA, CATEGORIA_RECEBEDORA, TIPO_EMPRESA } from "../../constants/empresa"
-import { useEffect, useState } from "react"
-import { STATUS_DOACAO } from "../../constants/doacao"
+import { useState } from "react"
+import { getTipoEmpresaLabel } from "../../constants/empresa/tipoEmpresa"
+import { getCategoriaDoadoraLabel, getCategoriaEmpresaLabel, getCategoriaLabel } from "../../constants/empresa/categoriaEmpresa"
 export  const CardPerfil = ({ empresa }) => {
     const [doacoesRecentes, setDoacoesRecentes] = useState(0)
 
@@ -29,7 +29,7 @@ export  const CardPerfil = ({ empresa }) => {
             <div className="flex flex-col items-center gap-2">
                 <div className=" rounded-full border-2 border-black p-2">{ <User className="opacity-60" size={100} />}</div>
                 <p>{ empresa.nome }</p>
-                <p>{ Object.keys(TIPO_EMPRESA).find(key => TIPO_EMPRESA[key] === empresa.tipo) } - { Object.keys(empresa.tipo === 1 ? CATEGORIA_DOADORA : CATEGORIA_RECEBEDORA).find(key => empresa.tipo === 1 ? CATEGORIA_DOADORA[key] : CATEGORIA_RECEBEDORA[key] === empresa.tipo) }</p>
+                <p>{ getTipoEmpresaLabel(empresa.tipo) } - { getCategoriaEmpresaLabel(empresa.tipo, empresa.categoria) }</p>
                 
                 <div className="flex content-center gap-2">
                     { <MapPin size={20} /> } <span className="cursor-pointer" title={empresa.endereco.cep}>{ empresa.endereco.bairro} </span>

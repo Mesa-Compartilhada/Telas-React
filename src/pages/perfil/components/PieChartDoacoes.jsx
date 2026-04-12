@@ -6,15 +6,16 @@ import {
     PieChart,
 } from "recharts";
 import { STATUS_DOACAO } from "../../../constants/doacao";
-import { TIPO_EMPRESA } from "../../../constants/empresa";
 import { getDoacoesByFilter } from "../../../lib/api/doacao";
+import { TipoEmpresa, TipoEmpresaByCodigo } from "../../../constants/empresa/tipoEmpresa";
+import { getTipoAlimentoLabel } from "../../../constants/doacao/tipoAlimento";
 export const PieChartDoacoes = ({ empresa }) => {
   const [tipoAlimentodoacoesRecentes, setTipoAlimentodoacoesRecentes] =
     useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (empresa.tipo === TIPO_EMPRESA.DOADORA) {
+      if(empresa.tipo === TipoEmpresa.DOADORA) {
         let doacoes = await getDoacoesByFilter({ "status": [STATUS_DOACAO.CONCLUIDA], "empresaDoadoraId": empresa.id });
   
         let contagem = doacoes.reduce((acc, item) => {
@@ -23,7 +24,7 @@ export const PieChartDoacoes = ({ empresa }) => {
         }, {});
   
         let dadosAlimentos = Object.keys(contagem).map((tipo) => ({
-          name: tipo,
+          name: getTipoAlimentoLabel(tipo),
           value: contagem[tipo],
         }));
         setTipoAlimentodoacoesRecentes(dadosAlimentos);

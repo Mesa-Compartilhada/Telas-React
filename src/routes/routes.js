@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import { AuthData } from "../auth/AuthWrapper";
-import { TIPO_EMPRESA } from "../constants/empresa";
 import CadDoacao from "../pages/cadDoacao";
 import CadDoadores from "../pages/cadDoadores";
 import Dashboard from "../pages/Dashboard";
@@ -10,7 +9,7 @@ import Login from "../pages/login";
 import MeusDados from "../pages/MeusDados";
 import { Perfil } from "../pages/perfil";
 import RecuperarSenha from "../pages/recuperarSenha";
-import Header from "../components/Header_V2.jsx";
+import { TipoEmpresa } from "../constants/empresa/tipoEmpresa.js";
 
 export default function AppRoutes() {
     
@@ -22,7 +21,7 @@ export default function AppRoutes() {
       { <Route path="/cadastro" element={!user ? <CadDoadores /> : <Home />} /> }
       { <Route path="/login" element={!user ? <Login /> : <Home />} /> }
       { <Route path="/dashboard" element={ user ? <Dashboard /> : <Home /> }/> }
-      { <Route path="/cadastro-doacao" element={ user && user.tipo === TIPO_EMPRESA.DOADORA ? <CadDoacao /> : <Home /> }/> }
+      { <Route path="/cadastro-doacao" element={ user && user.tipo === TipoEmpresa.DOADORA ? <CadDoacao /> : <Home /> }/> }
       { <Route path="/meus-dados" element={ user ? <MeusDados />: <Home />}/> }
       { <Route path="/historico" element={ user ? <Historico/> : <Home/>}/>}
       { <Route path="/perfil/:id" element={ user ? <Perfil/> : <Home/>}/>}

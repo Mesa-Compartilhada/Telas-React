@@ -6,10 +6,7 @@ import logo from "../../assets/MC_Logo.svg"
 import { AuthData } from "../../auth/AuthWrapper";
 import { toast } from "react-toastify";
 import { SignIn } from "@phosphor-icons/react";
-import Modal from "../../components/modal/Modal";
-import TermosDeUso from "../../components/termosDeUso/TermosDeUso";
-import { TIPO_ARMAZENAMENTO } from "../../constants/doacao";
-import { TIPO_EMPRESA } from "../../constants/empresa";
+import { TipoEmpresa } from "../../constants/empresa/tipoEmpresa";
 
 export default function Login() {
 
@@ -48,7 +45,7 @@ export default function Login() {
     if(dadosLogin.email && dadosLogin.senha) {
       const result = await loginUser(dadosLogin.email, dadosLogin.senha);
       if(result.status) {
-        toast.success(`Acessando como empresa ${result.user.tipo === TIPO_EMPRESA.DOADORA ? "doadora" : "recebedora"}`)
+        toast.success(`Acessando como empresa ${result.user.tipo === TipoEmpresa.DOADORA ? "doadora" : "recebedora"}`)
         navigate("/dashboard")
       }
       else {
