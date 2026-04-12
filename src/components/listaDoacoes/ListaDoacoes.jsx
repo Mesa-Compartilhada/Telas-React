@@ -4,7 +4,6 @@ import { Package } from "@phosphor-icons/react";
 import { getDoacoesByFilter } from "../../lib/api/doacao";
 import CardDoacaoSkeleton from "./components/CardDoacaoSkeleton";
 import FiltroDoacoes from "./components/FiltroDoacoes";
-import { TIPO_ALIMENTO } from "../../constants/doacao";
 
 export function ListaDoacoes({ filtros, ativarFiltro }) {
 

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { STATUS_DOACAO } from "../../../constants/doacao";
 import { useState } from "react";
+import { getTipoAlimentoLabel } from "../../../constants/doacao/tipoAlimento";
+import { getTipoArmazenamentoLabel } from "../../../constants/doacao/tipoArmazenamento";
 
 export function CardDoacaoDetalhado({ doacao }) {
   const [aba, setAba] = useState(1)
@@ -38,11 +40,11 @@ export function CardDoacaoDetalhado({ doacao }) {
           <div className="flex flex-col gap-2">
             <div className="flex items-center">
               <label className="text-xs" htmlFor="">Tipo de alimento: </label>
-              <small className="w-fit opacity-80 bg-blue-700 text-white p-1 rounded-md text-xs truncate">{doacao.tipoAlimento}</small>
+              <small className="w-fit opacity-80 bg-blue-700 text-white p-1 rounded-md text-xs truncate">{getTipoAlimentoLabel(doacao.tipoAlimento)}</small>
             </div>
             <div className="flex items-center">
               <label className="text-xs" htmlFor="">Tipo de armazenamento: </label>
-              <small className="w-fit opacity-80 bg-yellow-700 text-white p-1 rounded-md text-xs truncate">{doacao.tipoArmazenamento}</small>
+              <small className="w-fit opacity-80 bg-yellow-700 text-white p-1 rounded-md text-xs truncate">{getTipoArmazenamentoLabel(doacao.tipoArmazenamento)}</small>
             </div>
           </div>
           :
